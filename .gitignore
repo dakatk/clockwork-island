@@ -1,2 +1,7 @@
-obj
+# DS_Store
 .DS_Store
+
+# Project files
+obj
+bin/ClockworkIsland
+bin/ClockworkIsland.exe

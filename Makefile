@@ -1,4 +1,4 @@
-# OSFLAG 				:=
+# OSFLAG :=
 # ifeq ($(OS),Windows_NT)
 # 	OSFLAG += -D WIN32
 # 	ifeq ($(PROCESSOR_ARCHITECTURE),AMD64)
@@ -30,16 +30,14 @@
 CC = gcc
 RM = rm -rf
 MKDIR = mkdir -p
-ARCH = $(shell uname -s)_$(shell uname -p)
 
 SRC = src
 OBJ = obj
 BIN = bin
-LIB = lib/$(ARCH)
 INC = include
 
 CCFLAGS = -I $(INC) -O2
-LDFLAGS = -L $(LIB) -l SDL2-2.0.0 -l SDL2_image-2.0.0
+LDFLAGS = -l SDL2 -l SDL2_image
 CXXFLAGS = $(CCFLAGS) $(LDFLAGS) -fPIC
 
 SOURCES = $(wildcard $(SRC)/*.c)
