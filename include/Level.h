@@ -7,21 +7,19 @@
 #include "Platform.h"
 #include "Background.h"
 
-struct Node {
+struct PlatformNode {
 	struct Platform* platform;
-	struct Node* next;
+	struct PlatformNode* next;
 };
 
 struct Level {
 	struct Background background;
-	struct Node* platforms;
+	struct PlatformNode* platforms;
 
 	bool exited;
 };
 
 void Level_Init(struct Level* level);
-
-bool Level_SetBackground(struct Level* level, SDL_Renderer* renderer, const char* image0, const char* image1);
 void Level_AddPlatform(struct Level* level, struct Platform* platform);
 
 void Level_CheckPhysics(struct Level* level, struct Player* player);

@@ -33,10 +33,10 @@ void Platform_Init(struct Platform* platform, struct Texture* texture, double an
 struct Bounds Platform_GetBounds(struct Platform* platform)
 {
 	struct Bounds bounds = {
-		.x = (platform->x) + 1,
-		.y = (platform->y) + 1,
-		.w = (platform->w) - 2,
-		.h = (platform->h) - 2
+		.x = (float)platform->x + 1,
+		.y = (float)platform->y + 1,
+		.w = platform->w - 2,
+		.h = platform->h - 2
 	};
 
 	return bounds;

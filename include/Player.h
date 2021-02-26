@@ -8,10 +8,9 @@
 
 #define PLAYER_MOVE_SPEED 3.25f
 #define PLAYER_JUMP_SPEED 4.0f
-#define PLAYER_HEALTH 50
 
-#define PLAYER_WIDTH 75
-#define PLAYER_HEIGHT 75
+#define PLAYER_WIDTH 85
+#define PLAYER_HEIGHT 85
 
 #define PLAYER_SPRITE_CLIP_SIZE 100
 #define PLAYER_NUM_FILTERS 6
@@ -23,9 +22,9 @@ struct Player {
 	bool isJumping;
 	bool onGround;
 	int currFilter;
-	int health;
 
 	float vx, vy;
+	float cx, cy;
 	float x, y;
 	int w, h;
 };

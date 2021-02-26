@@ -10,11 +10,8 @@
 #include <SDL2/SDL_image.h>
 
 #include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
 
 #include "Keyboard.h"
-#include "Direction.h"
 #include "LevelLoader.h"
 #include "Viewport.h"
 
@@ -32,8 +29,17 @@ void RenderLoop();
 bool LoadLevel(int levelNum);
 int Cleanup(int);
 
+// TODO Render to texture instead of continuous rendering
+// Further optimization can be had when copying pixels
+// directly to one large pixel array, then rendering the array
+// as a single texture
 int main(int argc, char* argv[])
 {
+    if (argc > 1)
+    {
+        fprintf(stderr, "'%s' does not take any arguments.\n", argv[0]);
+        return -1;
+    }
 	printf("Running as executable '%s'\n", argv[0]);
 
 #define GAME_TITLE "Clockwork Island (Alpha v0.0.1)"
@@ -54,15 +60,16 @@ int main(int argc, char* argv[])
 	if (!LoadLevel(0)) 
 		return Cleanup(1);
 
-	bool quit = false;
-
 	do {
-		Keyboard_CaptureInput(&quit);
+		Keyboard_CaptureInput();
+
+		if (Keyboard_KeyPressed(KEY_QUIT))
+		    break;
 
 		UpdateLoop();
 		RenderLoop();
 
-	} while (!quit);
+	} while (true);
 
 	return Cleanup(0);
 }
@@ -150,10 +157,7 @@ void UpdateLoop()
 
 	Level_CheckPhysics(&level, &player);
 
-	float playerCenterX = player.x + (player.w / 2.0f);
-	float playerCenterY = player.y - (player.h / 2.0f);
-
-	Viewport_SnapTo(playerCenterX, playerCenterY);
+	Viewport_SnapTo(player.cx, player.cy);
 	Viewport_Constrain();
 
 	Player_UpdateDirection(&player);

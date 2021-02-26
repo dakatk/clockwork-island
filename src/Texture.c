@@ -3,8 +3,6 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 
-#include <stdlib.h>
-
 bool Texture_Init(struct Texture* texture, SDL_Renderer* renderer, const char* filename, int clipSize)
 {
 	SDL_Surface* image = IMG_Load(filename);

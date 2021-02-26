@@ -1,8 +1,6 @@
 #include "Player.h"
 #include "Viewport.h"
 
-#include <stdlib.h>
-
 // NULL means no filter active
 static const struct Filter* allFilters[PLAYER_NUM_FILTERS] = {
 		NULL, &Filter_RED,
@@ -14,12 +12,12 @@ void Player_Init(struct Player* player, struct Texture* spritesheet, int x, int 
 {
 	player->direction = &Direction_STAND_RIGHT;
 	player->texture = spritesheet;
-
-	player->health = PLAYER_HEALTH;
 	player->currFilter = 0;
 
 	player->vx = 0.0f;
 	player->vy = 0.0f;
+	player->cx = (float)x + (float)w / 2.0f;
+	player->cy = (float)y - (float)h / 2.0f;
 	player->x = (float)x;
 	player->y = (float)y;
 	player->w = w;
@@ -60,18 +58,24 @@ void Player_UpdateDirection(struct Player* player)
 	{
 		if (player->vy != 0.0f)
 		{
-			if (player->direction == &Direction_STAND_LEFT ||
-				player->direction == &Direction_WALK_LEFT)
-					player->direction = &Direction_JUMP_LEFT;
-			else
+			bool prevLeft = player->direction == &Direction_WALK_LEFT || player->direction == &Direction_STAND_LEFT;
+			bool prevRight = player->direction == &Direction_WALK_RIGHT || player->direction == &Direction_STAND_RIGHT;
+
+			if (prevLeft)
+				player->direction = &Direction_JUMP_LEFT;
+
+			else if (prevRight)
 				player->direction = &Direction_JUMP_RIGHT;
 		}
 		else 
 		{
-			if (player->direction == &Direction_WALK_LEFT ||
-				player->direction == &Direction_JUMP_LEFT)
-					player->direction = &Direction_STAND_LEFT;
-			else
+			bool prevLeft = player->direction == &Direction_WALK_LEFT || player->direction == &Direction_JUMP_LEFT;
+			bool prevRight = player->direction == &Direction_WALK_RIGHT || player->direction == &Direction_JUMP_RIGHT;
+
+			if (prevLeft)
+				player->direction = &Direction_STAND_LEFT;
+
+			else if (prevRight)
 				player->direction = &Direction_STAND_RIGHT;
 		}
 	}
@@ -122,8 +126,8 @@ void Player_Render(struct Player* player, SDL_Renderer* renderer)
 		};
 		SDL_RenderFillRect(renderer, &screen_bounds);
 	}
-	float actualX = player->x - Viewport_X;
-	float actualY = VIEWPORT_HEIGHT - player->y - Viewport_Y + 1.0f;
+	float actualX = player->x - (float)Viewport_X;
+	float actualY = VIEWPORT_HEIGHT - player->y - (float)Viewport_Y + 1.0f;
 
 	Texture_Render(player->texture, renderer, (int)actualX, (int)actualY, player->w, player->h);
 }

@@ -3,10 +3,9 @@
 #include "Viewport.h"
 
 #include <stdio.h>
-#include <string.h>
 
 #define NUM_VISIBLE_OPTIONS 43
-#define NUM_TEXTURES 3
+#define NUM_TEXTURES 2
 
 static struct Texture spritesheets[NUM_TEXTURES];
 
@@ -133,12 +132,15 @@ bool LevelLoader_LoadLevelFile(struct Level* level, struct Player* player, const
 	
 	Level_Init(level);
 
-	while(true)
-	{
+	while(!feof(lvlFile))
+    {
 		struct Platform platform;
 
 		if (!LoadPlatformData(&platform, lvlFile))
-			return false;
+		{
+		    fclose(lvlFile);
+            return false;
+        }
 		
 		Level_AddPlatform(level, &platform);
 	}
@@ -151,16 +153,13 @@ static bool LoadPlayerData(struct Player* player, FILE* lvlFile)
 {
 	// px = player x-coordinate
 	// py = player y-coordinate
-	// ex = level end x
-	// ey = level end y
 	// u = player upgrades
 	int px, py;
-	int ex, ey;
 	int u;
 
-	int result = fscanf(lvlFile, "%d,%d,%d,%d,%d", &px, &py, &u, &ex, &ey);
+	int result = fscanf(lvlFile, "%d,%d,%d", &px, &py, &u);
 
-	if (result != 7)
+	if (result != 3)
 	{
 		fprintf(stderr, "Corrupt or incomplete player data.\n");
 		return false;
@@ -188,11 +187,11 @@ static bool LoadPlatformData(struct Platform* platform, FILE* lvlFile)
 
 	int result = fscanf(lvlFile, "%d,%d,%d,%d,%d,%d,%d", &t, &e, &x, &y, &w, &h, &f);
 
-	if (result != 8)
-	{
-		fprintf(stderr, "Error: Corrupt or incomplete platform data.\n");
-		return false;
-	}
+    if (result != 7)
+    {
+        fprintf(stderr, "Corrupt or incomplete platform data.\n");
+        return false;
+    }
 
 	if (t < 0 || t >= NUM_VISIBLE_OPTIONS)
 	{
