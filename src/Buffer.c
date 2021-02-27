@@ -21,6 +21,7 @@ void Buffer_Begin()
 
 void Buffer_Present()
 {
+    SDL_SetRenderTarget(buffer.renderer, NULL);
     SDL_RenderCopy(buffer.renderer, buffer.texture, NULL, NULL);
     SDL_RenderPresent(buffer.renderer);
 }
@@ -32,7 +33,7 @@ void Buffer_RenderTexture(struct Texture* texture, int x, int y, int w, int h)
 
 void Buffer_RenderTextureRotated(struct Texture* texture, double angle, int x, int y, int w, int h)
 {
-    Texture_RenderRotated(texture, angle, x, y, w, h);
+    Texture_RenderRotated(texture, buffer.renderer, angle, x, y, w, h);
 }
 
 void Buffer_RenderTextureFull(struct Texture* texture)

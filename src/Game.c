@@ -81,7 +81,7 @@ bool SDL2_InitAll(const char* title, int imgFlags)
 		return false;
 
 	window = SDL_CreateWindow(title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
-							BUFFER_WIDTH, BUFFER_HEIGHT, SDL_WINDOW_SHOWN);
+							BUFFER_WIDTH, BUFFER_HEIGHT, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
 	if (window == NULL)
 		return false;
 
