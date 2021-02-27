@@ -14,7 +14,10 @@ find_package(SDL2_image REQUIRED)
 include_directories(${PROJECT_SOURCE_DIR})
 include_directories(${PROJECT_SOURCE_DIR}/include)
 
-file(GLOB all_SRCS "${PROJECT_SOURCE_DIR}/src/*.c")
+add_executable(ClockworkIsland
+        src/Background.c src/Bounds.c src/Direction.c
+        src/Filter.c src/Game.c src/Keyboard.c
+        src/Level.c src/LevelLoader.c src/Platform.c
+        src/Player.c src/Texture.c src/Viewport.c src/Buffer.c include/Buffer.h)
 
-add_executable(ClockworkIsland ${all_SRCS})
 target_link_libraries(${PROJECT_NAME} ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES})

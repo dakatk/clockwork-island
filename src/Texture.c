@@ -36,6 +36,16 @@ static inline bool clipFullImage(SDL_Rect clip)
 	return clip.w == FULL_IMAGE || clip.h == FULL_IMAGE;
 }
 
+static void RenderRect(struct Texture* texture, SDL_Renderer* renderer, SDL_Rect* dest)
+{
+    SDL_Rect* src = NULL;
+
+    if (!clipFullImage(texture->clip))
+        src = &texture->clip;
+
+    SDL_RenderCopy(renderer, texture->bitmap, src, dest);
+}
+
 void Texture_Render(struct Texture* texture, SDL_Renderer* renderer, int x, int y, int w, int h)
 {
 	SDL_Rect dest = {
@@ -44,17 +54,7 @@ void Texture_Render(struct Texture* texture, SDL_Renderer* renderer, int x, int 
 		.w = w,
 		.h = h
 	};
-	Texture_RenderRect(texture, renderer, &dest);
-}
-
-void Texture_RenderRect(struct Texture* texture, SDL_Renderer* renderer, SDL_Rect* dest)
-{
-	SDL_Rect* src = NULL;
-
-	if (!clipFullImage(texture->clip))
-		src = &texture->clip;
-
-	SDL_RenderCopy(renderer, texture->bitmap, src, dest);
+    RenderRect(texture, renderer, &dest);
 }
 
 void Texture_RenderRotated(struct Texture* texture, SDL_Renderer* renderer,
@@ -73,6 +73,11 @@ void Texture_RenderRotated(struct Texture* texture, SDL_Renderer* renderer,
 		dest = &clip;
 	}
 	SDL_RenderCopyEx(renderer, texture->bitmap, &texture->clip, dest, angle, NULL, SDL_FLIP_NONE);
+}
+
+void Texture_RenderFull(struct Texture* texture, SDL_Renderer* renderer)
+{
+    RenderRect(texture, renderer, NULL);
 }
 
 void Texture_Destroy(struct Texture* texture)

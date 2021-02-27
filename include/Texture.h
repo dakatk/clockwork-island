@@ -1,5 +1,5 @@
-#ifndef GAME_TEXTURE_H__
-#define GAME_TEXTURE_H__
+#ifndef CLOCKWORKISLAND_TEXTURE_H__
+#define CLOCKWORKISLAND_TEXTURE_H__
 
 #include <SDL2/SDL.h>
 #include "Bool.h"
@@ -18,9 +18,9 @@ void Texture_MoveClip(struct Texture* texture, int clipX, int clipY);
 void Texture_GetBitmapDims(struct Texture* texture, int* outW, int* outH);
 
 void Texture_Render(struct Texture* texture, SDL_Renderer* renderer, int x, int y, int w, int h);
-void Texture_RenderRect(struct Texture* texture, SDL_Renderer* renderer, SDL_Rect* dest);
 void Texture_RenderRotated(struct Texture* texture, SDL_Renderer* renderer, double angle, int x, int y, int w, int h);
+void Texture_RenderFull(struct Texture* texture, SDL_Renderer* renderer);
 
 void Texture_Destroy(struct Texture* texture);
 
-#endif /* GAME_TEXTURE_H__ */
+#endif /* CLOCKWORKISLAND_TEXTURE_H__ */

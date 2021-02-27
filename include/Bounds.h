@@ -1,5 +1,7 @@
-#ifndef GAME_BOUNDS_H__
-#define GAME_BOUNDS_H__
+#ifndef CLOCKWORKISLAND_BOUNDS_H__
+#define CLOCKWORKISLAND_BOUNDS_H__
+
+// TODO Physical interactions need an overhaul. start here...
 
 enum InterAt {
 	INTER_AT_NONE = -1,
@@ -37,4 +39,4 @@ struct Bounds {
 
 struct RayHit Bounds_Intersect(struct Bounds* a, struct Bounds* b, float avx, float avy);
 
-#endif /* GAME_BOUNDS_H__ */
+#endif /* CLOCKWORKISLAND_BOUNDS_H__ */

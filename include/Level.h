@@ -1,7 +1,5 @@
-#ifndef GAME_LEVEL_H__
-#define GAME_LEVEL_H__
-
-#include <SDL2/SDL.h>
+#ifndef CLOCKWORKISLAND_LEVEL_H__
+#define CLOCKWORKISLAND_LEVEL_H__
 
 #include "Player.h"
 #include "Platform.h"
@@ -24,7 +22,7 @@ void Level_AddPlatform(struct Level* level, struct Platform* platform);
 
 void Level_CheckPhysics(struct Level* level, struct Player* player);
 
-void Level_Render(struct Level* level, SDL_Renderer* renderer, unsigned currFilter);
+void Level_Render(struct Level* level, unsigned currFilter);
 void Level_Destroy(struct Level* level);
 
-#endif /* GAME_LEVEL_H__ */
+#endif /* CLOCKWORKISLAND_LEVEL_H__ */

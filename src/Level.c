@@ -147,9 +147,9 @@ void Level_CheckPhysics(struct Level* level, struct Player* player)
 #undef GRAVITY
 }
 
-void Level_Render(struct Level* level, SDL_Renderer* renderer, unsigned currFilter)
+void Level_Render(struct Level* level, unsigned currFilter)
 {
-	Background_Render(&level->background, renderer);
+	Background_Render(&level->background);
 
 	for (struct PlatformNode* current = level->platforms; current != NULL; current = current->next)
 	{
@@ -158,7 +158,7 @@ void Level_Render(struct Level* level, SDL_Renderer* renderer, unsigned currFilt
 		if (Platform_IsOffscreen(platform) || !(platform->visible[currFilter]))
 			continue;
 
-		Platform_Render(platform, renderer);
+		Platform_Render(platform);
 	}
 }
 

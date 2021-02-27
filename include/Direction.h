@@ -1,5 +1,5 @@
-#ifndef GAME_DIRECTION_H__
-#define GAME_DIRECTION_H__
+#ifndef CLOCKWORKISLAND_DIRECTION_H__
+#define CLOCKWORKISLAND_DIRECTION_H__
 
 struct Direction {
 	int value;
@@ -14,4 +14,4 @@ extern const struct Direction Direction_WALK_RIGHT;
 extern const struct Direction Direction_JUMP_LEFT;
 extern const struct Direction Direction_JUMP_RIGHT;
 
-#endif /* GAME_DIRECTION_H__ */
+#endif /* CLOCKWORKISLAND_DIRECTION_H__ */

@@ -1,5 +1,7 @@
 #include "Background.h"
 #include "Viewport.h"
+#include "Buffer.h"
+
 #include <stdio.h>
 
 bool Background_Init(struct Background* background, SDL_Renderer* renderer, const char* image0, const char* image1)
@@ -16,25 +18,15 @@ bool Background_Init(struct Background* background, SDL_Renderer* renderer, cons
 		return false;
 	}
 
-	background->dest0.w = VIEWPORT_WIDTH;
-	background->dest0.h = VIEWPORT_HEIGHT;
-	background->dest0.x = 0;
-	background->dest0.y = 0;
-
-	background->dest1.w = VIEWPORT_WIDTH;
-	background->dest1.h = VIEWPORT_HEIGHT;
-	background->dest1.x = 0;
-	background->dest1.y = 0;
-
 	return true;
 }
 
 // TODO FUTURE Parallax scrolling (maybe add a third layer?)
 
-void Background_Render(struct Background* background, SDL_Renderer* renderer)
+void Background_Render(struct Background* background)
 {
-	Texture_RenderRect(&background->layer0, renderer, &background->dest0);
-	Texture_RenderRect(&background->layer1, renderer, &background->dest1);
+    Buffer_RenderTextureFull(&background->layer0);
+    Buffer_RenderTextureFull(&background->layer1);
 }
 
 void Background_Destroy(struct Background* background)

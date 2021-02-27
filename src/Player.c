@@ -1,5 +1,6 @@
 #include "Player.h"
 #include "Viewport.h"
+#include "Buffer.h"
 
 // NULL means no filter active
 static const struct Filter* allFilters[PLAYER_NUM_FILTERS] = {
@@ -103,31 +104,20 @@ void Player_Animate(struct Player* player)
 	Texture_MoveClip(player->texture, clipX, clipY);
 }
 
-void Player_Render(struct Player* player, SDL_Renderer* renderer)
+void Player_Render(struct Player* player)
 {
-	// For debugging purposes:
-	// 
-	// Bounds player_bounds;
-	// player_bounds = Player_getBounds(player);
-	// SDL_SetRenderDrawColor(renderer, 255, 238, 0, 255);
-	// SDL_Rect draw_bounds = {.x=player_bounds.x, .y=player_bounds.y, .w=player_bounds.w, .h=player_bounds.h};
-	// SDL_RenderDrawRect(renderer, &draw_bounds);
-
 	const struct Filter* drawFilter = allFilters[player->currFilter];
 
 	if (drawFilter != NULL)
-	{
-		SDL_SetRenderDrawColor(renderer, drawFilter->r, drawFilter->g, drawFilter->b, FILTER_ALPHA);
-		SDL_Rect screen_bounds = {
-			.x = 0, 
-			.y = 0, 
-			.w = VIEWPORT_WIDTH, 
-			.h = VIEWPORT_HEIGHT
-		};
-		SDL_RenderFillRect(renderer, &screen_bounds);
-	}
-	float actualX = player->x - (float)Viewport_X;
-	float actualY = VIEWPORT_HEIGHT - player->y - (float)Viewport_Y + 1.0f;
+		Buffer_RenderFilter(drawFilter);
 
-	Texture_Render(player->texture, renderer, (int)actualX, (int)actualY, player->w, player->h);
+	float actualX = player->x - (float)Viewport_X;
+	float actualY = BUFFER_HEIGHT - player->y - (float)Viewport_Y + 1.0f;
+
+	Buffer_RenderTexture(player->texture, (int)actualX, (int)actualY, player->w, player->h);
+}
+
+void Player_Destroy(struct Player* player)
+{
+    Texture_Destroy(player->texture);
 }

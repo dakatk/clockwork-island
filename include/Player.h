@@ -1,5 +1,5 @@
-#ifndef GAME_PLAYER_H__
-#define GAME_PLAYER_H__
+#ifndef CLOCKWORKISLAND_PLAYER_H__
+#define CLOCKWORKISLAND_PLAYER_H__
 
 #include "Direction.h"
 #include "Texture.h"
@@ -35,6 +35,8 @@ struct Bounds Player_GetBounds(struct Player* player);
 
 void Player_UpdateDirection(struct Player* player);
 void Player_Animate(struct Player* player);
-void Player_Render(struct Player* player, SDL_Renderer* renderer);
+void Player_Render(struct Player* player);
 
-#endif /* GAME_PLAYER_H__ */
+void Player_Destroy(struct Player* player);
+
+#endif /* CLOCKWORKISLAND_PLAYER_H__ */

@@ -1,12 +1,7 @@
-#ifndef GAME_VIEWPORT_H__
-#define GAME_VIEWPORT_H__
+#ifndef CLOCKWORKISLAND_VIEWPORT_H__
+#define CLOCKWORKISLAND_VIEWPORT_H__
 
 #include "Bool.h"
-
-// Treat everything as if the display is 800x600,
-// scale the graphics when rendering
-#define VIEWPORT_WIDTH 800
-#define VIEWPORT_HEIGHT 600
 
 // Leave space for one extra viewport, since the viewport
 // is moved from the bottom-left corner
@@ -19,4 +14,4 @@ extern int Viewport_Y;
 void Viewport_Constrain();
 void Viewport_SnapTo(float centerX, float centerY);
 
-#endif /* GAME_VIEWPORT_H__ */
+#endif /* CLOCKWORKISLAND_VIEWPORT_H__ */

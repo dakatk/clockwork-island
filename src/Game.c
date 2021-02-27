@@ -14,6 +14,7 @@
 #include "Keyboard.h"
 #include "LevelLoader.h"
 #include "Viewport.h"
+#include "Buffer.h"
 
 SDL_Window* window;
 SDL_Renderer* renderer;
@@ -80,7 +81,7 @@ bool SDL2_InitAll(const char* title, int imgFlags)
 		return false;
 
 	window = SDL_CreateWindow(title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
-							VIEWPORT_WIDTH, VIEWPORT_HEIGHT, SDL_WINDOW_SHOWN);
+							BUFFER_WIDTH, BUFFER_HEIGHT, SDL_WINDOW_SHOWN);
 	if (window == NULL)
 		return false;
 
@@ -96,6 +97,10 @@ bool SDL2_InitAll(const char* title, int imgFlags)
 
 	if (!(IMG_Init(imgFlags) & imgFlags))
 		return false;
+
+	SDL_RenderClear(renderer);
+
+	Buffer_Init(renderer);
 
 	return true;
 }
@@ -166,22 +171,24 @@ void UpdateLoop()
 
 void RenderLoop()
 {
-	SDL_RenderClear(renderer);
+	// SDL_RenderClear(renderer);
 
-	Level_Render(&level, renderer, player.currFilter);
-	Player_Render(&player, renderer);
+	Buffer_Begin();
 
-	SDL_RenderPresent(renderer);
+	Level_Render(&level, player.currFilter);
+	Player_Render(&player);
+
+	Buffer_Present();
 }
 
 int Cleanup(int statusCode)
 {
 	LevelLoader_UnloadResources(&level);
 	Level_Destroy(&level);
+	Player_Destroy(&player);
+	Buffer_Destroy();
 
 	SDL_ClearHints();
-
-	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
 
 	IMG_Quit();

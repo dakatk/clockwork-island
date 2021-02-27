@@ -1,4 +1,5 @@
 #include "Viewport.h"
+#include "Buffer.h"
 
 int Viewport_X = 0;
 int Viewport_Y = 0;
@@ -20,6 +21,6 @@ void Viewport_Constrain()
 
 void Viewport_SnapTo(float centerX, float centerY) 
 {
-	Viewport_X = (int)(centerX - (VIEWPORT_WIDTH / 2.0f));
-	Viewport_Y = (int)(centerY - (VIEWPORT_HEIGHT / 2.0f));
+	Viewport_X = (int)(centerX - (BUFFER_WIDTH / 2.0f));
+	Viewport_Y = (int)(centerY - (BUFFER_HEIGHT / 2.0f));
 }

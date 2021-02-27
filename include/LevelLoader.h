@@ -1,5 +1,5 @@
-#ifndef GAME_LEVEL_LOADER_H__
-#define GAME_LEVEL_LOADER_H__
+#ifndef CLOCKWORKISLAND_LEVEL_LOADER_H__
+#define CLOCKWORKISLAND_LEVEL_LOADER_H__
 
 #include <SDL2/SDL.h>
 
@@ -11,4 +11,4 @@ void LevelLoader_UnloadResources(struct Level* level);
 
 bool LevelLoader_LoadLevelFile(struct Level* level, struct Player* player, const char* filename);
 
-#endif /* GAME_LEVEL_LOADER_H__ */
+#endif /* CLOCKWORKISLAND_LEVEL_LOADER_H__ */

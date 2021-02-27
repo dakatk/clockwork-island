@@ -1,7 +1,5 @@
-#ifndef GAME_PLATFORM_H__
-#define GAME_PLATFORM_H__
-
-#include <SDL2/SDL.h>
+#ifndef CLOCKWORKISLAND_PLATFORM_H__
+#define CLOCKWORKISLAND_PLATFORM_H__
 
 #include "Texture.h"
 #include "Bounds.h"
@@ -28,6 +26,6 @@ void Platform_Init(struct Platform* platform, struct Texture* texture, double an
 struct Bounds Platform_GetBounds(struct Platform* platform);
 bool Platform_IsOffscreen(struct Platform* platform);
 
-void Platform_Render(struct Platform* platform, SDL_Renderer* renderer);
+void Platform_Render(struct Platform* platform);
 
-#endif /* GAME_PLATFORM_H__ */
+#endif /* CLOCKWORKISLAND_PLATFORM_H__ */

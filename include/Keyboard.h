@@ -1,5 +1,5 @@
-#ifndef GAME_KEYBOARD_H__
-#define GAME_KEYBOARD_H__
+#ifndef CLOCKWORKISLAND_KEYBOARD_H__
+#define CLOCKWORKISLAND_KEYBOARD_H__
 
 #include "Bool.h"
 
@@ -16,4 +16,4 @@ void Keyboard_CaptureInput();
 bool Keyboard_KeyPressed(int key);
 bool Keyboard_KeyTyped(int key);
 
-#endif /* GAME_KEYBOARD_H__ */
+#endif /* CLOCKWORKISLAND_KEYBOARD_H__ */
