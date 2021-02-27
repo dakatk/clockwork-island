@@ -1,5 +1,6 @@
 #include "Platform.h"
 #include "Viewport.h"
+#include "Buffer.h"
 
 void Platform_Init(struct Platform* platform, struct Texture* texture, double angle, int spriteIndex, int x, int y, int w, int h)
 {
@@ -33,10 +34,10 @@ void Platform_Init(struct Platform* platform, struct Texture* texture, double an
 struct Bounds Platform_GetBounds(struct Platform* platform)
 {
 	struct Bounds bounds = {
-		.x = (platform->x) + 1,
-		.y = (platform->y) + 1,
-		.w = (platform->w) - 2,
-		.h = (platform->h) - 2
+		.x = (float)platform->x + 1,
+		.y = (float)platform->y + 1,
+		.w = platform->w - 2,
+		.h = platform->h - 2
 	};
 
 	return bounds;
@@ -45,7 +46,7 @@ struct Bounds Platform_GetBounds(struct Platform* platform)
 bool Platform_IsOffscreen(struct Platform* platform)
 {
 	// Platform to the left of viewport left edge
-	if (platform->x > Viewport_X + VIEWPORT_WIDTH)
+	if (platform->x > Viewport_X + BUFFER_WIDTH)
 		return true;
 
 	// Platform to the right of viewport right edge
@@ -53,7 +54,7 @@ bool Platform_IsOffscreen(struct Platform* platform)
 		return true;
 
 	// Platform above viewport top edge
-	if (platform->y + platform->h > Viewport_Y + VIEWPORT_HEIGHT)
+	if (platform->y + platform->h > Viewport_Y + BUFFER_HEIGHT)
 		return true;
 
 	// Platform below viewport bottom edge
@@ -63,12 +64,12 @@ bool Platform_IsOffscreen(struct Platform* platform)
 	return false;
 }
 
-void Platform_Render(struct Platform* platform, SDL_Renderer* renderer)
+void Platform_Render(struct Platform* platform)
 {
 	Texture_MoveClip(platform->texture, platform->spriteClipX, platform->spriteClipY);
 
 	int actualX = platform->x - Viewport_X;
-	int actualY = VIEWPORT_HEIGHT - platform->y - Viewport_Y;
+	int actualY = BUFFER_HEIGHT - platform->y - Viewport_Y;
 
-	Texture_RenderRotated(platform->texture, renderer, platform->angle, actualX, actualY, platform->w, platform->h);
+	Buffer_RenderTextureRotated(platform->texture, platform->angle, actualX, actualY, platform->w, platform->h);
 }

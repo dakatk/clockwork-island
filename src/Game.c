@@ -10,13 +10,11 @@
 #include <SDL2/SDL_image.h>
 
 #include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
 
 #include "Keyboard.h"
-#include "Direction.h"
 #include "LevelLoader.h"
 #include "Viewport.h"
+#include "Buffer.h"
 
 SDL_Window* window;
 SDL_Renderer* renderer;
@@ -34,6 +32,11 @@ int Cleanup(int);
 
 int main(int argc, char* argv[])
 {
+    if (argc > 1)
+    {
+        fprintf(stderr, "'%s' does not take any arguments.\n", argv[0]);
+        return -1;
+    }
 	printf("Running as executable '%s'\n", argv[0]);
 
 #define GAME_TITLE "Clockwork Island (Alpha v0.0.1)"
@@ -54,15 +57,16 @@ int main(int argc, char* argv[])
 	if (!LoadLevel(0)) 
 		return Cleanup(1);
 
-	bool quit = false;
-
 	do {
-		Keyboard_CaptureInput(&quit);
+		Keyboard_CaptureInput();
+
+		if (Keyboard_KeyPressed(KEY_QUIT))
+		    break;
 
 		UpdateLoop();
 		RenderLoop();
 
-	} while (!quit);
+	} while (true);
 
 	return Cleanup(0);
 }
@@ -73,7 +77,7 @@ bool SDL2_InitAll(const char* title, int imgFlags)
 		return false;
 
 	window = SDL_CreateWindow(title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
-							VIEWPORT_WIDTH, VIEWPORT_HEIGHT, SDL_WINDOW_SHOWN);
+							BUFFER_WIDTH, BUFFER_HEIGHT, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
 	if (window == NULL)
 		return false;
 
@@ -89,6 +93,10 @@ bool SDL2_InitAll(const char* title, int imgFlags)
 
 	if (!(IMG_Init(imgFlags) & imgFlags))
 		return false;
+
+	SDL_RenderClear(renderer);
+
+	Buffer_Init(renderer);
 
 	return true;
 }
@@ -150,10 +158,7 @@ void UpdateLoop()
 
 	Level_CheckPhysics(&level, &player);
 
-	float playerCenterX = player.x + (player.w / 2.0f);
-	float playerCenterY = player.y - (player.h / 2.0f);
-
-	Viewport_SnapTo(playerCenterX, playerCenterY);
+	Viewport_SnapTo(player.cx, player.cy);
 	Viewport_Constrain();
 
 	Player_UpdateDirection(&player);
@@ -162,22 +167,24 @@ void UpdateLoop()
 
 void RenderLoop()
 {
-	SDL_RenderClear(renderer);
+	// SDL_RenderClear(renderer);
 
-	Level_Render(&level, renderer, player.currFilter);
-	Player_Render(&player, renderer);
+	Buffer_Begin();
 
-	SDL_RenderPresent(renderer);
+	Level_Render(&level, player.currFilter);
+	Player_Render(&player);
+
+	Buffer_Present();
 }
 
 int Cleanup(int statusCode)
 {
 	LevelLoader_UnloadResources(&level);
 	Level_Destroy(&level);
+	Player_Destroy(&player);
+	Buffer_Destroy();
 
 	SDL_ClearHints();
-
-	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
 
 	IMG_Quit();
