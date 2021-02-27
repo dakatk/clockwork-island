@@ -1,8 +1,6 @@
 #ifndef CLOCKWORKISLAND_BOUNDS_H__
 #define CLOCKWORKISLAND_BOUNDS_H__
 
-// TODO Physical interactions need an overhaul. start here...
-
 enum InterAt {
 	INTER_AT_NONE = -1,
 	INTER_AT_TOP = 0,
@@ -28,8 +26,6 @@ struct RayHit {
 	float delta;
 };
 
-// TODO FUTURE We could make this a sequence of lines for more
-// abstraction/customizibility
 struct Bounds {
 	float x;
 	float y;

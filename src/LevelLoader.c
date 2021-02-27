@@ -7,6 +7,9 @@
 #define NUM_VISIBLE_OPTIONS 43
 #define NUM_TEXTURES 2
 
+// TODO FUTURE Level files should be hex files, with every two bytes representing
+// a single data point (MSBs and LSBs), allowing (almost) everything to be an unsigned short
+
 static struct Texture spritesheets[NUM_TEXTURES];
 
 static const bool optionsVisible[NUM_VISIBLE_OPTIONS][NUM_PLATFORM_VISIBLE_OPTIONS] = {

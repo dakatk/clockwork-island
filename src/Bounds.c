@@ -1,6 +1,8 @@
 #include "Bounds.h"
 #include "Bool.h"
 
+// TODO Physical interactions need an overhaul. start here...
+
 struct Line {
 	float x0, y0;
 	float x1, y1;

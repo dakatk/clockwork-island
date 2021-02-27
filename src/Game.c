@@ -30,10 +30,6 @@ void RenderLoop();
 bool LoadLevel(int levelNum);
 int Cleanup(int);
 
-// TODO Render to texture instead of continuous rendering
-// Further optimization can be had when copying pixels
-// directly to one large pixel array, then rendering the array
-// as a single texture
 int main(int argc, char* argv[])
 {
     if (argc > 1)

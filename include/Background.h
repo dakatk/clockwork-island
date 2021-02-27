@@ -1,7 +1,6 @@
 #ifndef CLOCKWORKISLAND_BACKGROUND_H__
 #define CLOCKWORKISLAND_BACKGROUND_H__
 
-#include <SDL2/SDL_rect.h>
 #include "Texture.h"
 
 struct Background {
