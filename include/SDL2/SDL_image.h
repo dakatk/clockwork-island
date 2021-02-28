@@ -98,7 +98,7 @@ extern DECLSPEC SDL_Surface * SDLCALL IMG_Load(const char *file);
 extern DECLSPEC SDL_Surface * SDLCALL IMG_Load_RW(SDL_RWops *src, int freesrc);
 
 #if SDL_VERSION_ATLEAST(2,0,0)
-/* Load an image directly into a render texture.
+/* Load an image directly into a render target.
  */
 extern DECLSPEC SDL_Texture * SDLCALL IMG_LoadTexture(SDL_Renderer *renderer, const char *file);
 extern DECLSPEC SDL_Texture * SDLCALL IMG_LoadTexture_RW(SDL_Renderer *renderer, SDL_RWops *src, int freesrc);

@@ -109,12 +109,12 @@ void Player_Render(struct Player* player)
 	const struct Filter* drawFilter = allFilters[player->currFilter];
 
 	if (drawFilter != NULL)
-		Buffer_RenderFilter(drawFilter);
+		Buffer_ApplyFilter(drawFilter);
 
 	float actualX = player->x - (float)Viewport_X;
 	float actualY = BUFFER_HEIGHT - player->y - (float)Viewport_Y + 1.0f;
 
-	Buffer_RenderTexture(player->texture, (int)actualX, (int)actualY, player->w, player->h);
+	Buffer_BlitTexture(player->texture, (int)actualX, (int)actualY, player->w, player->h);
 }
 
 void Player_Destroy(struct Player* player)

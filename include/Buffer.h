@@ -14,10 +14,10 @@ void Buffer_Init(SDL_Renderer* renderer);
 void Buffer_Begin();
 void Buffer_Present();
 
-void Buffer_RenderTexture(struct Texture* texture, int x, int y, int w, int h);
-void Buffer_RenderTextureRotated(struct Texture* texture, double angle, int x, int y, int w, int h);
-void Buffer_RenderTextureFull(struct Texture* texture);
-void Buffer_RenderFilter(const struct Filter* filter);
+void Buffer_BlitTexture(struct Texture* texture, int x, int y, int w, int h);
+void Buffer_BlitTextureRotated(struct Texture* texture, double angle, int x, int y, int w, int h);
+void Buffer_BlitTextureFull(struct Texture* texture);
+void Buffer_ApplyFilter(const struct Filter* filter);
 
 void Buffer_Destroy();
 

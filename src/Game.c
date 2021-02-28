@@ -167,8 +167,6 @@ void UpdateLoop()
 
 void RenderLoop()
 {
-	// SDL_RenderClear(renderer);
-
 	Buffer_Begin();
 
 	Level_Render(&level, player.currFilter);

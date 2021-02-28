@@ -15,12 +15,6 @@ bool Texture_Init(struct Texture* texture, SDL_Renderer* renderer, const char* f
 
 void Texture_MoveClip(struct Texture* texture, int clipX, int clipY);
 
-void Texture_GetBitmapDims(struct Texture* texture, int* outW, int* outH);
-
-void Texture_Render(struct Texture* texture, SDL_Renderer* renderer, int x, int y, int w, int h);
-void Texture_RenderRotated(struct Texture* texture, SDL_Renderer* renderer, double angle, int x, int y, int w, int h);
-void Texture_RenderFull(struct Texture* texture, SDL_Renderer* renderer);
-
 void Texture_Destroy(struct Texture* texture);
 
 #endif /* CLOCKWORKISLAND_TEXTURE_H__ */

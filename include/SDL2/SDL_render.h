@@ -28,11 +28,11 @@
  *      * single pixel points
  *      * single pixel lines
  *      * filled rectangles
- *      * texture images
+ *      * target images
  *
  *  The primitives may be drawn in opaque, blended, or additive modes.
  *
- *  The texture images may be drawn in opaque, blended, or additive modes.
+ *  The target images may be drawn in opaque, blended, or additive modes.
  *  They can have an additional color tint or alpha modulation applied to
  *  them, and may also be stretched with linear interpolation.
  *
@@ -69,7 +69,7 @@ typedef enum
     SDL_RENDERER_PRESENTVSYNC = 0x00000004,     /**< Present is synchronized
                                                      with the refresh rate */
     SDL_RENDERER_TARGETTEXTURE = 0x00000008     /**< The renderer supports
-                                                     rendering to texture */
+                                                     rendering to target */
 } SDL_RendererFlags;
 
 /**
@@ -79,14 +79,14 @@ typedef struct SDL_RendererInfo
 {
     const char *name;           /**< The name of the renderer */
     Uint32 flags;               /**< Supported ::SDL_RendererFlags */
-    Uint32 num_texture_formats; /**< The number of available texture formats */
-    Uint32 texture_formats[16]; /**< The available texture formats */
-    int max_texture_width;      /**< The maximum texture width */
-    int max_texture_height;     /**< The maximum texture height */
+    Uint32 num_texture_formats; /**< The number of available target formats */
+    Uint32 texture_formats[16]; /**< The available target formats */
+    int max_texture_width;      /**< The maximum target width */
+    int max_texture_height;     /**< The maximum target height */
 } SDL_RendererInfo;
 
 /**
- *  \brief The scaling mode for a texture.
+ *  \brief The scaling mode for a target.
  */
 typedef enum
 {
@@ -96,7 +96,7 @@ typedef enum
 } SDL_ScaleMode;
 
 /**
- *  \brief The access pattern allowed for a texture.
+ *  \brief The access pattern allowed for a target.
  */
 typedef enum
 {
@@ -106,7 +106,7 @@ typedef enum
 } SDL_TextureAccess;
 
 /**
- *  \brief The texture channel modulation used in SDL_RenderCopy().
+ *  \brief The target channel modulation used in SDL_RenderCopy().
  */
 typedef enum
 {
@@ -144,7 +144,7 @@ typedef struct SDL_Texture SDL_Texture;
  *  \brief Get the number of 2D rendering drivers available for the current
  *         display.
  *
- *  A render driver is a set of code that handles rendering and texture
+ *  A render driver is a set of code that handles rendering and target
  *  management on a particular display.  Normally there is only one, but
  *  some drivers may have several available with different capabilities.
  *
@@ -231,19 +231,19 @@ extern DECLSPEC int SDLCALL SDL_GetRendererOutputSize(SDL_Renderer * renderer,
                                                       int *w, int *h);
 
 /**
- *  \brief Create a texture for a rendering context.
+ *  \brief Create a target for a rendering context.
  *
  *  \param renderer The renderer.
- *  \param format The format of the texture.
+ *  \param format The format of the target.
  *  \param access One of the enumerated values in ::SDL_TextureAccess.
- *  \param w      The width of the texture in pixels.
- *  \param h      The height of the texture in pixels.
+ *  \param w      The width of the target in pixels.
+ *  \param h      The height of the target in pixels.
  *
- *  \return The created texture is returned, or NULL if no rendering context was
+ *  \return The created target is returned, or NULL if no rendering context was
  *          active,  the format was unsupported, or the width or height were out
  *          of range.
  *
- *  \note The contents of the texture are not defined at creation.
+ *  \note The contents of the target are not defined at creation.
  *
  *  \sa SDL_QueryTexture()
  *  \sa SDL_UpdateTexture()
@@ -255,12 +255,12 @@ extern DECLSPEC SDL_Texture * SDLCALL SDL_CreateTexture(SDL_Renderer * renderer,
                                                         int h);
 
 /**
- *  \brief Create a texture from an existing surface.
+ *  \brief Create a target from an existing surface.
  *
  *  \param renderer The renderer.
- *  \param surface The surface containing pixel data used to fill the texture.
+ *  \param surface The surface containing pixel data used to fill the target.
  *
- *  \return The created texture is returned, or NULL on error.
+ *  \return The created target is returned, or NULL on error.
  *
  *  \note The surface is not modified or freed by this function.
  *
@@ -270,17 +270,17 @@ extern DECLSPEC SDL_Texture * SDLCALL SDL_CreateTexture(SDL_Renderer * renderer,
 extern DECLSPEC SDL_Texture * SDLCALL SDL_CreateTextureFromSurface(SDL_Renderer * renderer, SDL_Surface * surface);
 
 /**
- *  \brief Query the attributes of a texture
+ *  \brief Query the attributes of a target
  *
- *  \param texture A texture to be queried.
- *  \param format  A pointer filled in with the raw format of the texture.  The
+ *  \param texture A target to be queried.
+ *  \param format  A pointer filled in with the raw format of the target.  The
  *                 actual format may differ, but pixel transfers will use this
  *                 format.
- *  \param access  A pointer filled in with the actual access to the texture.
- *  \param w       A pointer filled in with the width of the texture in pixels.
- *  \param h       A pointer filled in with the height of the texture in pixels.
+ *  \param access  A pointer filled in with the actual access to the target.
+ *  \param w       A pointer filled in with the width of the target in pixels.
+ *  \param h       A pointer filled in with the height of the target in pixels.
  *
- *  \return 0 on success, or -1 if the texture is not valid.
+ *  \return 0 on success, or -1 if the target is not valid.
  */
 extern DECLSPEC int SDLCALL SDL_QueryTexture(SDL_Texture * texture,
                                              Uint32 * format, int *access,
@@ -289,12 +289,12 @@ extern DECLSPEC int SDLCALL SDL_QueryTexture(SDL_Texture * texture,
 /**
  *  \brief Set an additional color value used in render copy operations.
  *
- *  \param texture The texture to update.
+ *  \param texture The target to update.
  *  \param r       The red color value multiplied into copy operations.
  *  \param g       The green color value multiplied into copy operations.
  *  \param b       The blue color value multiplied into copy operations.
  *
- *  \return 0 on success, or -1 if the texture is not valid or color modulation
+ *  \return 0 on success, or -1 if the target is not valid or color modulation
  *          is not supported.
  *
  *  \sa SDL_GetTextureColorMod()
@@ -306,12 +306,12 @@ extern DECLSPEC int SDLCALL SDL_SetTextureColorMod(SDL_Texture * texture,
 /**
  *  \brief Get the additional color value used in render copy operations.
  *
- *  \param texture The texture to query.
+ *  \param texture The target to query.
  *  \param r         A pointer filled in with the current red color value.
  *  \param g         A pointer filled in with the current green color value.
  *  \param b         A pointer filled in with the current blue color value.
  *
- *  \return 0 on success, or -1 if the texture is not valid.
+ *  \return 0 on success, or -1 if the target is not valid.
  *
  *  \sa SDL_SetTextureColorMod()
  */
@@ -322,10 +322,10 @@ extern DECLSPEC int SDLCALL SDL_GetTextureColorMod(SDL_Texture * texture,
 /**
  *  \brief Set an additional alpha value used in render copy operations.
  *
- *  \param texture The texture to update.
+ *  \param texture The target to update.
  *  \param alpha     The alpha value multiplied into copy operations.
  *
- *  \return 0 on success, or -1 if the texture is not valid or alpha modulation
+ *  \return 0 on success, or -1 if the target is not valid or alpha modulation
  *          is not supported.
  *
  *  \sa SDL_GetTextureAlphaMod()
@@ -336,10 +336,10 @@ extern DECLSPEC int SDLCALL SDL_SetTextureAlphaMod(SDL_Texture * texture,
 /**
  *  \brief Get the additional alpha value used in render copy operations.
  *
- *  \param texture The texture to query.
+ *  \param texture The target to query.
  *  \param alpha     A pointer filled in with the current alpha value.
  *
- *  \return 0 on success, or -1 if the texture is not valid.
+ *  \return 0 on success, or -1 if the target is not valid.
  *
  *  \sa SDL_SetTextureAlphaMod()
  */
@@ -347,12 +347,12 @@ extern DECLSPEC int SDLCALL SDL_GetTextureAlphaMod(SDL_Texture * texture,
                                                    Uint8 * alpha);
 
 /**
- *  \brief Set the blend mode used for texture copy operations.
+ *  \brief Set the blend mode used for target copy operations.
  *
- *  \param texture The texture to update.
- *  \param blendMode ::SDL_BlendMode to use for texture blending.
+ *  \param texture The target to update.
+ *  \param blendMode ::SDL_BlendMode to use for target blending.
  *
- *  \return 0 on success, or -1 if the texture is not valid or the blend mode is
+ *  \return 0 on success, or -1 if the target is not valid or the blend mode is
  *          not supported.
  *
  *  \note If the blend mode is not supported, the closest supported mode is
@@ -364,12 +364,12 @@ extern DECLSPEC int SDLCALL SDL_SetTextureBlendMode(SDL_Texture * texture,
                                                     SDL_BlendMode blendMode);
 
 /**
- *  \brief Get the blend mode used for texture copy operations.
+ *  \brief Get the blend mode used for target copy operations.
  *
- *  \param texture   The texture to query.
+ *  \param texture   The target to query.
  *  \param blendMode A pointer filled in with the current blend mode.
  *
- *  \return 0 on success, or -1 if the texture is not valid.
+ *  \return 0 on success, or -1 if the target is not valid.
  *
  *  \sa SDL_SetTextureBlendMode()
  */
@@ -377,12 +377,12 @@ extern DECLSPEC int SDLCALL SDL_GetTextureBlendMode(SDL_Texture * texture,
                                                     SDL_BlendMode *blendMode);
 
 /**
- *  \brief Set the scale mode used for texture scale operations.
+ *  \brief Set the scale mode used for target scale operations.
  *
- *  \param texture The texture to update.
- *  \param scaleMode ::SDL_ScaleMode to use for texture scaling.
+ *  \param texture The target to update.
+ *  \param scaleMode ::SDL_ScaleMode to use for target scaling.
  *
- *  \return 0 on success, or -1 if the texture is not valid.
+ *  \return 0 on success, or -1 if the target is not valid.
  *
  *  \note If the scale mode is not supported, the closest supported mode is
  *        chosen.
@@ -393,12 +393,12 @@ extern DECLSPEC int SDLCALL SDL_SetTextureScaleMode(SDL_Texture * texture,
                                                     SDL_ScaleMode scaleMode);
 
 /**
- *  \brief Get the scale mode used for texture scale operations.
+ *  \brief Get the scale mode used for target scale operations.
  *
- *  \param texture   The texture to query.
+ *  \param texture   The target to query.
  *  \param scaleMode A pointer filled in with the current scale mode.
  *
- *  \return 0 on success, or -1 if the texture is not valid.
+ *  \return 0 on success, or -1 if the target is not valid.
  *
  *  \sa SDL_SetTextureScaleMode()
  */
@@ -406,18 +406,18 @@ extern DECLSPEC int SDLCALL SDL_GetTextureScaleMode(SDL_Texture * texture,
                                                     SDL_ScaleMode *scaleMode);
 
 /**
- *  \brief Update the given texture rectangle with new pixel data.
+ *  \brief Update the given target rectangle with new pixel data.
  *
- *  \param texture   The texture to update
+ *  \param texture   The target to update
  *  \param rect      A pointer to the rectangle of pixels to update, or NULL to
- *                   update the entire texture.
- *  \param pixels    The raw pixel data in the format of the texture.
+ *                   update the entire target.
+ *  \param pixels    The raw pixel data in the format of the target.
  *  \param pitch     The number of bytes in a row of pixel data, including padding between lines.
  *
- *  The pixel data must be in the format of the texture. The pixel format can be
+ *  The pixel data must be in the format of the target. The pixel format can be
  *  queried with SDL_QueryTexture.
  *
- *  \return 0 on success, or -1 if the texture is not valid.
+ *  \return 0 on success, or -1 if the target is not valid.
  *
  *  \note This is a fairly slow function.
  */
@@ -426,11 +426,11 @@ extern DECLSPEC int SDLCALL SDL_UpdateTexture(SDL_Texture * texture,
                                               const void *pixels, int pitch);
 
 /**
- *  \brief Update a rectangle within a planar YV12 or IYUV texture with new pixel data.
+ *  \brief Update a rectangle within a planar YV12 or IYUV target with new pixel data.
  *
- *  \param texture   The texture to update
+ *  \param texture   The target to update
  *  \param rect      A pointer to the rectangle of pixels to update, or NULL to
- *                   update the entire texture.
+ *                   update the entire target.
  *  \param Yplane    The raw pixel data for the Y plane.
  *  \param Ypitch    The number of bytes between rows of pixel data for the Y plane.
  *  \param Uplane    The raw pixel data for the U plane.
@@ -438,7 +438,7 @@ extern DECLSPEC int SDLCALL SDL_UpdateTexture(SDL_Texture * texture,
  *  \param Vplane    The raw pixel data for the V plane.
  *  \param Vpitch    The number of bytes between rows of pixel data for the V plane.
  *
- *  \return 0 on success, or -1 if the texture is not valid.
+ *  \return 0 on success, or -1 if the target is not valid.
  *
  *  \note You can use SDL_UpdateTexture() as long as your pixel data is
  *        a contiguous block of Y and U/V planes in the proper order, but
@@ -451,17 +451,17 @@ extern DECLSPEC int SDLCALL SDL_UpdateYUVTexture(SDL_Texture * texture,
                                                  const Uint8 *Vplane, int Vpitch);
 
 /**
- *  \brief Lock a portion of the texture for write-only pixel access.
+ *  \brief Lock a portion of the target for write-only pixel access.
  *
- *  \param texture   The texture to lock for access, which was created with
+ *  \param texture   The target to lock for access, which was created with
  *                   ::SDL_TEXTUREACCESS_STREAMING.
  *  \param rect      A pointer to the rectangle to lock for access. If the rect
- *                   is NULL, the entire texture will be locked.
+ *                   is NULL, the entire target will be locked.
  *  \param pixels    This is filled in with a pointer to the locked pixels,
  *                   appropriately offset by the locked area.
  *  \param pitch     This is filled in with the pitch of the locked pixels.
  *
- *  \return 0 on success, or -1 if the texture is not valid or was not created with ::SDL_TEXTUREACCESS_STREAMING.
+ *  \return 0 on success, or -1 if the target is not valid or was not created with ::SDL_TEXTUREACCESS_STREAMING.
  *
  *  \sa SDL_UnlockTexture()
  */
@@ -470,17 +470,17 @@ extern DECLSPEC int SDLCALL SDL_LockTexture(SDL_Texture * texture,
                                             void **pixels, int *pitch);
 
 /**
- *  \brief Lock a portion of the texture for write-only pixel access.
+ *  \brief Lock a portion of the target for write-only pixel access.
  *         Expose it as a SDL surface.
  *
- *  \param texture   The texture to lock for access, which was created with
+ *  \param texture   The target to lock for access, which was created with
  *                   ::SDL_TEXTUREACCESS_STREAMING.
  *  \param rect      A pointer to the rectangle to lock for access. If the rect
- *                   is NULL, the entire texture will be locked.
+ *                   is NULL, the entire target will be locked.
  *  \param surface   This is filled in with a SDL surface representing the locked area
  *                   Surface is freed internally after calling SDL_UnlockTexture or SDL_DestroyTexture.
  *
- *  \return 0 on success, or -1 if the texture is not valid or was not created with ::SDL_TEXTUREACCESS_STREAMING.
+ *  \return 0 on success, or -1 if the target is not valid or was not created with ::SDL_TEXTUREACCESS_STREAMING.
  *
  *  \sa SDL_UnlockTexture()
  */
@@ -489,7 +489,7 @@ extern DECLSPEC int SDLCALL SDL_LockTextureToSurface(SDL_Texture *texture,
                                             SDL_Surface **surface);
 
 /**
- *  \brief Unlock a texture, uploading the changes to video memory, if needed.
+ *  \brief Unlock a target, uploading the changes to video memory, if needed.
  *         If SDL_LockTextureToSurface() was called for locking, the SDL surface is freed.
  *
  *  \sa SDL_LockTexture()
@@ -507,10 +507,10 @@ extern DECLSPEC void SDLCALL SDL_UnlockTexture(SDL_Texture * texture);
 extern DECLSPEC SDL_bool SDLCALL SDL_RenderTargetSupported(SDL_Renderer *renderer);
 
 /**
- * \brief Set a texture as the current rendering target.
+ * \brief Set a target as the current rendering target.
  *
  * \param renderer The renderer.
- * \param texture The targeted texture, which must be created with the SDL_TEXTUREACCESS_TARGET flag, or NULL for the default render target
+ * \param texture The targeted target, which must be created with the SDL_TEXTUREACCESS_TARGET flag, or NULL for the default render target
  *
  * \return 0 on success, or -1 on error
  *
@@ -856,12 +856,12 @@ extern DECLSPEC int SDLCALL SDL_RenderFillRects(SDL_Renderer * renderer,
                                                 int count);
 
 /**
- *  \brief Copy a portion of the texture to the current rendering target.
+ *  \brief Copy a portion of the target to the current rendering target.
  *
- *  \param renderer The renderer which should copy parts of a texture.
- *  \param texture The source texture.
+ *  \param renderer The renderer which should copy parts of a target.
+ *  \param texture The source target.
  *  \param srcrect   A pointer to the source rectangle, or NULL for the entire
- *                   texture.
+ *                   target.
  *  \param dstrect   A pointer to the destination rectangle, or NULL for the
  *                   entire rendering target.
  *
@@ -873,17 +873,17 @@ extern DECLSPEC int SDLCALL SDL_RenderCopy(SDL_Renderer * renderer,
                                            const SDL_Rect * dstrect);
 
 /**
- *  \brief Copy a portion of the source texture to the current rendering target, rotating it by angle around the given center
+ *  \brief Copy a portion of the source target to the current rendering target, rotating it by angle around the given center
  *
- *  \param renderer The renderer which should copy parts of a texture.
- *  \param texture The source texture.
+ *  \param renderer The renderer which should copy parts of a target.
+ *  \param texture The source target.
  *  \param srcrect   A pointer to the source rectangle, or NULL for the entire
- *                   texture.
+ *                   target.
  *  \param dstrect   A pointer to the destination rectangle, or NULL for the
  *                   entire rendering target.
  *  \param angle    An angle in degrees that indicates the rotation that will be applied to dstrect, rotating it in a clockwise direction
  *  \param center   A pointer to a point indicating the point around which dstrect will be rotated (if NULL, rotation will be done around dstrect.w/2, dstrect.h/2).
- *  \param flip     An SDL_RendererFlip value stating which flipping actions should be performed on the texture
+ *  \param flip     An SDL_RendererFlip value stating which flipping actions should be performed on the target
  *
  *  \return 0 on success, or -1 on error
  */
@@ -998,12 +998,12 @@ extern DECLSPEC int SDLCALL SDL_RenderFillRectsF(SDL_Renderer * renderer,
                                                  int count);
 
 /**
- *  \brief Copy a portion of the texture to the current rendering target.
+ *  \brief Copy a portion of the target to the current rendering target.
  *
- *  \param renderer The renderer which should copy parts of a texture.
- *  \param texture The source texture.
+ *  \param renderer The renderer which should copy parts of a target.
+ *  \param texture The source target.
  *  \param srcrect   A pointer to the source rectangle, or NULL for the entire
- *                   texture.
+ *                   target.
  *  \param dstrect   A pointer to the destination rectangle, or NULL for the
  *                   entire rendering target.
  *
@@ -1015,17 +1015,17 @@ extern DECLSPEC int SDLCALL SDL_RenderCopyF(SDL_Renderer * renderer,
                                             const SDL_FRect * dstrect);
 
 /**
- *  \brief Copy a portion of the source texture to the current rendering target, rotating it by angle around the given center
+ *  \brief Copy a portion of the source target to the current rendering target, rotating it by angle around the given center
  *
- *  \param renderer The renderer which should copy parts of a texture.
- *  \param texture The source texture.
+ *  \param renderer The renderer which should copy parts of a target.
+ *  \param texture The source target.
  *  \param srcrect   A pointer to the source rectangle, or NULL for the entire
- *                   texture.
+ *                   target.
  *  \param dstrect   A pointer to the destination rectangle, or NULL for the
  *                   entire rendering target.
  *  \param angle    An angle in degrees that indicates the rotation that will be applied to dstrect, rotating it in a clockwise direction
  *  \param center   A pointer to a point indicating the point around which dstrect will be rotated (if NULL, rotation will be done around dstrect.w/2, dstrect.h/2).
- *  \param flip     An SDL_RendererFlip value stating which flipping actions should be performed on the texture
+ *  \param flip     An SDL_RendererFlip value stating which flipping actions should be performed on the target
  *
  *  \return 0 on success, or -1 on error
  */
@@ -1063,7 +1063,7 @@ extern DECLSPEC int SDLCALL SDL_RenderReadPixels(SDL_Renderer * renderer,
 extern DECLSPEC void SDLCALL SDL_RenderPresent(SDL_Renderer * renderer);
 
 /**
- *  \brief Destroy the specified texture.
+ *  \brief Destroy the specified target.
  *
  *  \sa SDL_CreateTexture()
  *  \sa SDL_CreateTextureFromSurface()
@@ -1105,21 +1105,21 @@ extern DECLSPEC int SDLCALL SDL_RenderFlush(SDL_Renderer * renderer);
 
 
 /**
- *  \brief Bind the texture to the current OpenGL/ES/ES2 context for use with
+ *  \brief Bind the target to the current OpenGL/ES/ES2 context for use with
  *         OpenGL instructions.
  *
- *  \param texture  The SDL texture to bind
- *  \param texw     A pointer to a float that will be filled with the texture width
- *  \param texh     A pointer to a float that will be filled with the texture height
+ *  \param texture  The SDL target to bind
+ *  \param texw     A pointer to a float that will be filled with the target width
+ *  \param texh     A pointer to a float that will be filled with the target height
  *
  *  \return 0 on success, or -1 if the operation is not supported
  */
 extern DECLSPEC int SDLCALL SDL_GL_BindTexture(SDL_Texture *texture, float *texw, float *texh);
 
 /**
- *  \brief Unbind a texture from the current OpenGL/ES/ES2 context.
+ *  \brief Unbind a target from the current OpenGL/ES/ES2 context.
  *
- *  \param texture  The SDL texture to unbind
+ *  \param texture  The SDL target to unbind
  *
  *  \return 0 on success, or -1 if the operation is not supported
  */

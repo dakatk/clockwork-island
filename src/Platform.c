@@ -71,5 +71,5 @@ void Platform_Render(struct Platform* platform)
 	int actualX = platform->x - Viewport_X;
 	int actualY = BUFFER_HEIGHT - platform->y - Viewport_Y;
 
-	Buffer_RenderTextureRotated(platform->texture, platform->angle, actualX, actualY, platform->w, platform->h);
+	Buffer_BlitTextureRotated(platform->texture, platform->angle, actualX, actualY, platform->w, platform->h);
 }
