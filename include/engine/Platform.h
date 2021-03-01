@@ -12,8 +12,8 @@ struct Platform {
 	struct Bitmap* bitmap;
 	bool visible[NUM_PLATFORM_VISIBLE_OPTIONS];
 
-	int spriteClipX;
-	int spriteClipY;
+	int spriteCol;
+	int spriteRow;
 	int flipped;
 
 	int x, y;
@@ -22,9 +22,7 @@ struct Platform {
 
 // Long boi:
 void Platform_Init(struct Platform* platform, struct Bitmap* texture, int flipped, int spriteIndex, int x, int y, int w, int h);
-
 bool Platform_IsOffscreen(struct Platform* platform);
-
 void Platform_Render(struct Platform* platform);
 
 #endif /* CLOCKWORKISLAND_PLATFORM_H__ */

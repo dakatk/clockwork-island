@@ -6,20 +6,20 @@ void Platform_Init(struct Platform* platform, struct Bitmap* texture, int flippe
 {
 	platform->bitmap = texture;
 
-	int spriteClipX = spriteIndex;
-	int spriteClipY = 0;
+	int spriteCol = spriteIndex;
+	int spriteRow = 0;
 
 #define PLATFORM_SPRITES_PER_ROW 15
 
-	while (spriteClipX >= PLATFORM_SPRITES_PER_ROW)
+	while (spriteCol >= PLATFORM_SPRITES_PER_ROW)
 	{
-		spriteClipX -= PLATFORM_SPRITES_PER_ROW;
-		spriteClipY ++;
+		spriteCol -= PLATFORM_SPRITES_PER_ROW;
+		spriteRow ++;
 	}
 #undef PLATFORM_SPRITES_PER_ROW
 
-	platform->spriteClipX = spriteClipX;
-	platform->spriteClipY = spriteClipY;
+	platform->spriteCol = spriteCol;
+	platform->spriteRow = spriteRow;
 
 	for (int i = 0; i < NUM_PLATFORM_VISIBLE_OPTIONS; i ++)
 		platform->visible[i] = false;
@@ -43,8 +43,7 @@ bool Platform_IsOffscreen(struct Platform* platform)
 
 void Platform_Render(struct Platform* platform)
 {
-    platform->bitmap->clipSize = platform->w;
-	Bitmap_MoveClip(platform->bitmap, platform->spriteClipX, platform->spriteClipY);
+	Bitmap_MoveClip(platform->bitmap, platform->spriteCol, platform->spriteRow);
 
 	int actualX = platform->x - Viewport_X;
 	int actualY = BUFFER_HEIGHT - platform->y - Viewport_Y;

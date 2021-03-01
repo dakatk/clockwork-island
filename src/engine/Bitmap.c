@@ -17,10 +17,10 @@ void Bitmap_Init(struct Bitmap* bitmap, unsigned char* pixels, int w, int h, int
     bitmap->clipSize = clipSize;
 }
 
-void Bitmap_MoveClip(struct Bitmap* bitmap, int clipX, int clipY)
+void Bitmap_MoveClip(struct Bitmap* bitmap, int col, int row)
 {
-    bitmap->clipX = clipX * bitmap->clipSize;
-    bitmap->clipY = clipY * bitmap->clipSize;
+    bitmap->clipX = col * bitmap->clipSize;
+    bitmap->clipY = row * bitmap->clipSize;
 }
 
 void Bitmap_Destroy(struct Bitmap* texture)

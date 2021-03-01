@@ -15,9 +15,7 @@ struct Bitmap {
 };
 
 void Bitmap_Init(struct Bitmap* bitmap, unsigned char* pixels, int w, int h, int clipSize);
-
-void Bitmap_MoveClip(struct Bitmap* bitmap, int clipX, int clipY);
-
+void Bitmap_MoveClip(struct Bitmap* bitmap, int col, int row);
 void Bitmap_Destroy(struct Bitmap* texture);
 
 #endif /* CLOCKWORKISLAND_TEXTURE_H__ */

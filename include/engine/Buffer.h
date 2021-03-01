@@ -11,12 +11,10 @@
 extern unsigned char* frame;
 
 void Buffer_Init();
-
 void Buffer_BlitBitmap(struct Bitmap* bitmap, int x, int y);
 void Buffer_BlitBitmapFlipped(struct Bitmap* bitmap, int x, int y);
 void Buffer_BlitBitmapFull(struct Bitmap* bitmap);
 void Buffer_ApplyFilter(const struct Filter* filter);
-
 void Buffer_Destroy();
 
 #endif /* CLOCKWORKISLAND_BUFFER_H__ */

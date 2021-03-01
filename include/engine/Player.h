@@ -30,11 +30,9 @@ struct Player {
 };
 
 void Player_Init(struct Player* player, struct Bitmap* spritesheet, int x, int y, int w, int h);
-
 void Player_UpdateDirection(struct Player* player);
 void Player_Animate(struct Player* player);
 void Player_Render(struct Player* player);
-
 void Player_Destroy(struct Player* player);
 
 #endif /* CLOCKWORKISLAND_PLAYER_H__ */
