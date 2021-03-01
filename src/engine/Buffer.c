@@ -4,10 +4,8 @@
 
 unsigned char* frame;
 
-void Buffer_Init()//SDL_Renderer* renderer)
+void Buffer_Init()
 {
-    // buffer.target = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888,
-    //                                   SDL_TEXTUREACCESS_TARGET, BUFFER_WIDTH, BUFFER_HEIGHT);
     frame = malloc(BUFFER_WIDTH * BUFFER_HEIGHT * sizeof(unsigned char) * 4);
 }
 

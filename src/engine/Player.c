@@ -3,7 +3,7 @@
 #include "engine/Buffer.h"
 
 // NULL means no filter active
-static const struct Filter* allFilters[PLAYER_NUM_FILTERS] = {
+static const struct Filter* allFilters[PLAYER_NUM_FILTERS] = { // NOLINT(cppcoreguidelines-interfaces-global-init)
 		NULL, &Filter_RED,
 		&Filter_GREEN, &Filter_BLUE,
 		&Filter_ORANGE, &Filter_VIOLET

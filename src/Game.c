@@ -18,6 +18,7 @@
 
 SDL_Window* window;
 SDL_Renderer* renderer;
+SDL_Texture* target;
 
 struct Player player;
 struct Level level;
@@ -95,8 +96,9 @@ bool SDL2_InitAll(const char* title, int imgFlags)
 		return false;
 
 	SDL_RenderClear(renderer);
-
-	Buffer_Init(renderer);
+	target = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_ABGR8888,
+                            SDL_TEXTUREACCESS_STREAMING, BUFFER_WIDTH, BUFFER_HEIGHT);
+	Buffer_Init();
 
 	return true;
 }
@@ -172,6 +174,8 @@ void RenderLoop()
 
 	// TODO render buffer to screen
 
+	SDL_UpdateTexture(target, NULL, frame, BUFFER_WIDTH * 4);
+    SDL_RenderCopy(renderer, target, NULL, NULL);
 	SDL_RenderPresent(renderer);
 }
 
