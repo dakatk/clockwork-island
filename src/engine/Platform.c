@@ -4,7 +4,7 @@
 
 void Platform_Init(struct Platform* platform, struct Bitmap* texture, double angle, int spriteIndex, int x, int y, int w, int h)
 {
-	platform->texture = texture;
+	platform->bitmap = texture;
 
 	int spriteClipX = spriteIndex;
 	int spriteClipY = 0;
@@ -31,18 +31,6 @@ void Platform_Init(struct Platform* platform, struct Bitmap* texture, double ang
 	platform->w = w;
 }
 
-struct Bounds Platform_GetBounds(struct Platform* platform)
-{
-	struct Bounds bounds = {
-		.x = (float)platform->x + 1,
-		.y = (float)platform->y + 1,
-		.w = platform->w - 2,
-		.h = platform->h - 2
-	};
-
-	return bounds;
-}
-
 bool Platform_IsOffscreen(struct Platform* platform)
 {
 	// Platform to the left of viewport left edge
@@ -66,10 +54,11 @@ bool Platform_IsOffscreen(struct Platform* platform)
 
 void Platform_Render(struct Platform* platform)
 {
-	Texture_MoveClip(platform->texture, platform->spriteClipX, platform->spriteClipY);
+    platform->bitmap->clipSize = platform->w;
+	Bitmap_MoveClip(platform->bitmap, platform->spriteClipX, platform->spriteClipY);
 
 	int actualX = platform->x - Viewport_X;
 	int actualY = BUFFER_HEIGHT - platform->y - Viewport_Y;
 
-    Buffer_BlitBitmapRotated(platform->texture, platform->angle, actualX, actualY, platform->w, platform->h);
+    Buffer_BlitBitmapRotated(platform->bitmap, platform->angle, actualX, actualY);
 }

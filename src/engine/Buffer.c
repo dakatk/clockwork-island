@@ -51,6 +51,10 @@ void Buffer_BlitBitmap(struct Bitmap* bitmap, int x, int y)
             int bitmapIndex = bitmapRow * bitmap->w + bitmapCol;
             int bufferIndex = bufferRow * BUFFER_WIDTH + bufferCol;
 
+            unsigned char alpha = frame[(bufferIndex * 4) + 3];
+            if (alpha == 0)
+                continue;
+
             memcpy(frame + (bufferIndex * 4), bitmap->pixels + (bitmapIndex * 4), 4 * sizeof(unsigned char));
         }
     }

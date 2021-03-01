@@ -1,0 +1,6 @@
+#ifndef CLOCKWORKISLAND_PHYSICS_H__
+#define CLOCKWORKISLAND_PHYSICS_H__
+
+// TODO re-implement
+
+#endif /* CLOCKWORKISLAND_PHYSICS_H__ */

@@ -11,10 +11,10 @@
 
 #include <stdio.h>
 
-#include "Keyboard.h"
 #include "AssetLoader.h"
-#include "Viewport.h"
-#include "Buffer.h"
+#include "engine/Keyboard.h"
+#include "engine/Viewport.h"
+#include "engine/Buffer.h"
 
 SDL_Window* window;
 SDL_Renderer* renderer;
@@ -48,7 +48,7 @@ int main(int argc, char* argv[])
 	}
 #undef GAME_TITLE
 
-	if (!AssetLoader_LoadResources(&level, renderer))
+	if (!AssetLoader_LoadResources(&level))
 	{
 		fprintf(stderr, "Failed to load game textures!\n");
 		return Cleanup(1);
@@ -167,12 +167,12 @@ void UpdateLoop()
 
 void RenderLoop()
 {
-	Buffer_Begin();
-
 	Level_Render(&level, player.currFilter);
 	Player_Render(&player);
 
-	Buffer_Present();
+	// TODO render buffer to screen
+
+	SDL_RenderPresent(renderer);
 }
 
 int Cleanup(int statusCode)

@@ -16,7 +16,7 @@ include_directories(${PROJECT_SOURCE_DIR}/include)
 
 add_executable(ClockworkIsland
         src/engine/Background.c include/engine/Background.h
-        src/engine/Bounds.c include/engine/Bounds.h
+        src/engine/Physics.c include/engine/Physics.h
         src/engine/Buffer.c include/engine/Buffer.h
         src/engine/Direction.c include/engine/Direction.h
         src/engine/Filter.c include/engine/Filter.h

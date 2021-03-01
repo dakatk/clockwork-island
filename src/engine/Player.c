@@ -25,17 +25,6 @@ void Player_Init(struct Player* player, struct Bitmap* spritesheet, int x, int y
 	player->h = h;
 }
 
-struct Bounds Player_GetBounds(struct Player* player)
-{
-	struct Bounds bounds = {
-		.x = (player->x) + 10,
-		.w = (player->w) - 20,
-		.y = player->y,
-		.h = player->h
-	};
-	return bounds;
-}
-
 void Player_UpdateDirection(struct Player* player)
 {
 	// Right
@@ -114,7 +103,7 @@ void Player_Render(struct Player* player)
 	float actualX = player->x - (float)Viewport_X;
 	float actualY = BUFFER_HEIGHT - player->y - (float)Viewport_Y + 1.0f;
 
-    Buffer_BlitBitmap(player->texture, (int) actualX, (int) actualY, player->w, player->h);
+    Buffer_BlitBitmap(player->texture, (int)actualX, (int)actualY);
 }
 
 void Player_Destroy(struct Player* player)

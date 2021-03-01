@@ -3,7 +3,7 @@
 
 #include "Direction.h"
 #include "Bitmap.h"
-#include "Bounds.h"
+#include "Physics.h"
 #include "Filter.h"
 
 #define PLAYER_MOVE_SPEED 3.25f
@@ -30,8 +30,6 @@ struct Player {
 };
 
 void Player_Init(struct Player* player, struct Bitmap* spritesheet, int x, int y, int w, int h);
-
-struct Bounds Player_GetBounds(struct Player* player);
 
 void Player_UpdateDirection(struct Player* player);
 void Player_Animate(struct Player* player);
