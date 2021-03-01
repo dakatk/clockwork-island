@@ -11,12 +11,10 @@ struct Bitmap {
 
     int clipX, clipY;
     int clipSize;
-	/*SDL_Texture* bitmap;
-	SDL_Rect clip;*/
+    int w, h;
 };
 
-// bool Texture_Init(struct Bitmap* bitmap, SDL_Renderer* renderer, const char* filename, int clipSize);
-void Bitmap_Init(struct Bitmap* bitmap, unsigned char* pixels, size_t pixelsSize, int clipSize);
+void Bitmap_Init(struct Bitmap* bitmap, unsigned char* pixels, int w, int h, int clipSize);
 
 void Bitmap_MoveClip(struct Bitmap* bitmap, int clipX, int clipY);
 

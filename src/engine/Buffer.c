@@ -1,67 +1,65 @@
 #include "engine/Buffer.h"
 
-#include <SDL2/SDL.h>
+#include <stdlib.h>
 
-struct Color {
-    unsigned char r;
-    unsigned char g;
-    unsigned char b;
-    unsigned char a;
-};
-
-static struct {
-    struct Color* frame;
-    // SDL_Texture* target;
-    // SDL_Renderer* renderer;
-} buffer;
+unsigned char* frame;
 
 void Buffer_Init()//SDL_Renderer* renderer)
 {
     // buffer.target = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888,
     //                                   SDL_TEXTUREACCESS_TARGET, BUFFER_WIDTH, BUFFER_HEIGHT);
-    // buffer.renderer = renderer;
+    frame = malloc(BUFFER_WIDTH * BUFFER_HEIGHT * sizeof(unsigned char) * 4);
 }
 
-void Buffer_Begin()
+void Buffer_BlitBitmap(struct Bitmap* bitmap, int x, int y)
 {
-    // SDL_SetRenderTarget(buffer.renderer, buffer.target);
+    int startX = 0;
+    int startY = 0;
+    int endX = bitmap->w;
+    int endY = bitmap->h;
+
+    if (bitmap->clipSize != FULL_IMAGE)
+    {
+        startX = bitmap->clipX;
+        startY = bitmap->clipY;
+        endX = bitmap->clipSize;
+        endY = bitmap->clipSize;
+    }
+
+    for (int row = 0; row < endY; row ++)
+    {
+        int bitmapRow = row + startY;
+        int bufferRow = row + y;
+
+        if (bitmapRow < 0 || bitmapRow >= bitmap->h)
+            continue;
+
+        if (bufferRow < 0 || bufferRow >= BUFFER_HEIGHT)
+            continue;
+
+        for (int col = 0; col < endX; col ++)
+        {
+            int bitmapCol = col + startX;
+            int bufferCol = col + x;
+
+            if (bitmapCol < 0 || bitmapCol >= bitmap->w)
+                continue;
+
+            if (bufferCol < 0 || bufferCol >= BUFFER_WIDTH)
+                continue;
+
+            int bitmapIndex = bitmapRow * bitmap->w + bitmapCol;
+            int bufferIndex = bufferRow * BUFFER_WIDTH + bufferCol;
+
+            memcpy(frame + (bufferIndex * 4), bitmap->pixels + (bitmapIndex * 4), 4 * sizeof(unsigned char));
+        }
+    }
+
 }
 
-void Buffer_Present()
+void Buffer_BlitBitmapRotated(struct Bitmap* bitmap, double angle, int x, int y)
 {
-    /*SDL_SetRenderTarget(buffer.renderer, NULL);
-    SDL_RenderCopy(buffer.renderer, buffer.target, NULL, NULL);
-    SDL_RenderPresent(buffer.renderer);*/
-}
-
-/*static inline bool ClipFullImage(SDL_Rect clip)
-{
-    return clip.w == FULL_IMAGE || clip.h == FULL_IMAGE;
-}*/
-
-static void RenderRect(struct Bitmap* bitmap, SDL_Renderer* renderer, SDL_Rect* dest)
-{
-    /*SDL_Rect* src = NULL;
-
-    if (!(bit))
-        src = &bitmap->clip;
-
-    SDL_RenderCopy(renderer, bitmap->bitmap, src, dest);*/
-}
-
-void Buffer_BlitBitmap(struct Bitmap* bitmap, int x, int y, int w, int h)
-{
-    /*SDL_Rect dest = {
-            .x = x,
-            .y = y,
-            .w = w,
-            .h = h
-    };
-    RenderRect(bitmap, buffer.renderer, &dest);*/
-}
-
-void Buffer_BlitBitmapRotated(struct Bitmap* bitmap, double angle, int x, int y, int w, int h)
-{
+    // TODO
     /*SDL_Rect* dest = NULL;
 
     if (!clipFullImage(bitmap->clip))
@@ -80,22 +78,21 @@ void Buffer_BlitBitmapRotated(struct Bitmap* bitmap, double angle, int x, int y,
 void Buffer_BlitBitmapFull(struct Bitmap* bitmap)
 {
     // RenderRect(bitmap, buffer.renderer, NULL);
+    Buffer_BlitBitmap(bitmap, 0, 0);
 }
 
 void Buffer_ApplyFilter(const struct Filter* filter)
 {
-    /*SDL_SetRenderDrawColor(buffer.renderer, filter->r, filter->g,filter->b, FILTER_ALPHA);
-    SDL_Rect screenBounds = {
-            .x = 0,
-            .y = 0,
-            .w = BUFFER_WIDTH,
-            .h = BUFFER_HEIGHT
-    };
-    SDL_RenderFillRect(buffer.renderer, &screenBounds);*/
+    for (int row = 0; row < BUFFER_HEIGHT; row ++)
+    {
+        for (int col = 0; col < BUFFER_WIDTH; col ++)
+        {
+            // TODO color combine
+        }
+    }
 }
 
 void Buffer_Destroy()
 {
-    /*SDL_DestroyTexture(buffer.target);
-    SDL_DestroyRenderer(buffer.renderer);*/
+    free(frame);
 }

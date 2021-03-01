@@ -1,6 +1,6 @@
 #include "AssetLoader.h"
-#include "Bitmap.h"
-#include "Viewport.h"
+#include "engine/Bitmap.h"
+#include "engine/Viewport.h"
 
 #include <SDL2/SDL_image.h>
 
@@ -79,15 +79,14 @@ static bool LoadTextureData(struct Bitmap* bitmap, const char* filename, int cli
         return false;
     }
 
-    size_t pixelsSize = 4 * image->w * image->h * sizeof(unsigned char);
-    Bitmap_Init(bitmap, image->pixels, pixelsSize, clipSize);
+    Bitmap_Init(bitmap, image->pixels, image->w, image->h, clipSize);
 
     SDL_FreeSurface(image);
 
     return true;
 }
 
-bool AssetLoader_LoadResources(struct Level* level, SDL_Renderer* renderer)
+bool AssetLoader_LoadResources(struct Level* level)
 {
 #define PLAYER_IMAGE "resources/images/player_character.png"
 #define TILES_IMAGE "resources/images/tiles.png"
@@ -115,11 +114,21 @@ bool AssetLoader_LoadResources(struct Level* level, SDL_Renderer* renderer)
 #define BACKGROUND_LAYER_1 "resources/images/background_layer_1.png"
 #define BACKGROUND_LAYER_2 "resources/images/background_layer_2.png"
 
-	if (!Background_Init(&level->background, renderer, BACKGROUND_LAYER_1, BACKGROUND_LAYER_2))
-	{
-		fprintf(stderr, "Error: Failed to load background images.\n");
-		return false;
-	}
+	struct Bitmap layer0, layer1;
+
+	if (!LoadTextureData(&layer0, BACKGROUND_LAYER_1, FULL_IMAGE))
+    {
+        fprintf(stderr, "Error: Failed to load background image '"BACKGROUND_LAYER_1"'\n");
+        return false;
+    }
+
+    if (!LoadTextureData(&layer1, BACKGROUND_LAYER_2, FULL_IMAGE))
+    {
+        fprintf(stderr, "Error: Failed to load background image '"BACKGROUND_LAYER_2"'\n");
+        return false;
+    }
+    Background_Init(&level->background, layer0, layer1);
+
 #undef BACKGROUND_LAYER_1
 #undef BACKGROUND_LAYER_2
 

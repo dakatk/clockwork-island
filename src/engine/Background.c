@@ -4,21 +4,10 @@
 
 #include <stdio.h>
 
-bool Background_Init(struct Background* background, SDL_Renderer* renderer, const char* image0, const char* image1)
+void Background_Init(struct Background* background, struct Bitmap layer0, struct Bitmap layer1)
 {
-	if (!Texture_Init(&background->layer0, renderer, image0, FULL_IMAGE))
-	{
-		fprintf(stderr, "Failed to load image '%s'.\n", image0);
-		return false;
-	}
-
-	if (!Texture_Init(&background->layer1, renderer, image1, FULL_IMAGE))
-	{
-		fprintf(stderr, "Failed to load image '%s'.\n", image1);
-		return false;
-	}
-
-	return true;
+	background->layer0 = layer0;
+	background->layer1 = layer1;
 }
 
 // TODO FUTURE Parallax scrolling (maybe add a third layer?)

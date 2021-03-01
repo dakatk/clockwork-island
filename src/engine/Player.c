@@ -101,7 +101,7 @@ void Player_Animate(struct Player* player)
 	}
 	else ticks ++;
 
-	Texture_MoveClip(player->texture, clipX, clipY);
+	Bitmap_MoveClip(player->texture, clipX, clipY);
 }
 
 void Player_Render(struct Player* player)

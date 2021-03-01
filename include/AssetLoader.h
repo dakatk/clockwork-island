@@ -6,7 +6,7 @@
 #include "engine/Level.h"
 #include "engine/Player.h"
 
-bool AssetLoader_LoadResources(struct Level* level, SDL_Renderer* renderer);
+bool AssetLoader_LoadResources(struct Level* level);
 void AssetLoader_UnloadResources(struct Level* level);
 
 bool AssetLoader_LoadLevelFile(struct Level* level, struct Player* player, const char* filename);
