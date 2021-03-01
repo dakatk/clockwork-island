@@ -1,6 +1,6 @@
-#include "Player.h"
-#include "Viewport.h"
-#include "Buffer.h"
+#include "engine/Player.h"
+#include "engine/Viewport.h"
+#include "engine/Buffer.h"
 
 // NULL means no filter active
 static const struct Filter* allFilters[PLAYER_NUM_FILTERS] = {

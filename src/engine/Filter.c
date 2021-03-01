@@ -1,4 +1,4 @@
-#include "Filter.h"
+#include "engine/Filter.h"
 
 const struct Filter Filter_RED = {.r=255, .g=0, .b=0};
 const struct Filter Filter_GREEN = {.r=0, .g=255, .b=0};

@@ -1,6 +1,6 @@
-#include "Platform.h"
-#include "Viewport.h"
-#include "Buffer.h"
+#include "engine/Platform.h"
+#include "engine/Viewport.h"
+#include "engine/Buffer.h"
 
 void Platform_Init(struct Platform* platform, struct Bitmap* texture, double angle, int spriteIndex, int x, int y, int w, int h)
 {

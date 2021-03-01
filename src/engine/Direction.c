@@ -1,4 +1,4 @@
-#include "Direction.h"
+#include "engine/Direction.h"
 
 const struct Direction Direction_STAND_LEFT = {.value=3, .frames=8, .sleep=15};
 const struct Direction Direction_STAND_RIGHT = {.value=2, .frames=8, .sleep=15};

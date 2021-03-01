@@ -1,5 +1,5 @@
-#include "Viewport.h"
-#include "Buffer.h"
+#include "engine/Viewport.h"
+#include "engine/Buffer.h"
 
 int Viewport_X = 0;
 int Viewport_Y = 0;
