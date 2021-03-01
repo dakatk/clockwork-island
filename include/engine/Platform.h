@@ -12,16 +12,16 @@ struct Platform {
 	struct Bitmap* bitmap;
 	bool visible[NUM_PLATFORM_VISIBLE_OPTIONS];
 
-	double angle;
 	int spriteClipX;
 	int spriteClipY;
+	int flipped;
 
 	int x, y;
 	int w, h;
 };
 
 // Long boi:
-void Platform_Init(struct Platform* platform, struct Bitmap* texture, double angle, int spriteIndex, int x, int y, int w, int h);
+void Platform_Init(struct Platform* platform, struct Bitmap* texture, int flipped, int spriteIndex, int x, int y, int w, int h);
 
 bool Platform_IsOffscreen(struct Platform* platform);
 

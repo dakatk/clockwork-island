@@ -13,7 +13,7 @@ extern unsigned char* frame;
 void Buffer_Init();
 
 void Buffer_BlitBitmap(struct Bitmap* bitmap, int x, int y);
-void Buffer_BlitBitmapRotated(struct Bitmap* bitmap, double angle, int x, int y);
+void Buffer_BlitBitmapFlipped(struct Bitmap* bitmap, int x, int y);
 void Buffer_BlitBitmapFull(struct Bitmap* bitmap);
 void Buffer_ApplyFilter(const struct Filter* filter);
 

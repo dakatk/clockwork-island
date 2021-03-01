@@ -208,7 +208,7 @@ static bool LoadPlatformData(struct Platform* platform, FILE* lvlFile)
 	// y = y-coordinate
 	// w = width
 	// h = height
-	// f = facing
+	// f = flipped
 	int t, e;
 	int x, y;
 	int w, h;
@@ -227,8 +227,7 @@ static bool LoadPlatformData(struct Platform* platform, FILE* lvlFile)
 		fprintf(stderr, "Error: Invalid visibility index found.\n");
 		return false;
 	}
-	double angle = f * 90.0;
-	Platform_Init(platform, &spritesheets[1], angle, e, x, y, w, h);
+	Platform_Init(platform, &spritesheets[1], f, e, x, y, w, h);
 
 	for (int j = 0; j < NUM_PLATFORM_VISIBLE_OPTIONS; j ++)
 		platform->visible[j] = optionsVisible[t][j];

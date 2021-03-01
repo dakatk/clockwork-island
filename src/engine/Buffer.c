@@ -35,6 +35,7 @@ void Buffer_BlitBitmap(struct Bitmap* bitmap, int x, int y)
         if (bufferRow < 0 || bufferRow >= BUFFER_HEIGHT)
             continue;
 
+        // TODO replace with memcpy
         for (int col = 0; col < endX; col ++)
         {
             int bitmapCol = col + startX;
@@ -59,27 +60,13 @@ void Buffer_BlitBitmap(struct Bitmap* bitmap, int x, int y)
 
 }
 
-void Buffer_BlitBitmapRotated(struct Bitmap* bitmap, double angle, int x, int y)
+void Buffer_BlitBitmapFlipped(struct Bitmap* bitmap, int x, int y)
 {
-    // TODO
-    /*SDL_Rect* dest = NULL;
-
-    if (!clipFullImage(bitmap->clip))
-    {
-        SDL_Rect clip = {
-                .x = x,
-                .y = y,
-                .w = w,
-                .h = h
-        };
-        dest = &clip;
-    }
-    SDL_RenderCopyEx(buffer.renderer, bitmap->bitmap, &bitmap->clip, dest, angle, NULL, SDL_FLIP_NONE);*/
+    // TODO same as BlitBitmap, but starting from the bottom (flipped y-coord)
 }
 
 void Buffer_BlitBitmapFull(struct Bitmap* bitmap)
 {
-    // RenderRect(bitmap, buffer.renderer, NULL);
     Buffer_BlitBitmap(bitmap, 0, 0);
 }
 

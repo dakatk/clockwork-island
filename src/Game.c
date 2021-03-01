@@ -172,8 +172,6 @@ void RenderLoop()
 	Level_Render(&level, player.currFilter);
 	Player_Render(&player);
 
-	// TODO render buffer to screen
-
 	SDL_UpdateTexture(target, NULL, frame, BUFFER_WIDTH * 4);
     SDL_RenderCopy(renderer, target, NULL, NULL);
 	SDL_RenderPresent(renderer);
