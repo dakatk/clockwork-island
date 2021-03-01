@@ -2,8 +2,15 @@
 
 #include <SDL2/SDL.h>
 
-// TODO would be best if 'target' was an array of pixels rather than a Texture...
+struct Color {
+    unsigned char r;
+    unsigned char g;
+    unsigned char b;
+    unsigned char a;
+};
+
 static struct {
+    struct Color* frame;
     SDL_Texture* target;
     SDL_Renderer* renderer;
 } buffer;

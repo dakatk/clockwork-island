@@ -12,7 +12,7 @@
 #include <stdio.h>
 
 #include "Keyboard.h"
-#include "LevelLoader.h"
+#include "AssetLoader.h"
 #include "Viewport.h"
 #include "Buffer.h"
 
@@ -48,7 +48,7 @@ int main(int argc, char* argv[])
 	}
 #undef GAME_TITLE
 
-	if (!LevelLoader_LoadResources(&level, renderer))
+	if (!AssetLoader_LoadResources(&level, renderer))
 	{
 		fprintf(stderr, "Failed to load game textures!\n");
 		return Cleanup(1);
@@ -77,7 +77,7 @@ bool SDL2_InitAll(const char* title, int imgFlags)
 		return false;
 
 	window = SDL_CreateWindow(title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
-							BUFFER_WIDTH, BUFFER_HEIGHT, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
+							800, 600, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
 	if (window == NULL)
 		return false;
 
@@ -106,7 +106,7 @@ bool LoadLevel(int levelNum)
 	char levelFile[30];
 	snprintf(levelFile, 30, "resources/levels/level%d.lvl", levelNum);
 
-	if (!LevelLoader_LoadLevelFile(&level, &player, levelFile))
+	if (!AssetLoader_LoadLevelFile(&level, &player, levelFile))
 	{
 		fprintf(stderr, "Error: Failed to load level data!\n");
 		return false;
@@ -177,7 +177,7 @@ void RenderLoop()
 
 int Cleanup(int statusCode)
 {
-	LevelLoader_UnloadResources(&level);
+    AssetLoader_UnloadResources(&level);
 	Level_Destroy(&level);
 	Player_Destroy(&player);
 	Buffer_Destroy();

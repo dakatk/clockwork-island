@@ -7,7 +7,7 @@ bool Texture_Init(struct Texture* texture, SDL_Renderer* renderer, const char* f
 {
 	SDL_Surface* image = IMG_Load(filename);
 	if (image == NULL)
-		return 0;
+		return false;
 
 	texture->bitmap = SDL_CreateTextureFromSurface(renderer, image);
 	SDL_FreeSurface(image);
@@ -17,7 +17,7 @@ bool Texture_Init(struct Texture* texture, SDL_Renderer* renderer, const char* f
 	texture->clip.w = clipSize;
 	texture->clip.h = clipSize;
 
-	return 1;
+	return true;
 }
 
 void Texture_MoveClip(struct Texture* texture, int clipX, int clipY)

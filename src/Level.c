@@ -52,6 +52,9 @@ static inline void movePlayerBottomRight(struct Player* player, float x, float y
 
 void Level_CheckPhysics(struct Level* level, struct Player* player)
 {
+    player->x += player->vx;
+    player->cx += player->vx;
+    /*
 	struct Bounds playerBounds = Player_GetBounds(player);
 	struct RayHit minHit = {
 		.intersectAt = INTER_AT_NONE,
@@ -60,8 +63,6 @@ void Level_CheckPhysics(struct Level* level, struct Player* player)
 		.intersectY = -1.0f,
 		.delta = -1.0f
 	};
-
-	/*
 	// TODO Only loop over platforms in the visible pool. Adjust the visible pool as the player moves
 	// Possible solution:
 	// 1. Player moves based on vx, vy, collision
@@ -86,7 +87,6 @@ void Level_CheckPhysics(struct Level* level, struct Player* player)
 		if (hit.delta < minHit.delta)
 			minHit = hit;
 	}
-	*/
 
 	if (minHit.intersectAt == INTER_AT_NONE || minHit.intersectFrom == INTER_FROM_NONE) 
 	{
@@ -144,7 +144,7 @@ void Level_CheckPhysics(struct Level* level, struct Player* player)
 
 #undef MAX_SPEED_Y
 #undef MIN_SPEED_Y
-#undef GRAVITY
+#undef GRAVITY*/
 }
 
 void Level_Render(struct Level* level, unsigned currFilter)

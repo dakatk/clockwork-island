@@ -15,6 +15,7 @@ include_directories(${PROJECT_SOURCE_DIR})
 include_directories(${PROJECT_SOURCE_DIR}/include)
 
 add_executable(ClockworkIsland
+        src/AssetLoader.c include/AssetLoader.h
         src/Background.c include/Background.h
         src/Bounds.c include/Bounds.h
         src/Buffer.c include/Buffer.h
@@ -22,7 +23,6 @@ add_executable(ClockworkIsland
         src/Filter.c include/Filter.h
         src/Keyboard.c include/Keyboard.h
         src/Level.c include/Level.h
-        src/LevelLoader.c include/LevelLoader.h
         src/Platform.c include/Platform.h
         src/Player.c include/Player.h
         src/Texture.c include/Texture.h
