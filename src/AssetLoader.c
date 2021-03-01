@@ -1,6 +1,8 @@
 #include "AssetLoader.h"
-#include "Texture.h"
+#include "Bitmap.h"
 #include "Viewport.h"
+
+#include <SDL2/SDL_image.h>
 
 #include <stdio.h>
 
@@ -10,7 +12,7 @@
 // TODO FUTURE Level files should be hex files, with every two bytes representing
 // a single data point (MSBs and LSBs), allowing (almost) everything to be an unsigned short
 
-static struct Texture spritesheets[NUM_TEXTURES];
+static struct Bitmap spritesheets[NUM_TEXTURES];
 
 static const bool optionsVisible[NUM_VISIBLE_OPTIONS][NUM_PLATFORM_VISIBLE_OPTIONS] = {
 		{true, false, false, false, false, false}, // only NONE					(0)
@@ -70,6 +72,21 @@ static const bool optionsVisible[NUM_VISIBLE_OPTIONS][NUM_PLATFORM_VISIBLE_OPTIO
 		{true, true, true, true, false, false}, // not ORANGE and not VIOLET	(42)
 };
 
+static bool LoadTextureData(struct Bitmap* bitmap, const char* filename, int clipSize)
+{
+    SDL_Surface* image = IMG_Load(filename);
+    if (image == NULL) {
+        return false;
+    }
+
+    size_t pixelsSize = 4 * image->w * image->h * sizeof(unsigned char);
+    Bitmap_Init(bitmap, image->pixels, pixelsSize, clipSize);
+
+    SDL_FreeSurface(image);
+
+    return true;
+}
+
 bool AssetLoader_LoadResources(struct Level* level, SDL_Renderer* renderer)
 {
 #define PLAYER_IMAGE "resources/images/player_character.png"
@@ -89,7 +106,7 @@ bool AssetLoader_LoadResources(struct Level* level, SDL_Renderer* renderer)
 
 	for (int i = 0; i < NUM_TEXTURES; i ++)
 	{
-		if (!Texture_Init(&spritesheets[i], renderer, filenames[i], clipSizes[i]))
+		if (!LoadTextureData(&spritesheets[i], filenames[i], clipSizes[i]))
 		{
 			fprintf(stderr, "Error: Sprite sheet '%s' is missing.\n", filenames[i]);
 			return false;
@@ -112,7 +129,7 @@ bool AssetLoader_LoadResources(struct Level* level, SDL_Renderer* renderer)
 void AssetLoader_UnloadResources(struct Level* level)
 {
 	for(int i = 0; i < NUM_TEXTURES; i ++)
-		Texture_Destroy(&spritesheets[i]);
+        Bitmap_Destroy(&spritesheets[i]);
 
 	Background_Destroy(&level->background);
 }

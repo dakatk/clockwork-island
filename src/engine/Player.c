@@ -9,7 +9,7 @@ static const struct Filter* allFilters[PLAYER_NUM_FILTERS] = {
 		&Filter_ORANGE, &Filter_VIOLET
 };
 
-void Player_Init(struct Player* player, struct Texture* spritesheet, int x, int y, int w, int h)
+void Player_Init(struct Player* player, struct Bitmap* spritesheet, int x, int y, int w, int h)
 {
 	player->direction = &Direction_STAND_RIGHT;
 	player->texture = spritesheet;
@@ -114,10 +114,10 @@ void Player_Render(struct Player* player)
 	float actualX = player->x - (float)Viewport_X;
 	float actualY = BUFFER_HEIGHT - player->y - (float)Viewport_Y + 1.0f;
 
-	Buffer_BlitTexture(player->texture, (int)actualX, (int)actualY, player->w, player->h);
+    Buffer_BlitBitmap(player->texture, (int) actualX, (int) actualY, player->w, player->h);
 }
 
 void Player_Destroy(struct Player* player)
 {
-    Texture_Destroy(player->texture);
+    Bitmap_Destroy(player->texture);
 }

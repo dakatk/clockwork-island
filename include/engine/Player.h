@@ -2,7 +2,7 @@
 #define CLOCKWORKISLAND_PLAYER_H__
 
 #include "Direction.h"
-#include "Texture.h"
+#include "Bitmap.h"
 #include "Bounds.h"
 #include "Filter.h"
 
@@ -17,7 +17,7 @@
 
 struct Player {
 	const struct Direction* direction;
-	struct Texture* texture;
+	struct Bitmap* texture;
 
 	bool isJumping;
 	bool onGround;
@@ -29,7 +29,7 @@ struct Player {
 	int w, h;
 };
 
-void Player_Init(struct Player* player, struct Texture* spritesheet, int x, int y, int w, int h);
+void Player_Init(struct Player* player, struct Bitmap* spritesheet, int x, int y, int w, int h);
 
 struct Bounds Player_GetBounds(struct Player* player);
 

@@ -25,12 +25,12 @@ bool Background_Init(struct Background* background, SDL_Renderer* renderer, cons
 
 void Background_Render(struct Background* background)
 {
-    Buffer_BlitTextureFull(&background->layer0);
-    Buffer_BlitTextureFull(&background->layer1);
+    Buffer_BlitBitmapFull(&background->layer0);
+    Buffer_BlitBitmapFull(&background->layer1);
 }
 
 void Background_Destroy(struct Background* background)
 {
-	Texture_Destroy(&background->layer0);
-	Texture_Destroy(&background->layer1);
+    Bitmap_Destroy(&background->layer0);
+    Bitmap_Destroy(&background->layer1);
 }

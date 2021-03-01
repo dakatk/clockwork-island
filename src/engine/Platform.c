@@ -2,7 +2,7 @@
 #include "Viewport.h"
 #include "Buffer.h"
 
-void Platform_Init(struct Platform* platform, struct Texture* texture, double angle, int spriteIndex, int x, int y, int w, int h)
+void Platform_Init(struct Platform* platform, struct Bitmap* texture, double angle, int spriteIndex, int x, int y, int w, int h)
 {
 	platform->texture = texture;
 
@@ -71,5 +71,5 @@ void Platform_Render(struct Platform* platform)
 	int actualX = platform->x - Viewport_X;
 	int actualY = BUFFER_HEIGHT - platform->y - Viewport_Y;
 
-	Buffer_BlitTextureRotated(platform->texture, platform->angle, actualX, actualY, platform->w, platform->h);
+    Buffer_BlitBitmapRotated(platform->texture, platform->angle, actualX, actualY, platform->w, platform->h);
 }

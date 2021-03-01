@@ -1,11 +1,11 @@
 #ifndef CLOCKWORKISLAND_BACKGROUND_H__
 #define CLOCKWORKISLAND_BACKGROUND_H__
 
-#include "Texture.h"
+#include "Bitmap.h"
 
 struct Background {
-	struct Texture layer0;
-	struct Texture layer1;
+	struct Bitmap layer0;
+	struct Bitmap layer1;
 };
 
 bool Background_Init(struct Background* background, SDL_Renderer* renderer, const char* image0, const char* image1);
