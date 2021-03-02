@@ -96,7 +96,7 @@ bool SDL2_InitAll(const char* title, int imgFlags)
 		return false;
 
 	SDL_RenderClear(renderer);
-	target = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_ABGR8888,
+	target = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_ARGB8888,
                             SDL_TEXTUREACCESS_STREAMING, BUFFER_WIDTH, BUFFER_HEIGHT);
 	Buffer_Init();
 
@@ -169,7 +169,7 @@ void UpdateLoop()
 
 void RenderLoop()
 {
-	// Level_Render(&level, player.currFilter);
+	Level_Render(&level, player.currFilter);
 	Player_Render(&player);
 
 	SDL_UpdateTexture(target, NULL, frame, BUFFER_WIDTH * 4);
@@ -181,7 +181,6 @@ int Cleanup(int statusCode)
 {
     AssetLoader_UnloadResources(&level);
 	Level_Destroy(&level);
-	Player_Destroy(&player);
 	Buffer_Destroy();
 
 	SDL_ClearHints();
