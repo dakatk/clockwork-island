@@ -7,8 +7,10 @@
 #define NUM_VISIBLE_OPTIONS 43
 #define NUM_TEXTURES 2
 
-// TODO FUTURE Level files should be hex files, with every two bytes representing
-// a single data point (MSBs and LSBs), allowing (almost) everything to be an unsigned short
+/* TODO FUTURE Update level file format
+ * Level files should be hex files, with every two bytes representing
+ * a single data point (MSBs and LSBs), allowing (almost) everything to be an unsigned short
+ */
 
 static struct Texture spritesheets[NUM_TEXTURES];
 
@@ -160,7 +162,7 @@ static bool LoadPlayerData(struct Player* player, FILE* lvlFile)
 	int px, py;
 	int u;
 
-	int result = fscanf(lvlFile, "%d,%d,%d", &px, &py, &u);
+	int result = fscanf(lvlFile, "%d,%d,%d", &px, &py, &u); // NOLINT(cert-err34-c)
 
 	if (result != 3)
 	{
@@ -172,8 +174,6 @@ static bool LoadPlayerData(struct Player* player, FILE* lvlFile)
 	return true;
 }
 
-// Platform data layout may be subject to change, as with the new collision detection algorithm,
-// platforms can be defined by abstract polygons rather than just rectangles
 static bool LoadPlatformData(struct Platform* platform, FILE* lvlFile)
 {
 	// t = visibility index
@@ -183,12 +183,12 @@ static bool LoadPlatformData(struct Platform* platform, FILE* lvlFile)
 	// w = width
 	// h = height
 	// f = facing
-	int t, e;
+	int t, s;
 	int x, y;
 	int w, h;
 	int f;
 
-	int result = fscanf(lvlFile, "%d,%d,%d,%d,%d,%d,%d", &t, &e, &x, &y, &w, &h, &f);
+	int result = fscanf(lvlFile, "%d,%d,%d,%d,%d,%d,%d", &t, &s, &x, &y, &w, &h, &f); // NOLINT(cert-err34-c)
 
     if (result != 7)
     {
@@ -202,7 +202,7 @@ static bool LoadPlatformData(struct Platform* platform, FILE* lvlFile)
 		return false;
 	}
 	double angle = f * 90.0;
-	Platform_Init(platform, &spritesheets[1], angle, e, x, y, w, h);
+	Platform_Init(platform, &spritesheets[1], angle, s, x, y, w, h);
 
 	for (int j = 0; j < NUM_PLATFORM_VISIBLE_OPTIONS; j ++)
 		platform->visible[j] = optionsVisible[t][j];
