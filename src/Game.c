@@ -1,5 +1,4 @@
 /*
- *  Game.c
  *  Clockwork Island
  *
  *  Created by Dusten Knull on 02/05/21.
@@ -167,8 +166,6 @@ void UpdateLoop()
 
 void RenderLoop()
 {
-	// SDL_RenderClear(renderer);
-
 	Buffer_Begin();
 
 	Level_Render(&level, player.currFilter);
