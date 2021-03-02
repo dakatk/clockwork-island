@@ -12,7 +12,6 @@
 #define KEY_QUIT 31
 
 void Keyboard_CaptureInput();
-
 bool Keyboard_KeyPressed(int key);
 bool Keyboard_KeyTyped(int key);
 

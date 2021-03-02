@@ -15,18 +15,18 @@ include_directories(${PROJECT_SOURCE_DIR})
 include_directories(${PROJECT_SOURCE_DIR}/include)
 
 add_executable(ClockworkIsland
-        src/Background.c include/Background.h
-        src/Bounds.c include/Bounds.h
-        src/Buffer.c include/Buffer.h
-        src/Direction.c include/Direction.h
-        src/Filter.c include/Filter.h
-        src/Keyboard.c include/Keyboard.h
-        src/Level.c include/Level.h
-        src/LevelLoader.c include/LevelLoader.h
-        src/Platform.c include/Platform.h
-        src/Player.c include/Player.h
-        src/Texture.c include/Texture.h
-        src/Viewport.c include/Viewport.h
+        src/engine/Background.c include/engine/Background.h
+        src/engine/Buffer.c include/engine/Buffer.h
+        src/engine/Direction.c include/engine/Direction.h
+        src/engine/Filter.c include/engine/Filter.h
+        src/engine/Keyboard.c include/engine/Keyboard.h
+        src/engine/Level.c include/engine/Level.h
+        src/engine/Physics.c include/engine/Physics.h
+        src/engine/Platform.c include/engine/Platform.h
+        src/engine/Player.c include/engine/Player.h
+        src/engine/Texture.c include/engine/Texture.h
+        src/engine/Viewport.c include/engine/Viewport.h
+        src/AssetLoader.c include/AssetLoader.h
         src/Game.c)
 
 target_link_libraries(${PROJECT_NAME} ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES})

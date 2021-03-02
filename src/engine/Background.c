@@ -1,6 +1,6 @@
-#include "Background.h"
-#include "Viewport.h"
-#include "Buffer.h"
+#include "engine/Background.h"
+#include "engine/Viewport.h"
+#include "engine/Buffer.h"
 
 #include <stdio.h>
 
@@ -17,7 +17,6 @@ bool Background_Init(struct Background* background, SDL_Renderer* renderer, cons
 		fprintf(stderr, "Failed to load image '%s'.\n", image1);
 		return false;
 	}
-
 	return true;
 }
 

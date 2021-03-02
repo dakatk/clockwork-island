@@ -1,6 +1,6 @@
-#include "Player.h"
-#include "Viewport.h"
-#include "Buffer.h"
+#include "engine/Player.h"
+#include "engine/Viewport.h"
+#include "engine/Buffer.h"
 
 // NULL means no filter active
 static const struct Filter* allFilters[PLAYER_NUM_FILTERS] = {
@@ -23,17 +23,6 @@ void Player_Init(struct Player* player, struct Texture* spritesheet, int x, int 
 	player->y = (float)y;
 	player->w = w;
 	player->h = h;
-}
-
-struct Bounds Player_GetBounds(struct Player* player)
-{
-	struct Bounds bounds = {
-		.x = (player->x) + 10,
-		.w = (player->w) - 20,
-		.y = player->y,
-		.h = player->h
-	};
-	return bounds;
 }
 
 void Player_UpdateDirection(struct Player* player)
@@ -115,9 +104,4 @@ void Player_Render(struct Player* player)
 	float actualY = BUFFER_HEIGHT - player->y - (float)Viewport_Y + 1.0f;
 
 	Buffer_RenderTexture(player->texture, (int)actualX, (int)actualY, player->w, player->h);
-}
-
-void Player_Destroy(struct Player* player)
-{
-    Texture_Destroy(player->texture);
 }

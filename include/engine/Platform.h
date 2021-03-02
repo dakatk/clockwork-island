@@ -2,7 +2,7 @@
 #define CLOCKWORKISLAND_PLATFORM_H__
 
 #include "Texture.h"
-#include "Bounds.h"
+#include "Physics.h"
 
 #define PLATFORM_SPRITE_CLIP_SIZE 128
 #define NUM_PLATFORM_VISIBLE_OPTIONS 6
@@ -22,10 +22,7 @@ struct Platform {
 
 // Long boi:
 void Platform_Init(struct Platform* platform, struct Texture* texture, double angle, int spriteIndex, int x, int y, int w, int h);
-
-struct Bounds Platform_GetBounds(struct Platform* platform);
 bool Platform_IsOffscreen(struct Platform* platform);
-
 void Platform_Render(struct Platform* platform);
 
 #endif /* CLOCKWORKISLAND_PLATFORM_H__ */

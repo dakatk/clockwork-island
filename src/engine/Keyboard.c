@@ -1,4 +1,4 @@
-#include "Keyboard.h"
+#include "engine/Keyboard.h"
 
 #include <stdint.h>
 #include <SDL2/SDL.h>
@@ -12,8 +12,8 @@ void Keyboard_CaptureInput()
 {
 	prevKeysBuffer = keysBuffer;
 
-#define SET_KEY(key) keysBuffer |= (1 << key)
-#define UNSET_KEY(key) keysBuffer &= ~(1 << key)
+#define SET_KEY(key) keysBuffer |= (1 << (key))
+#define UNSET_KEY(key) keysBuffer &= ~(1 << (key))
 
     SDL_Event e;
 	while (SDL_PollEvent(&e))

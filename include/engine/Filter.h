@@ -1,7 +1,7 @@
 #ifndef CLOCKWORKISLAND_FILTER_H__
 #define CLOCKWORKISLAND_FILTER_H__
 
-#include <SDL2/SDL.h>
+#define FILTER_ALPHA 55
 
 struct Filter {
 	unsigned char r;
@@ -14,7 +14,5 @@ extern const struct Filter Filter_GREEN;
 extern const struct Filter Filter_BLUE;
 extern const struct Filter Filter_ORANGE;
 extern const struct Filter Filter_VIOLET;
-
-void Filter_Render(const struct Filter* filter, SDL_Renderer* render);
 
 #endif /* CLOCKWORKISLAND_FILTER_H__ */

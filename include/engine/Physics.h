@@ -1,0 +1,6 @@
+#ifndef CLOCKWORKISLAND_BOUNDS_H__
+#define CLOCKWORKISLAND_BOUNDS_H__
+
+// TODO implement...
+
+#endif /* CLOCKWORKISLAND_BOUNDS_H__ */

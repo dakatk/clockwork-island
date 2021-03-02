@@ -1,6 +1,6 @@
-#include "Platform.h"
-#include "Viewport.h"
-#include "Buffer.h"
+#include "engine/Platform.h"
+#include "engine/Viewport.h"
+#include "engine/Buffer.h"
 
 void Platform_Init(struct Platform* platform, struct Texture* texture, double angle, int spriteIndex, int x, int y, int w, int h)
 {
@@ -31,37 +31,14 @@ void Platform_Init(struct Platform* platform, struct Texture* texture, double an
 	platform->w = w;
 }
 
-struct Bounds Platform_GetBounds(struct Platform* platform)
-{
-	struct Bounds bounds = {
-		.x = (float)platform->x + 1,
-		.y = (float)platform->y + 1,
-		.w = platform->w - 2,
-		.h = platform->h - 2
-	};
-
-	return bounds;
-}
-
 bool Platform_IsOffscreen(struct Platform* platform)
 {
-	// Platform to the left of viewport left edge
-	if (platform->x > Viewport_X + BUFFER_WIDTH)
-		return true;
+    bool offscreenLeft = platform->x > Viewport_X + BUFFER_WIDTH;
+    bool offscreenRight = platform->x + platform->w < Viewport_X;
+    bool offscreenAbove = platform->y + platform->h > Viewport_Y + BUFFER_HEIGHT;
+    bool offscreenBelow = platform->y < Viewport_Y;
 
-	// Platform to the right of viewport right edge
-	else if (platform->x + platform->w < Viewport_X)
-		return true;
-
-	// Platform above viewport top edge
-	if (platform->y + platform->h > Viewport_Y + BUFFER_HEIGHT)
-		return true;
-
-	// Platform below viewport bottom edge
-	if (platform->y < Viewport_Y)
-		return true;
-
-	return false;
+	return offscreenLeft || offscreenRight || offscreenAbove || offscreenBelow;
 }
 
 void Platform_Render(struct Platform* platform)

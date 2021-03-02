@@ -1,6 +1,6 @@
-#include "LevelLoader.h"
-#include "Texture.h"
-#include "Viewport.h"
+#include "AssetLoader.h"
+#include "engine/Texture.h"
+#include "engine/Viewport.h"
 
 #include <stdio.h>
 
@@ -70,7 +70,7 @@ static const bool optionsVisible[NUM_VISIBLE_OPTIONS][NUM_PLATFORM_VISIBLE_OPTIO
 		{true, true, true, true, false, false}, // not ORANGE and not VIOLET	(42)
 };
 
-bool LevelLoader_LoadResources(struct Level* level, SDL_Renderer* renderer)
+bool AssetLoader_LoadResources(struct Level* level, SDL_Renderer* renderer)
 {
 #define PLAYER_IMAGE "resources/images/player_character.png"
 #define TILES_IMAGE "resources/images/tiles.png"
@@ -109,7 +109,7 @@ bool LevelLoader_LoadResources(struct Level* level, SDL_Renderer* renderer)
 	return true;
 }
 
-void LevelLoader_UnloadResources(struct Level* level)
+void AssetLoader_UnloadResources(struct Level* level)
 {
 	for(int i = 0; i < NUM_TEXTURES; i ++)
 		Texture_Destroy(&spritesheets[i]);
@@ -120,7 +120,7 @@ void LevelLoader_UnloadResources(struct Level* level)
 static bool LoadPlayerData(struct Player* player, FILE* lvlFile);
 static bool LoadPlatformData(struct Platform* platform, FILE* lvlFile);
 
-bool LevelLoader_LoadLevelFile(struct Level* level, struct Player* player, const char* filename)
+bool AssetLoader_LoadLevelFile(struct Level* level, struct Player* player, const char* filename)
 {
 	FILE* lvlFile = fopen(filename, "r");
 	if (lvlFile == NULL)
