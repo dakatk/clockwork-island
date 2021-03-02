@@ -26,30 +26,6 @@ void Level_AddPlatform(struct Level* level, struct Platform* platform)
 		level->platforms->next = node;
 }
 
-static inline void movePlayerTopLeft(struct Player* player, float x, float y)
-{
-	player->x = x;
-	player->y = y;
-}
-
-static inline void movePlayerTopRight(struct Player* player, float x, float y)
-{
-	player->x = x - (float)player->w;
-	player->y = y;
-}
-
-static inline void movePlayerBottomLeft(struct Player* player, float x, float y)
-{
-	player->x = x;
-	player->y = y - (float)player->h;
-}
-
-static inline void movePlayerBottomRight(struct Player* player, float x, float y)
-{
-	player->x = x - (float)player->w;
-	player->y = y - (float)player->h;
-}
-
 void Level_CheckPhysics(struct Level* level, struct Player* player)
 {
     player->x += player->vx;

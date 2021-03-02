@@ -201,7 +201,7 @@ static bool LoadPlatformData(struct Platform* platform, FILE* lvlFile)
 		fprintf(stderr, "Error: Invalid visibility index found.\n");
 		return false;
 	}
-	double angle = f * 90.0;
+	double angle = (double)(f * 90);
 	Platform_Init(platform, &spritesheets[1], angle, s, x, y, w, h);
 
 	for (int j = 0; j < NUM_PLATFORM_VISIBLE_OPTIONS; j ++)
