@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.17)
 project(ClockworkIsland C)
 
+file(COPY "${CMAKE_SOURCE_DIR}/resources" DESTINATION "${CMAKE_CURRENT_BINARY_DIR}/resources")
+
 set(CMAKE_C_STANDARD 11)
 
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR})
