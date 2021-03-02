@@ -2,8 +2,6 @@
 #include "engine/Viewport.h"
 #include "engine/Buffer.h"
 
-#include <stdio.h>
-
 void Background_Init(struct Background* background, struct Bitmap layer0, struct Bitmap layer1)
 {
 	background->layer0 = layer0;

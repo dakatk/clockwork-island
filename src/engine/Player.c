@@ -105,8 +105,3 @@ void Player_Render(struct Player* player)
 
     Buffer_BlitBitmap(player->texture, (int)actualX, (int)actualY);
 }
-
-void Player_Destroy(struct Player* player)
-{
-    Bitmap_Destroy(player->texture);
-}

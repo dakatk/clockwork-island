@@ -7,6 +7,14 @@ unsigned char* frame;
 void Buffer_Init()
 {
     frame = malloc(BUFFER_WIDTH * BUFFER_HEIGHT * sizeof(unsigned char) * 4);
+
+    for (int i = 0; i < BUFFER_WIDTH * BUFFER_HEIGHT; i ++)
+    {
+        frame[i * 4] = 255;
+        frame[i * 4 + 1] = 255;
+        frame[i * 4 + 2] = 255;
+        frame[i * 4 + 3] = 255;
+    }
 }
 
 void Buffer_BlitBitmap(struct Bitmap* bitmap, int x, int y)

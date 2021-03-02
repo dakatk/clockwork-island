@@ -169,7 +169,7 @@ void UpdateLoop()
 
 void RenderLoop()
 {
-	Level_Render(&level, player.currFilter);
+	// Level_Render(&level, player.currFilter);
 	Player_Render(&player);
 
 	SDL_UpdateTexture(target, NULL, frame, BUFFER_WIDTH * 4);
@@ -186,6 +186,8 @@ int Cleanup(int statusCode)
 
 	SDL_ClearHints();
 	SDL_DestroyWindow(window);
+	SDL_DestroyRenderer(renderer);
+	SDL_DestroyTexture(target);
 
 	IMG_Quit();
 	SDL_Quit();
