@@ -16,14 +16,10 @@ void Level_AddPlatform(struct Level* level, struct Platform* platform)
 	struct PlatformNode* node = malloc(sizeof(struct PlatformNode));
 
 	node->platform = malloc(sizeof(struct Platform));
-	node->next = NULL;
-
 	memcpy(node->platform, platform, sizeof(struct Platform));
 
-	if (level->platforms == NULL) 
-		level->platforms = node;
-	else 
-		level->platforms->next = node;
+	node->next = level->platforms;
+	level->platforms = node;
 }
 
 void Level_CheckPhysics(struct Level* level, struct Player* player)
@@ -46,8 +42,11 @@ void Level_Render(struct Level* level, unsigned activeFilter)
 {
 	Background_Render(&level->background);
 
+	int count = 0;
+
 	for (struct PlatformNode* current = level->platforms; current != NULL; current = current->next)
 	{
+	    count ++;
 		struct Platform* platform = current->platform;
 
 		if (Platform_IsOffscreen(platform) || !(platform->visible[activeFilter]))

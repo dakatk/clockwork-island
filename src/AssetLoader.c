@@ -149,7 +149,6 @@ bool AssetLoader_LoadLevelFile(struct Level* level, struct Player* player, const
 		    fclose(lvlFile);
             return false;
         }
-		
 		Level_AddPlatform(level, &platform);
 	}
 	fclose(lvlFile);
@@ -172,7 +171,7 @@ static bool LoadPlayerData(struct Player* player, FILE* lvlFile)
 		fprintf(stderr, "Corrupt or incomplete player data.\n");
 		return false;
 	}
-	Player_Init(player, &(spritesheets[0]), px, py, PLAYER_WIDTH, PLAYER_HEIGHT);
+	Player_Init(player, &spritesheets[0], px, py, PLAYER_WIDTH, PLAYER_HEIGHT);
 
 	return true;
 }
