@@ -133,7 +133,10 @@ bool AssetLoader_LoadLevelFile(struct Level* level, struct Player* player, const
 	fseek(lvlFile, 0, SEEK_SET);
 
 	if (!LoadPlayerData(player, lvlFile))
-		return false;
+	{
+	    fclose(lvlFile);
+        return false;
+    }
 	
 	Level_Init(level);
 
@@ -177,7 +180,7 @@ static bool LoadPlayerData(struct Player* player, FILE* lvlFile)
 static bool LoadPlatformData(struct Platform* platform, FILE* lvlFile)
 {
 	// t = visibility index
-	// e = sprite sheet index
+	// s = sprite sheet index
 	// x = x-coordinate
 	// y = y-coordinate
 	// w = width

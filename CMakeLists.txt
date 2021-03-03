@@ -1,7 +1,9 @@
 cmake_minimum_required(VERSION 3.17)
 project(ClockworkIsland C)
 
-file(COPY "${CMAKE_SOURCE_DIR}/resources" DESTINATION "${CMAKE_CURRENT_BINARY_DIR}/resources")
+if(NOT EXISTS "${CMAKE_CURRENT_BINARY_DIR}/resources")
+    file(COPY "${CMAKE_SOURCE_DIR}/resources" DESTINATION "${CMAKE_CURRENT_BINARY_DIR}/resources")
+endif()
 
 set(CMAKE_C_STANDARD 11)
 

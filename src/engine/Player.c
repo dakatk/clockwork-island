@@ -76,9 +76,9 @@ void Player_Animate(struct Player* player)
 	static int clipX = 0;
 	static int ticks = 0;
 
-	int frames = (player->direction)->frames;
-	int waitTime = (player->direction)->sleep;
-	int clipY = (player->direction)->value;
+	int frames = player->direction->frames;
+	int waitTime = player->direction->sleep;
+	int clipY = player->direction->value;
 
 	if (ticks >= waitTime)
 	{

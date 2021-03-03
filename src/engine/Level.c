@@ -30,7 +30,16 @@ void Level_CheckPhysics(struct Level* level, struct Player* player)
 {
     player->x += player->vx;
     player->cx += player->vx;
-    // TODO implement...
+
+    for (struct PlatformNode* current = level->platforms; current != NULL; current = current->next) {
+
+        struct Platform *platform = current->platform;
+
+        if (Platform_IsOffscreen(platform) || !(platform->visible[player->currFilter]))
+            continue;
+
+        // TODO implement...
+    }
 }
 
 void Level_Render(struct Level* level, unsigned currFilter)
