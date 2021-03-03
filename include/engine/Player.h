@@ -21,7 +21,7 @@ struct Player {
 
 	bool isJumping;
 	bool onGround;
-	int currFilter;
+	int activeFilter;
 
 	float vx, vy;
 	float cx, cy;

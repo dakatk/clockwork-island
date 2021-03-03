@@ -13,7 +13,7 @@ void Player_Init(struct Player* player, struct Texture* spritesheet, int x, int 
 {
 	player->direction = &Direction_STAND_RIGHT;
 	player->texture = spritesheet;
-	player->currFilter = 0;
+	player->activeFilter = 0;
 
 	player->vx = 0.0f;
 	player->vy = 0.0f;
@@ -95,7 +95,7 @@ void Player_Animate(struct Player* player)
 
 void Player_Render(struct Player* player)
 {
-	const struct Filter* drawFilter = allFilters[player->currFilter];
+	const struct Filter* drawFilter = allFilters[player->activeFilter];
 
 	if (drawFilter != NULL)
 		Buffer_RenderFilter(drawFilter);

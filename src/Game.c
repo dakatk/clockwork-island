@@ -123,17 +123,17 @@ static inline void UpdatePlayerFilter()
 {
 	if (Keyboard_KeyTyped(KEY_A)) 
 	{
-		player.currFilter --;
+		player.activeFilter --;
 
-		if (player.currFilter < 0)
-			player.currFilter = PLAYER_NUM_FILTERS - 1;
+		if (player.activeFilter < 0)
+			player.activeFilter = PLAYER_NUM_FILTERS - 1;
 	}
 	else if (Keyboard_KeyTyped(KEY_S)) 
 	{
-		player.currFilter ++;
+		player.activeFilter ++;
 
-		if (player.currFilter >= PLAYER_NUM_FILTERS)
-			player.currFilter = 0;
+		if (player.activeFilter >= PLAYER_NUM_FILTERS)
+			player.activeFilter = 0;
 	}
 }
 
@@ -168,7 +168,7 @@ void RenderLoop()
 {
 	Buffer_Begin();
 
-	Level_Render(&level, player.currFilter);
+	Level_Render(&level, player.activeFilter);
 	Player_Render(&player);
 
 	Buffer_Present();

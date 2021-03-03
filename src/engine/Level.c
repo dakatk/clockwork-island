@@ -35,14 +35,14 @@ void Level_CheckPhysics(struct Level* level, struct Player* player)
 
         struct Platform *platform = current->platform;
 
-        if (Platform_IsOffscreen(platform) || !(platform->visible[player->currFilter]))
+        if (Platform_IsOffscreen(platform) || !(platform->visible[player->activeFilter]))
             continue;
 
         // TODO implement...
     }
 }
 
-void Level_Render(struct Level* level, unsigned currFilter)
+void Level_Render(struct Level* level, unsigned activeFilter)
 {
 	Background_Render(&level->background);
 
@@ -50,7 +50,7 @@ void Level_Render(struct Level* level, unsigned currFilter)
 	{
 		struct Platform* platform = current->platform;
 
-		if (Platform_IsOffscreen(platform) || !(platform->visible[currFilter]))
+		if (Platform_IsOffscreen(platform) || !(platform->visible[activeFilter]))
 			continue;
 
 		Platform_Render(platform);
