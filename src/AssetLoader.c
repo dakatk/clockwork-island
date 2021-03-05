@@ -120,11 +120,11 @@ void AssetLoader_UnloadResources(struct Level* level)
 }
 
 static bool LoadPlayerData(struct Player* player, FILE* lvlFile);
-static bool LoadPlatformData(struct Platform* platform, FILE* lvlFile);
+static int LoadPlatformData(struct Platform* platform, FILE* lvlFile);
 
 bool AssetLoader_LoadLevelFile(struct Level* level, struct Player* player, const char* filename)
 {
-	FILE* lvlFile = fopen(filename, "r");
+	FILE* lvlFile = fopen(filename, "rb");
 	if (lvlFile == NULL)
 	{
 		fprintf(stderr, "File not found '%s'\n", filename);
@@ -144,10 +144,15 @@ bool AssetLoader_LoadLevelFile(struct Level* level, struct Player* player, const
     {
 		struct Platform platform;
 
-		if (!LoadPlatformData(&platform, lvlFile))
+		int result = LoadPlatformData(&platform, lvlFile);
+		if (result != 1)
 		{
 		    fclose(lvlFile);
-            return false;
+
+		    if (result == -1)
+                return false;
+
+		    else break;
         }
 		Level_AddPlatform(level, &platform);
 	}
@@ -158,58 +163,76 @@ bool AssetLoader_LoadLevelFile(struct Level* level, struct Player* player, const
 
 static bool LoadPlayerData(struct Player* player, FILE* lvlFile)
 {
-	// px = player x-coordinate
-	// py = player y-coordinate
-	// u = player upgrades
-	int px, py;
-	int u;
+    // REMEMBER: ordering is little-endian
+    // (buffer[0] is LSBs of data[0], buffer[1] is MSBs)
+	union {
+	    unsigned char buffer[6];
+	    unsigned short data[3];
+	} playerData;
 
-	int result = fscanf(lvlFile, "%d,%d,%d", &px, &py, &u); // NOLINT(cert-err34-c)
+    size_t result = fread(playerData.buffer, sizeof(playerData.buffer), 1, lvlFile);
+    if (result != 1)
+    {
+        fprintf(stderr, "Corrupt or incomplete player data.\n");
+        return false;
+    }
 
-	if (result != 3)
-	{
-		fprintf(stderr, "Corrupt or incomplete player data.\n");
-		return false;
-	}
+    // px = player x-coordinate
+    // py = player y-coordinate
+    // u = player upgrades
+    int px = (int)playerData.data[0];
+    int py = (int)playerData.data[1];
+    int u = (int)playerData.data[2];
+
 	Player_Init(player, &spritesheets[0], px, py, PLAYER_WIDTH, PLAYER_HEIGHT);
 
 	return true;
 }
 
-static bool LoadPlatformData(struct Platform* platform, FILE* lvlFile)
+static int LoadPlatformData(struct Platform* platform, FILE* lvlFile)
 {
-	// t = visibility index
-	// s = sprite sheet index
-	// x = x-coordinate
-	// y = y-coordinate
-	// w = width
-	// h = height
-	// f = facing
-	int t, s;
-	int x, y;
-	int w, h;
-	int f;
+    union {
+        unsigned char buffer[14];
+        unsigned short data[7];
+    } platformData;
 
-	int result = fscanf(lvlFile, "%d,%d,%d,%d,%d,%d,%d", &t, &s, &x, &y, &w, &h, &f); // NOLINT(cert-err34-c)
-
-    if (result != 7)
+    size_t result = fread(platformData.buffer, sizeof(platformData.buffer), 1, lvlFile);
+    if (result != 1)
     {
+        if (platformData.buffer[0] == 0xff) {
+            return 0;
+        }
         fprintf(stderr, "Corrupt or incomplete platform data.\n");
-        return false;
+        return -1;
     }
 
-	if (t < 0 || t >= NUM_VISIBLE_OPTIONS)
-	{
-		fprintf(stderr, "Error: Invalid visibility index found.\n");
-		return false;
-	}
-	double angle = (double)(f * 90);
-	Platform_Init(platform, &spritesheets[1], angle, s, x, y, w, h);
+    // t = visibility index
+    // s = sprite sheet index
+    // x = x-coordinate
+    // y = y-coordinate
+    // w = width
+    // h = height
+    // f = facing
+    int t = (int)platformData.data[0];
+    int s = (int)platformData.data[1];
+    int x = (int)platformData.data[2];
+    int y = (int)platformData.data[3];
+    int w = (int)platformData.data[4];
+    int h = (int)platformData.data[5];
+    int f = (int)platformData.data[6];
 
-	for (int j = 0; j < NUM_PLATFORM_VISIBLE_OPTIONS; j ++)
-		platform->visible[j] = optionsVisible[t][j];
+    if (t < 0 || t >= NUM_VISIBLE_OPTIONS)
+    {
+        fprintf(stderr, "Error: Invalid visibility index found.\n");
+        return -1;
+    }
+    double angle = (double)(f * 90);
+    Platform_Init(platform, &spritesheets[1], angle, s, x, y, w, h);
 
-	return true;
+    for (int j = 0; j < NUM_PLATFORM_VISIBLE_OPTIONS; j ++)
+        platform->visible[j] = optionsVisible[t][j];
+
+    return 1;
 }
 
 #undef NUM_VISIBLE_OPTIONS

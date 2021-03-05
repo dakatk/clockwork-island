@@ -102,8 +102,12 @@ bool SDL2_InitAll(const char* title, int imgFlags)
 
 bool LoadLevel(int levelNum)
 {
+#define LEVEL_FILE_REL_PATH "resources/levels/level%d.bin"
+
 	char levelFile[30];
-	snprintf(levelFile, 30, "resources/levels/level%d.lvl", levelNum);
+	snprintf(levelFile, 30, LEVEL_FILE_REL_PATH, levelNum);
+
+#undef LEVEL_FILE_REL_PATH
 
 	if (!AssetLoader_LoadLevelFile(&level, &player, levelFile))
 	{
