@@ -20,7 +20,10 @@ bool Background_Init(struct Background* background, SDL_Renderer* renderer, cons
 	return true;
 }
 
-// TODO FUTURE Parallax scrolling (maybe add a third layer?)
+void Background_Scroll(struct Background* background)
+{
+
+}
 
 void Background_Render(struct Background* background)
 {
