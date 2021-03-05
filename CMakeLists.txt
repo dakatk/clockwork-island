@@ -1,9 +1,12 @@
 cmake_minimum_required(VERSION 3.17)
 project(ClockworkIsland C)
 
-if(NOT EXISTS "${CMAKE_CURRENT_BINARY_DIR}/resources")
-    file(COPY "${CMAKE_SOURCE_DIR}/resources" DESTINATION "${CMAKE_CURRENT_BINARY_DIR}/resources")
-endif()
+#if(EXISTS "${CMAKE_CURRENT_BINARY_DIR}/resources")
+#    file(REMOVE_RECURSE "${CMAKE_CURRENT_BINARY_DIR}/resources")
+#endif()
+#
+#file(COPY "${CMAKE_SOURCE_DIR}/resources" DESTINATION "${CMAKE_CURRENT_BINARY_DIR}")
+file(CREATE_LINK "${CMAKE_SOURCE_DIR}/resources" "${CMAKE_CURRENT_BINARY_DIR}/resources" SYMBOLIC)
 
 set(CMAKE_C_STANDARD 11)
 
