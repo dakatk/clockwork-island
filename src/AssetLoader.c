@@ -1,6 +1,7 @@
 #include "AssetLoader.h"
 #include "engine/Texture.h"
 #include "engine/Viewport.h"
+#include "engine/Background.h"
 
 #include <stdio.h>
 
@@ -100,7 +101,7 @@ bool AssetLoader_LoadResources(struct Level* level, SDL_Renderer* renderer)
 #define BACKGROUND_LAYER_1 "resources/images/background_layer_1.png"
 #define BACKGROUND_LAYER_2 "resources/images/background_layer_2.png"
 
-	if (!Background_Init(&level->background, renderer, BACKGROUND_LAYER_1, BACKGROUND_LAYER_2))
+	if (!Background_Init(renderer, BACKGROUND_LAYER_1, BACKGROUND_LAYER_2))
 	{
 		fprintf(stderr, "Error: Failed to load background images.\n");
 		return false;
@@ -116,7 +117,7 @@ void AssetLoader_UnloadResources(struct Level* level)
 	for(int i = 0; i < NUM_TEXTURES; i ++)
 		Texture_Destroy(&spritesheets[i]);
 
-	Background_Destroy(&level->background);
+	Background_Destroy();
 }
 
 static bool LoadPlayerData(struct Player* player, FILE* lvlFile);

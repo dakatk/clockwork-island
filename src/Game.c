@@ -11,9 +11,11 @@
 #include <stdio.h>
 
 #include "engine/Keyboard.h"
-#include "AssetLoader.h"
 #include "engine/Viewport.h"
 #include "engine/Buffer.h"
+#include "engine/Background.h"
+
+#include "AssetLoader.h"
 
 SDL_Window* window;
 SDL_Renderer* renderer;
@@ -172,6 +174,7 @@ void RenderLoop()
 {
 	Buffer_Begin();
 
+	Background_Render();
 	Level_Render(&level, player.activeFilter);
 	Player_Render(&player);
 
