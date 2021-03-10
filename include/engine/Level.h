@@ -11,7 +11,6 @@ struct PlatformNode {
 
 struct Level {
 	struct PlatformNode* platforms;
-	bool exited;
 };
 
 void Level_Init(struct Level* level);

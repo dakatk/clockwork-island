@@ -1,7 +1,7 @@
 #ifndef CLOCKWORKISLAND_VIEWPORT_H__
 #define CLOCKWORKISLAND_VIEWPORT_H__
 
-#include "Bool.h"
+#include <stdbool.h>
 
 // Leave space for one extra viewport, since the viewport
 // is moved from the bottom-left corner

@@ -8,7 +8,6 @@
 void Level_Init(struct Level* level)
 {
 	level->platforms = NULL;
-	level->exited = false;
 }
 
 void Level_AddPlatform(struct Level* level, struct Platform* platform)

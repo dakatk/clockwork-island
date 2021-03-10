@@ -1,7 +1,7 @@
 #ifndef CLOCKWORKISLAND_KEYBOARD_H__
 #define CLOCKWORKISLAND_KEYBOARD_H__
 
-#include "Bool.h"
+#include <stdbool.h>
 
 #define KEY_LEFT 0
 #define KEY_RIGHT 1

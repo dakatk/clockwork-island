@@ -2,7 +2,7 @@
 #define CLOCKWORKISLAND_TEXTURE_H__
 
 #include <SDL2/SDL.h>
-#include "Bool.h"
+#include <stdbool.h>
 
 #define FULL_IMAGE (-1)
 
