@@ -7,6 +7,12 @@
 static struct Texture layer0;
 static struct Texture layer1;
 
+static float scrollX;
+static float scrollY;
+
+// Pixels per movement
+const float ppm;
+
 bool Background_Init(SDL_Renderer* renderer, const char* image0, const char* image1)
 {
 	if (!Texture_Init(&layer0, renderer, image0, FULL_IMAGE))

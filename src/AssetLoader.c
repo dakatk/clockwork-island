@@ -8,11 +8,6 @@
 #define NUM_VISIBLE_OPTIONS 43
 #define NUM_TEXTURES 2
 
-/* TODO FUTURE Update level file format
- * Level files should be hex files, with every two bytes representing
- * a single data point (MSBs and LSBs), allowing (almost) everything to be an unsigned short
- */
-
 static struct Texture spritesheets[NUM_TEXTURES];
 
 static const bool optionsVisible[NUM_VISIBLE_OPTIONS][NUM_PLATFORM_VISIBLE_OPTIONS] = {
@@ -73,7 +68,7 @@ static const bool optionsVisible[NUM_VISIBLE_OPTIONS][NUM_PLATFORM_VISIBLE_OPTIO
 		{true, true, true, true, false, false}, // not ORANGE and not VIOLET	(42)
 };
 
-bool AssetLoader_LoadResources(struct Level* level, SDL_Renderer* renderer)
+bool AssetLoader_LoadResources(SDL_Renderer* renderer)
 {
 #define PLAYER_IMAGE "resources/images/player_character.png"
 #define TILES_IMAGE "resources/images/tiles.png"
@@ -112,7 +107,7 @@ bool AssetLoader_LoadResources(struct Level* level, SDL_Renderer* renderer)
 	return true;
 }
 
-void AssetLoader_UnloadResources(struct Level* level)
+void AssetLoader_UnloadResources()
 {
 	for(int i = 0; i < NUM_TEXTURES; i ++)
 		Texture_Destroy(&spritesheets[i]);

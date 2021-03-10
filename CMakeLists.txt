@@ -20,6 +20,7 @@ find_package(SDL2_image REQUIRED)
 
 include_directories(${PROJECT_SOURCE_DIR})
 include_directories(${PROJECT_SOURCE_DIR}/include)
+include_directories(/usr/local/include)
 
 add_executable(ClockworkIsland
         src/engine/Background.c include/engine/Background.h

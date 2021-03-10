@@ -49,7 +49,7 @@ int main(int argc, char* argv[])
 	}
 #undef GAME_TITLE
 
-	if (!AssetLoader_LoadResources(&level, renderer))
+	if (!AssetLoader_LoadResources(renderer))
 	{
 		fprintf(stderr, "Failed to load game textures!\n");
 		return Cleanup(1);
@@ -183,7 +183,7 @@ void RenderLoop()
 
 int Cleanup(int statusCode)
 {
-    AssetLoader_UnloadResources(&level);
+    AssetLoader_UnloadResources();
 	Level_Destroy(&level);
 	Buffer_Destroy();
 
