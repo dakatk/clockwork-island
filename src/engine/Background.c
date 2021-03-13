@@ -4,14 +4,21 @@
 
 #include <stdio.h>
 
+#define LAYER0_CLIP_WIDTH 800
+#define LAYER0_CLIP_HEIGHT 600
+#define LAYER0_CLIP_X 0
+#define LAYER0_CLIP_Y 0
+
+#define LAYER1_CLIP_WIDTH 800
+#define LAYER1_CLIP_HEIGHT 600
+#define LAYER1_CLIP_X 0
+#define LAYER1_CLIP_Y 0
+
 static struct Texture layer0;
 static struct Texture layer1;
 
 static float scrollX;
 static float scrollY;
-
-// Pixels per movement
-const float ppm;
 
 bool Background_Init(SDL_Renderer* renderer, const char* image0, const char* image1)
 {
@@ -26,6 +33,8 @@ bool Background_Init(SDL_Renderer* renderer, const char* image0, const char* ima
 		fprintf(stderr, "Failed to load image '%s'.\n", image1);
 		return false;
 	}
+
+
 	return true;
 }
 
