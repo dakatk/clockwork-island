@@ -152,8 +152,6 @@ bool AssetLoader_LoadLevelFile(struct Level* level, struct Player* player, const
         }
 		Level_AddPlatform(level, &platform);
 	}
-	fclose(lvlFile);
-
 	return true;
 }
 

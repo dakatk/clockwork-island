@@ -1,11 +1,6 @@
 cmake_minimum_required(VERSION 3.17)
 project(ClockworkIsland C)
 
-#if(EXISTS "${CMAKE_CURRENT_BINARY_DIR}/resources")
-#    file(REMOVE_RECURSE "${CMAKE_CURRENT_BINARY_DIR}/resources")
-#endif()
-#
-#file(COPY "${CMAKE_SOURCE_DIR}/resources" DESTINATION "${CMAKE_CURRENT_BINARY_DIR}")
 file(CREATE_LINK "${CMAKE_SOURCE_DIR}/resources" "${CMAKE_CURRENT_BINARY_DIR}/resources" SYMBOLIC)
 
 set(CMAKE_C_STANDARD 11)
@@ -20,7 +15,7 @@ find_package(SDL2_image REQUIRED)
 
 include_directories(${PROJECT_SOURCE_DIR})
 include_directories(${PROJECT_SOURCE_DIR}/include)
-include_directories(/usr/local/include)
+include_directories(${SDL2_LIBRARIES})
 
 add_executable(ClockworkIsland
         src/engine/Background.c include/engine/Background.h
