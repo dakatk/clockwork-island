@@ -9,11 +9,13 @@ static const struct Filter* allFilters[PLAYER_NUM_FILTERS] = { // NOLINT(cppcore
 		&Filter_ORANGE, &Filter_VIOLET
 };
 
-void Player_Init(struct Player* player, struct Texture* spritesheet, int x, int y, int w, int h)
+void Player_Init(struct Player* player, struct Texture* spritesheet, int x, int y, int w, int h, int u)
 {
 	player->direction = &Direction_STAND_RIGHT;
 	player->texture = spritesheet;
+
 	player->activeFilter = 0;
+	player->allowedFilters = u;
 
 	player->vx = 0.0f;
 	player->vy = 0.0f;

@@ -23,7 +23,9 @@ struct Player {
 
 	bool isJumping;
 	bool onGround;
+
 	int activeFilter;
+	int allowedFilters;
 
 	float vx, vy;
 	float cx, cy;
@@ -31,7 +33,7 @@ struct Player {
 	int w, h;
 };
 
-void Player_Init(struct Player* player, struct Texture* spritesheet, int x, int y, int w, int h);
+void Player_Init(struct Player* player, struct Texture* spritesheet, int x, int y, int w, int h, int u);
 void Player_UpdateDirection(struct Player* player);
 void Player_Animate(struct Player* player);
 void Player_Render(struct Player* player);

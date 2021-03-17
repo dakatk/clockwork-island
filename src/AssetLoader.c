@@ -179,7 +179,7 @@ static bool LoadPlayerData(struct Player* player, FILE* lvlFile)
     int py = (int)playerData.data[1];
     int u = (int)playerData.data[2];
 
-	Player_Init(player, &spritesheets[0], px, py, PLAYER_WIDTH, PLAYER_HEIGHT);
+	Player_Init(player, &spritesheets[0], px, py, PLAYER_WIDTH, PLAYER_HEIGHT, u);
 
 	return true;
 }
