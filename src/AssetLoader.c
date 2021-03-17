@@ -4,6 +4,7 @@
 #include "engine/Background.h"
 
 #include <stdio.h>
+#include <stdint.h>
 
 #define NUM_VISIBLE_OPTIONS 43
 #define NUM_TEXTURES 2
@@ -160,8 +161,8 @@ static bool LoadPlayerData(struct Player* player, FILE* lvlFile)
     // REMEMBER: ordering is little-endian
     // (buffer[0] is LSBs of data[0], buffer[1] is MSBs)
 	union {
-	    unsigned char buffer[6];
-	    unsigned short data[3];
+	    uint8_t buffer[6];
+	    uint16_t data[3];
 	} playerData;
 
     size_t result = fread(playerData.buffer, sizeof(playerData.buffer), 1, lvlFile);
@@ -186,8 +187,8 @@ static bool LoadPlayerData(struct Player* player, FILE* lvlFile)
 static int LoadPlatformData(struct Platform* platform, FILE* lvlFile)
 {
     union {
-        unsigned char buffer[14];
-        unsigned short data[7];
+        uint8_t buffer[14];
+        uint16_t data[7];
     } platformData;
 
     size_t result = fread(platformData.buffer, sizeof(platformData.buffer), 1, lvlFile);
