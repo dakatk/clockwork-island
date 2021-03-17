@@ -179,6 +179,11 @@ static bool LoadPlayerData(struct Player* player, FILE* lvlFile)
     int py = (int)playerData.data[1];
     int u = (int)playerData.data[2];
 
+    if (u < 0) u = 0;
+
+    else if (u >= PLAYER_NUM_FILTERS)
+        u = PLAYER_NUM_FILTERS - 1;
+
 	Player_Init(player, &spritesheets[0], px, py, PLAYER_WIDTH, PLAYER_HEIGHT, u);
 
 	return true;
