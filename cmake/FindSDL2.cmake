@@ -307,7 +307,6 @@ if(SDL2_INCLUDE_DIR AND EXISTS "${SDL2_INCLUDE_DIR}/SDL_version.h")
     unset(SDL2_VERSION_MAJOR)
     unset(SDL2_VERSION_MINOR)
     unset(SDL2_VERSION_PATCH)
-    message("FOUND")
 endif()
 
 include(FindPackageHandleStandardArgs)

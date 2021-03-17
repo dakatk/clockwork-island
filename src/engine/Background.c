@@ -18,10 +18,10 @@ bool Background_Init(SDL_Renderer* renderer, const char* image0, const char* ima
 		return false;
 	}
 
-#define LAYER0_CLIP_WIDTH 320
-#define LAYER0_CLIP_HEIGHT 240
-#define LAYER0_CLIP_X 480
-#define LAYER0_CLIP_Y 360
+#define LAYER0_CLIP_WIDTH 534
+#define LAYER0_CLIP_HEIGHT 400
+#define LAYER0_CLIP_X 266
+#define LAYER0_CLIP_Y 200
 
 	layer0.clip.w = LAYER0_CLIP_WIDTH;
 	layer0.clip.h = LAYER0_CLIP_HEIGHT;
@@ -39,10 +39,10 @@ bool Background_Init(SDL_Renderer* renderer, const char* image0, const char* ima
 		return false;
 	}
 
-#define LAYER1_CLIP_WIDTH 534
-#define LAYER1_CLIP_HEIGHT 400
-#define LAYER1_CLIP_X 266
-#define LAYER1_CLIP_Y 200
+#define LAYER1_CLIP_WIDTH 320
+#define LAYER1_CLIP_HEIGHT 240
+#define LAYER1_CLIP_X 480
+#define LAYER1_CLIP_Y 360
 
     layer1.clip.w = LAYER1_CLIP_WIDTH;
     layer1.clip.h = LAYER1_CLIP_HEIGHT;
