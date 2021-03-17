@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.17)
 project(ClockworkIsland C)
 
 set(CMAKE_C_STANDARD 11)
+set(CMAKE_CXX_FLAGS "-O3 -g -Wall -Wextra")
 
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR})
 set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR})
@@ -19,7 +20,7 @@ add_executable(ClockworkIsland
         src/engine/Buffer.c include/engine/Buffer.h
         src/engine/Direction.c include/engine/Direction.h
         src/engine/Filter.c include/engine/Filter.h
-        src/engine/Keyboard.c include/engine/Keyboard.h
+        src/engine/Input.c include/engine/Input.h
         src/engine/Level.c include/engine/Level.h
         src/engine/Physics.c include/engine/Physics.h
         src/engine/Platform.c include/engine/Platform.h

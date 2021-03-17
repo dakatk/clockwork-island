@@ -10,7 +10,7 @@
 
 #include <stdio.h>
 
-#include "engine/Keyboard.h"
+#include "engine/Input.h"
 #include "engine/Viewport.h"
 #include "engine/Buffer.h"
 #include "engine/Background.h"

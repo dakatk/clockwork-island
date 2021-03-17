@@ -1,4 +1,4 @@
-#include "engine/Keyboard.h"
+#include "engine/Input.h"
 
 #include <stdint.h>
 #include <SDL.h>
@@ -7,6 +7,10 @@
 
 static uint32_t keysBuffer = 0;
 static uint32_t prevKeysBuffer = 0;
+
+static uint8_t mouseBuffer = 0;
+static uint32_t mouseX;
+static uint32_t mouseY;
 
 void Keyboard_CaptureInput()
 {
