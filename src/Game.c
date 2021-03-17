@@ -132,13 +132,13 @@ static inline void UpdatePlayerFilter()
 		player.activeFilter --;
 
 		if (player.activeFilter < 0)
-			player.activeFilter = PLAYER_NUM_FILTERS - 1;
+			player.activeFilter = player.allowedFilters;
 	}
 	else if (Keyboard_KeyTyped(KEY_S)) 
 	{
 		player.activeFilter ++;
 
-		if (player.activeFilter >= PLAYER_NUM_FILTERS)
+		if (player.activeFilter > player.allowedFilters)
 			player.activeFilter = 0;
 	}
 }
