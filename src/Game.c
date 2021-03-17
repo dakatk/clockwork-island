@@ -166,6 +166,8 @@ void UpdateLoop()
 	Viewport_SnapTo(player.cx, player.cy);
 	Viewport_Constrain();
 
+	Background_Scroll();
+
 	Player_UpdateDirection(&player);
 	Player_Animate(&player);
 }
