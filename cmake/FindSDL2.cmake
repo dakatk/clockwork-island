@@ -171,6 +171,7 @@ find_path(SDL2_INCLUDE_DIR SDL.h
         PATH_SUFFIXES SDL2
         # path suffixes to search inside ENV{SDL2DIR}
         include/SDL2 include
+        /usr/local/include/SDL2 /usr/local/include
         PATHS ${SDL2_PATH}
         DOC "Where the SDL2 headers can be found"
         )
@@ -306,6 +307,7 @@ if(SDL2_INCLUDE_DIR AND EXISTS "${SDL2_INCLUDE_DIR}/SDL_version.h")
     unset(SDL2_VERSION_MAJOR)
     unset(SDL2_VERSION_MINOR)
     unset(SDL2_VERSION_PATCH)
+    message("FOUND")
 endif()
 
 include(FindPackageHandleStandardArgs)

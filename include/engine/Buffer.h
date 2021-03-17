@@ -4,7 +4,7 @@
 #include "Texture.h"
 #include "Filter.h"
 
-#include <SDL2/SDL.h>
+#include <SDL.h>
 
 #define BUFFER_WIDTH 800
 #define BUFFER_HEIGHT 600

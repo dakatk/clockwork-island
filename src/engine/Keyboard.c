@@ -1,7 +1,7 @@
 #include "engine/Keyboard.h"
 
 #include <stdint.h>
-#include <SDL2/SDL.h>
+#include <SDL.h>
 
 #define KEY_BUFFER_SIZE 32
 

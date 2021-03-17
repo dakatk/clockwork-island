@@ -1,8 +1,6 @@
 cmake_minimum_required(VERSION 3.17)
 project(ClockworkIsland C)
 
-file(CREATE_LINK "${CMAKE_SOURCE_DIR}/resources" "${CMAKE_CURRENT_BINARY_DIR}/resources" SYMBOLIC)
-
 set(CMAKE_C_STANDARD 11)
 
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR})
@@ -13,9 +11,8 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/cmake)
 find_package(SDL2 REQUIRED)
 find_package(SDL2_image REQUIRED)
 
-include_directories(${PROJECT_SOURCE_DIR})
 include_directories(${PROJECT_SOURCE_DIR}/include)
-include_directories(${SDL2_LIBRARIES})
+include_directories(${SDL2_INCLUDE_DIRS})
 
 add_executable(ClockworkIsland
         src/engine/Background.c include/engine/Background.h
@@ -32,4 +29,6 @@ add_executable(ClockworkIsland
         src/AssetLoader.c include/AssetLoader.h
         src/Game.c)
 
-target_link_libraries(${PROJECT_NAME} ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES})
+file(COPY resources DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+
+target_link_libraries(${PROJECT_NAME} SDL2::Main SDL2::Image)

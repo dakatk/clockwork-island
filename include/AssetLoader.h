@@ -4,7 +4,7 @@
 #include "engine/Level.h"
 #include "engine/Player.h"
 
-#include <SDL2/SDL.h>
+#include <SDL.h>
 
 bool AssetLoader_LoadResources(SDL_Renderer* renderer);
 void AssetLoader_UnloadResources();
