@@ -11,6 +11,13 @@
 #define KEY_F1 5
 #define KEY_QUIT 31
 
+#define BUTTON_LEFT 0
+#define BUTTON_RIGHT 1
+#define BUTTON_MIDDLE 2
+
+extern int mouseX;
+extern int mouseY;
+
 void Keyboard_CaptureInput();
 bool Keyboard_KeyPressed(int key);
 bool Keyboard_KeyTyped(int key);

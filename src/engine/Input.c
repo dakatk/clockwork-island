@@ -9,8 +9,9 @@ static uint32_t keysBuffer = 0;
 static uint32_t prevKeysBuffer = 0;
 
 static uint8_t mouseBuffer = 0;
-static uint32_t mouseX;
-static uint32_t mouseY;
+
+int mouseX;
+int mouseY;
 
 void Keyboard_CaptureInput()
 {
@@ -25,7 +26,7 @@ void Keyboard_CaptureInput()
 		if (e.type == SDL_QUIT)
 			SET_KEY(KEY_QUIT);
 
-		if (e.type == SDL_KEYDOWN)
+		else if (e.type == SDL_KEYDOWN)
 		{
 			if (e.key.keysym.sym == SDLK_q &&
 				e.key.keysym.mod == KMOD_LCTRL)
@@ -33,69 +34,116 @@ void Keyboard_CaptureInput()
 
 			switch (e.key.keysym.sym)
 			{
-			case SDLK_LEFT:
-				SET_KEY(KEY_LEFT);
-				break;
+                case SDLK_LEFT:
+                    SET_KEY(KEY_LEFT);
+                    break;
 
-			case SDLK_RIGHT:
-				SET_KEY(KEY_RIGHT);
-				break;
+                case SDLK_RIGHT:
+                    SET_KEY(KEY_RIGHT);
+                    break;
 
-			case SDLK_z:
-				SET_KEY(KEY_Z);
-				break;
+                case SDLK_z:
+                    SET_KEY(KEY_Z);
+                    break;
 
-			case SDLK_a:
-				SET_KEY(KEY_A);
-				break;
+                case SDLK_a:
+                    SET_KEY(KEY_A);
+                    break;
 
-			case SDLK_s:
-				SET_KEY(KEY_S);
-				break;
+                case SDLK_s:
+                    SET_KEY(KEY_S);
+                    break;
 
-			case SDLK_F1:
-				SET_KEY(KEY_F1);
-				break;
+                case SDLK_F1:
+                    SET_KEY(KEY_F1);
+                    break;
 
-			default:
-				break;
+                default:
+                    break;
 			}
 		}
 
-		if (e.type == SDL_KEYUP)
+		else if (e.type == SDL_KEYUP)
 		{
 			switch (e.key.keysym.sym)
 			{
-			case SDLK_LEFT:
-				UNSET_KEY(KEY_LEFT);
-				break;
+                case SDLK_LEFT:
+                    UNSET_KEY(KEY_LEFT);
+                    break;
 
-			case SDLK_RIGHT:
-				UNSET_KEY(KEY_RIGHT);
-				break;
+                case SDLK_RIGHT:
+                    UNSET_KEY(KEY_RIGHT);
+                    break;
 
-			case SDLK_z:
-				UNSET_KEY(KEY_Z);
-				break;
+                case SDLK_z:
+                    UNSET_KEY(KEY_Z);
+                    break;
 
-			case SDLK_a:
-				UNSET_KEY(KEY_A);
-				break;
+                case SDLK_a:
+                    UNSET_KEY(KEY_A);
+                    break;
 
-			case SDLK_s:
-				UNSET_KEY(KEY_S);
-                break;
+                case SDLK_s:
+                    UNSET_KEY(KEY_S);
+                    break;
 
-            case SDLK_F1:
-                UNSET_KEY(KEY_F1);
+                case SDLK_F1:
+                    UNSET_KEY(KEY_F1);
 
-			default:
-				break;
+                default:
+                    break;
 			}
 		}
-	}
+
 #undef SET_KEY
 #undef UNSET_KEY
+
+#define SET_BTN(btn) mouseBuffer |= (1 << (btn))
+#define UNSET_BTN(btn) mouseBuffer &= ~(1 << (btn))
+
+		else if (e.type == SDL_MOUSEBUTTONDOWN)
+        {
+		    switch (e.button.button)
+            {
+                case SDL_BUTTON_LEFT:
+                    SET_BTN(BUTTON_LEFT);
+                    break;
+
+                case SDL_BUTTON_RIGHT:
+                    SET_BTN(BUTTON_RIGHT);
+                    break;
+
+                case SDL_BUTTON_MIDDLE:
+                    SET_BTN(BUTTON_MIDDLE);
+            }
+        }
+
+		else if (e.type == SDL_MOUSEBUTTONUP)
+        {
+            switch (e.button.button)
+            {
+                case SDL_BUTTON_LEFT:
+                    UNSET_BTN(BUTTON_LEFT);
+                    break;
+
+                case SDL_BUTTON_RIGHT:
+                    UNSET_BTN(BUTTON_RIGHT);
+                    break;
+
+                case SDL_BUTTON_MIDDLE:
+                    UNSET_BTN(BUTTON_MIDDLE);
+            }
+        }
+
+#undef SET_BTN
+#undef UNSET_BTN
+
+		else if (e.type == SDL_MOUSEMOTION)
+        {
+		    mouseX = e.motion.x;
+		    mouseY = e.motion.y;
+        }
+	}
 }
 
 bool Keyboard_KeyPressed(int key)
