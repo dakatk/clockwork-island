@@ -6,6 +6,8 @@
 #include "Physics.h"
 #include "Filter.h"
 
+#include <stdbool.h>
+
 #define PLAYER_MOVE_SPEED 3.25f
 #define PLAYER_JUMP_SPEED 4.0f
 

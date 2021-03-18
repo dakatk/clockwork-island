@@ -1,16 +1,13 @@
 #include "AssetLoader.h"
 #include "engine/Texture.h"
 #include "engine/Viewport.h"
+#include "engine/Background.h"
 
 #include <stdio.h>
+#include <stdint.h>
 
 #define NUM_VISIBLE_OPTIONS 43
 #define NUM_TEXTURES 2
-
-/* TODO FUTURE Update level file format
- * Level files should be hex files, with every two bytes representing
- * a single data point (MSBs and LSBs), allowing (almost) everything to be an unsigned short
- */
 
 static struct Texture spritesheets[NUM_TEXTURES];
 
@@ -72,7 +69,7 @@ static const bool optionsVisible[NUM_VISIBLE_OPTIONS][NUM_PLATFORM_VISIBLE_OPTIO
 		{true, true, true, true, false, false}, // not ORANGE and not VIOLET	(42)
 };
 
-bool AssetLoader_LoadResources(struct Level* level, SDL_Renderer* renderer)
+bool AssetLoader_LoadResources(SDL_Renderer* renderer)
 {
 #define PLAYER_IMAGE "resources/images/player_character.png"
 #define TILES_IMAGE "resources/images/tiles.png"
@@ -100,7 +97,7 @@ bool AssetLoader_LoadResources(struct Level* level, SDL_Renderer* renderer)
 #define BACKGROUND_LAYER_1 "resources/images/background_layer_1.png"
 #define BACKGROUND_LAYER_2 "resources/images/background_layer_2.png"
 
-	if (!Background_Init(&level->background, renderer, BACKGROUND_LAYER_1, BACKGROUND_LAYER_2))
+	if (!Background_Init(renderer, BACKGROUND_LAYER_1, BACKGROUND_LAYER_2))
 	{
 		fprintf(stderr, "Error: Failed to load background images.\n");
 		return false;
@@ -111,12 +108,12 @@ bool AssetLoader_LoadResources(struct Level* level, SDL_Renderer* renderer)
 	return true;
 }
 
-void AssetLoader_UnloadResources(struct Level* level)
+void AssetLoader_UnloadResources()
 {
 	for(int i = 0; i < NUM_TEXTURES; i ++)
 		Texture_Destroy(&spritesheets[i]);
 
-	Background_Destroy(&level->background);
+	Background_Destroy();
 }
 
 static bool LoadPlayerData(struct Player* player, FILE* lvlFile);
@@ -156,8 +153,6 @@ bool AssetLoader_LoadLevelFile(struct Level* level, struct Player* player, const
         }
 		Level_AddPlatform(level, &platform);
 	}
-	fclose(lvlFile);
-
 	return true;
 }
 
@@ -166,8 +161,8 @@ static bool LoadPlayerData(struct Player* player, FILE* lvlFile)
     // REMEMBER: ordering is little-endian
     // (buffer[0] is LSBs of data[0], buffer[1] is MSBs)
 	union {
-	    unsigned char buffer[6];
-	    unsigned short data[3];
+	    uint8_t buffer[6];
+	    uint16_t data[3];
 	} playerData;
 
     size_t result = fread(playerData.buffer, sizeof(playerData.buffer), 1, lvlFile);
@@ -192,8 +187,8 @@ static bool LoadPlayerData(struct Player* player, FILE* lvlFile)
 static int LoadPlatformData(struct Platform* platform, FILE* lvlFile)
 {
     union {
-        unsigned char buffer[14];
-        unsigned short data[7];
+        uint8_t buffer[14];
+        uint16_t data[7];
     } platformData;
 
     size_t result = fread(platformData.buffer, sizeof(platformData.buffer), 1, lvlFile);

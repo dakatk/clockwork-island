@@ -8,7 +8,6 @@
 void Level_Init(struct Level* level)
 {
 	level->platforms = NULL;
-	level->exited = false;
 }
 
 void Level_AddPlatform(struct Level* level, struct Platform* platform)
@@ -40,8 +39,6 @@ void Level_CheckPhysics(struct Level* level, struct Player* player)
 
 void Level_Render(struct Level* level, unsigned activeFilter)
 {
-	Background_Render(&level->background);
-
 	int count = 0;
 
 	for (struct PlatformNode* current = level->platforms; current != NULL; current = current->next)

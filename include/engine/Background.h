@@ -3,13 +3,11 @@
 
 #include "Texture.h"
 
-struct Background {
-	struct Texture layer0;
-	struct Texture layer1;
-};
+#include <stdbool.h>
 
-bool Background_Init(struct Background* background, SDL_Renderer* renderer, const char* image0, const char* image1);
-void Background_Render(struct Background* background);
-void Background_Destroy(struct Background* background);
+bool Background_Init(SDL_Renderer* renderer, const char* image0, const char* image1);
+void Background_Scroll();
+void Background_Render();
+void Background_Destroy();
 
 #endif /* CLOCKWORKISLAND_BACKGROUND_H__ */

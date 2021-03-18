@@ -4,6 +4,8 @@
 #include "Texture.h"
 #include "Physics.h"
 
+#include <stdbool.h>
+
 #define PLATFORM_SPRITE_CLIP_SIZE 128
 #define NUM_PLATFORM_VISIBLE_OPTIONS 6
 

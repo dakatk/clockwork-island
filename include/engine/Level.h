@@ -3,7 +3,6 @@
 
 #include "Player.h"
 #include "Platform.h"
-#include "Background.h"
 
 struct PlatformNode {
 	struct Platform* platform;
@@ -11,10 +10,7 @@ struct PlatformNode {
 };
 
 struct Level {
-	struct Background background;
 	struct PlatformNode* platforms;
-
-	bool exited;
 };
 
 void Level_Init(struct Level* level);

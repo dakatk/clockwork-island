@@ -1,8 +1,8 @@
 #ifndef CLOCKWORKISLAND_TEXTURE_H__
 #define CLOCKWORKISLAND_TEXTURE_H__
 
-#include <SDL2/SDL.h>
-#include "Bool.h"
+#include <SDL.h>
+#include <stdbool.h>
 
 #define FULL_IMAGE (-1)
 

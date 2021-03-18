@@ -5,15 +5,17 @@
  *  Copyright © 2021 Dusten Knull. All rights reserved.
  */
 
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
+#include <SDL.h>
+#include <SDL_image.h>
 
 #include <stdio.h>
 
-#include "engine/Keyboard.h"
-#include "AssetLoader.h"
+#include "engine/Input.h"
 #include "engine/Viewport.h"
 #include "engine/Buffer.h"
+#include "engine/Background.h"
+
+#include "AssetLoader.h"
 
 SDL_Window* window;
 SDL_Renderer* renderer;
@@ -47,7 +49,7 @@ int main(int argc, char* argv[])
 	}
 #undef GAME_TITLE
 
-	if (!AssetLoader_LoadResources(&level, renderer))
+	if (!AssetLoader_LoadResources(renderer))
 	{
 		fprintf(stderr, "Failed to load game textures!\n");
 		return Cleanup(1);
@@ -164,6 +166,8 @@ void UpdateLoop()
 	Viewport_SnapTo(player.cx, player.cy);
 	Viewport_Constrain();
 
+	Background_Scroll();
+
 	Player_UpdateDirection(&player);
 	Player_Animate(&player);
 }
@@ -172,6 +176,7 @@ void RenderLoop()
 {
 	Buffer_Begin();
 
+	Background_Render();
 	Level_Render(&level, player.activeFilter);
 	Player_Render(&player);
 
@@ -180,7 +185,7 @@ void RenderLoop()
 
 int Cleanup(int statusCode)
 {
-    AssetLoader_UnloadResources(&level);
+    AssetLoader_UnloadResources();
 	Level_Destroy(&level);
 	Buffer_Destroy();
 

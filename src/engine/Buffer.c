@@ -1,6 +1,6 @@
 #include "engine/Buffer.h"
 
-#include <SDL2/SDL.h>
+#include <SDL.h>
 
 static SDL_Texture* target;
 static SDL_Renderer* renderer;

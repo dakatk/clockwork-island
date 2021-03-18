@@ -1,10 +1,10 @@
 #ifndef CLOCKWORKISLAND_BUFFER_H__
 #define CLOCKWORKISLAND_BUFFER_H__
 
-#include <SDL2/SDL.h>
-
 #include "Texture.h"
 #include "Filter.h"
+
+#include <SDL.h>
 
 #define BUFFER_WIDTH 800
 #define BUFFER_HEIGHT 600
