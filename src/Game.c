@@ -59,9 +59,9 @@ int main(int argc, char* argv[])
 		return Cleanup(1);
 
 	do {
-		Keyboard_CaptureInput();
+        Input_Capture();
 
-		if (Keyboard_KeyPressed(KEY_QUIT))
+		if (Input_KeyPressed(KEY_QUIT))
 		    break;
 
 		UpdateLoop();
@@ -127,14 +127,14 @@ void ToggleFullscreen()
 
 static inline void UpdatePlayerFilter()
 {
-	if (Keyboard_KeyTyped(KEY_A)) 
+	if (Input_KeyTyped(KEY_A))
 	{
 		player.activeFilter --;
 
 		if (player.activeFilter < 0)
 			player.activeFilter = player.allowedFilters;
 	}
-	else if (Keyboard_KeyTyped(KEY_S)) 
+	else if (Input_KeyTyped(KEY_S))
 	{
 		player.activeFilter ++;
 
@@ -145,20 +145,20 @@ static inline void UpdatePlayerFilter()
 
 void UpdateLoop()
 {
-	if (Keyboard_KeyTyped(KEY_F1))
+	if (Input_KeyTyped(KEY_F1))
 		ToggleFullscreen();
 
 	UpdatePlayerFilter();
 
-	if (Keyboard_KeyPressed(KEY_LEFT))
+	if (Input_KeyPressed(KEY_LEFT))
 		player.vx = -PLAYER_MOVE_SPEED;
 
-	else if (Keyboard_KeyPressed(KEY_RIGHT))
+	else if (Input_KeyPressed(KEY_RIGHT))
 		player.vx = PLAYER_MOVE_SPEED;
 
 	else player.vx = 0.0f;
 
-	if (Keyboard_KeyPressed(KEY_Z)) 
+	if (Input_KeyPressed(KEY_Z))
 		player.vy = -PLAYER_JUMP_SPEED;
 
 	Level_CheckPhysics(&level, &player);

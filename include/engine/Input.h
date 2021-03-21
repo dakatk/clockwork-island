@@ -15,11 +15,14 @@
 #define BUTTON_RIGHT 1
 #define BUTTON_MIDDLE 2
 
-extern int mouseX;
-extern int mouseY;
+extern int Input_MouseX;
+extern int Input_MouseY;
 
-void Keyboard_CaptureInput();
-bool Keyboard_KeyPressed(int key);
-bool Keyboard_KeyTyped(int key);
+void Input_Capture();
+
+bool Input_KeyPressed(int key);
+bool Input_KeyTyped(int key);
+
+bool Input_ButtonPressed(int button);
 
 #endif /* CLOCKWORKISLAND_INPUT_H__ */

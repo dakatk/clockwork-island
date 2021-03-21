@@ -3,8 +3,6 @@
 #include <stdint.h>
 #include <SDL.h>
 
-#define KEY_BUFFER_SIZE 32
-
 static uint32_t keysBuffer = 0;
 static uint32_t prevKeysBuffer = 0;
 
@@ -13,7 +11,7 @@ static uint8_t mouseBuffer = 0;
 int mouseX;
 int mouseY;
 
-void Keyboard_CaptureInput()
+void Input_Capture()
 {
 	prevKeysBuffer = keysBuffer;
 
@@ -146,7 +144,9 @@ void Keyboard_CaptureInput()
 	}
 }
 
-bool Keyboard_KeyPressed(int key)
+#define KEY_BUFFER_SIZE 32
+
+bool Input_KeyPressed(int key)
 {
     if (key < 0 || key >= KEY_BUFFER_SIZE) 
         return false;
@@ -154,7 +154,7 @@ bool Keyboard_KeyPressed(int key)
     return (keysBuffer >> key) & 1;
 }
 
-bool Keyboard_KeyTyped(int key)
+bool Input_KeyTyped(int key)
 {
     if (key < 0 || key >= KEY_BUFFER_SIZE)
         return false;
@@ -164,4 +164,17 @@ bool Keyboard_KeyTyped(int key)
     
     return keyPressed && !prevKeyPressed;
 }
+
 #undef KEY_BUFFER_SIZE
+
+#define MOUSE_BUFFER_SIZE 8
+
+bool Input_ButtonPressed(int button)
+{
+    if (button < 0 || button >= MOUSE_BUFFER_SIZE)
+        return false;
+
+    return (mouseBuffer >> button) & 1;
+}
+
+#undef MOUSE_BUFFER_SIZE
