@@ -153,42 +153,25 @@ void Input_Capture()
 	}
 }
 
-#define KEY_BUFFER_SIZE 16
-
-bool Input_KeyPressed(int key)
+bool Input_KeyPressed(uint16_t key)
 {
-    if (key < 0 || key >= KEY_BUFFER_SIZE) 
-        return false;
-
-    return (keysBuffer >> key) & 1;
+    return keysBuffer & key;
 }
 
-bool Input_KeyTyped(int key)
+bool Input_KeyTyped(uint16_t key)
 {
-    if (key < 0 || key >= KEY_BUFFER_SIZE)
-        return false;
-
-	bool keyPressed = (keysBuffer >> key) & 1;
-	bool prevKeyPressed = (prevKeysBuffer >> key) & 1;
+	bool keyPressed = keysBuffer & key;
+	bool prevKeyPressed = prevKeysBuffer & key;
     
     return keyPressed && !prevKeyPressed;
 }
-
-#undef KEY_BUFFER_SIZE
 
 uint16_t Input_KeysBuffer()
 {
     return keysBuffer;
 }
 
-#define MOUSE_BUFFER_SIZE 8
-
-bool Input_ButtonPressed(int button)
+bool Input_ButtonPressed(uint8_t button)
 {
-    if (button < 0 || button >= MOUSE_BUFFER_SIZE)
-        return false;
-
-    return (mouseBuffer >> button) & 1;
+    return mouseBuffer & button;
 }
-
-#undef MOUSE_BUFFER_SIZE

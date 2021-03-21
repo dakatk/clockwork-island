@@ -47,6 +47,7 @@ int main(int argc, char* argv[])
 		fprintf(stderr, "SDL2 failed to initialize with error: %s", SDL_GetError());
 		return Cleanup(1);
 	}
+
 #undef GAME_TITLE
 
 	if (!AssetLoader_LoadResources(renderer))
@@ -141,6 +142,19 @@ static inline void UpdatePlayerFilter()
 		if (player.activeFilter > player.allowedFilters)
 			player.activeFilter = 0;
 	}
+	else if (Input_KeyTyped(KEY_0 | KEY_1 | KEY_2 | KEY_3 | KEY_4 | KEY_5))
+    {
+	    uint16_t buffer = Input_KeysBuffer();
+
+	    for (int i = player.allowedFilters; i >= 0; i --)
+        {
+	        if (buffer & (1 << i))
+            {
+	            player.activeFilter = i;
+	            break;
+            }
+        }
+    }
 }
 
 void UpdateLoop()

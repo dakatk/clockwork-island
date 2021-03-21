@@ -27,11 +27,11 @@ extern int Input_MouseY;
 
 void Input_Capture();
 
-bool Input_KeyPressed(int key);
-bool Input_KeyTyped(int key);
+bool Input_KeyPressed(uint16_t key);
+bool Input_KeyTyped(uint16_t key);
 
 uint16_t Input_KeysBuffer();
 
-bool Input_ButtonPressed(int button);
+bool Input_ButtonPressed(uint8_t button);
 
 #endif /* CLOCKWORKISLAND_INPUT_H__ */
