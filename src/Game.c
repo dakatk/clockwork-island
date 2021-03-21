@@ -38,7 +38,7 @@ int main(int argc, char* argv[])
         fprintf(stderr, "'%s' does not take any arguments.\n", argv[0]);
         return -1;
     }
-	printf("Running as executable '%s'\n", argv[0]);
+	printf("Running from executable '%s'\n", argv[0]);
 
 #define GAME_TITLE "Clockwork Island (Alpha v0.0.1)"
 
