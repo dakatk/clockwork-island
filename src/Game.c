@@ -38,7 +38,7 @@ int main(int argc, char* argv[])
         fprintf(stderr, "'%s' does not take any arguments.\n", argv[0]);
         return -1;
     }
-	printf("Running as executable '%s'\n", argv[0]);
+	printf("Running from executable '%s'\n", argv[0]);
 
 #define GAME_TITLE "Clockwork Island (Alpha v0.0.1)"
 
@@ -47,6 +47,7 @@ int main(int argc, char* argv[])
 		fprintf(stderr, "SDL2 failed to initialize with error: %s", SDL_GetError());
 		return Cleanup(1);
 	}
+
 #undef GAME_TITLE
 
 	if (!AssetLoader_LoadResources(renderer))
@@ -59,9 +60,9 @@ int main(int argc, char* argv[])
 		return Cleanup(1);
 
 	do {
-		Keyboard_CaptureInput();
+        Input_Capture();
 
-		if (Keyboard_KeyPressed(KEY_QUIT))
+		if (Input_KeyPressed(KEY_QUIT))
 		    break;
 
 		UpdateLoop();
@@ -127,38 +128,51 @@ void ToggleFullscreen()
 
 static inline void UpdatePlayerFilter()
 {
-	if (Keyboard_KeyTyped(KEY_A)) 
+	if (Input_KeyTyped(KEY_A))
 	{
 		player.activeFilter --;
 
 		if (player.activeFilter < 0)
-			player.activeFilter = PLAYER_NUM_FILTERS - 1;
+			player.activeFilter = player.allowedFilters;
 	}
-	else if (Keyboard_KeyTyped(KEY_S)) 
+	else if (Input_KeyTyped(KEY_S))
 	{
 		player.activeFilter ++;
 
-		if (player.activeFilter >= PLAYER_NUM_FILTERS)
+		if (player.activeFilter > player.allowedFilters)
 			player.activeFilter = 0;
 	}
+	else if (Input_KeyTyped(KEY_0 | KEY_1 | KEY_2 | KEY_3 | KEY_4 | KEY_5))
+    {
+	    uint16_t buffer = Input_KeysBuffer();
+
+	    for (int i = player.allowedFilters; i >= 0; i --)
+        {
+	        if (buffer & (1 << i))
+            {
+	            player.activeFilter = i;
+	            break;
+            }
+        }
+    }
 }
 
 void UpdateLoop()
 {
-	if (Keyboard_KeyTyped(KEY_F1))
+	if (Input_KeyTyped(KEY_F1))
 		ToggleFullscreen();
 
 	UpdatePlayerFilter();
 
-	if (Keyboard_KeyPressed(KEY_LEFT))
+	if (Input_KeyPressed(KEY_LEFT))
 		player.vx = -PLAYER_MOVE_SPEED;
 
-	else if (Keyboard_KeyPressed(KEY_RIGHT))
+	else if (Input_KeyPressed(KEY_RIGHT))
 		player.vx = PLAYER_MOVE_SPEED;
 
 	else player.vx = 0.0f;
 
-	if (Keyboard_KeyPressed(KEY_Z)) 
+	if (Input_KeyPressed(KEY_Z))
 		player.vy = -PLAYER_JUMP_SPEED;
 
 	Level_CheckPhysics(&level, &player);
