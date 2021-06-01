@@ -42,7 +42,7 @@ void Level_CheckPhysics(struct Level* level, struct Player* player)
 
         struct Platform *platform = current->platform;
 
-        if (Platform_IsOffscreen(platform) || !(platform->visible[player->activeFilter]))
+        if (Platform_IsOffscreen(platform) || !Platform_IsVisible(platform, player->activeFilter))
             continue;
 
         Physics_Collide(player, platform, playerOldX, playerOldY);
@@ -58,7 +58,7 @@ void Level_Render(struct Level* level, unsigned activeFilter)
 	    count ++;
 		struct Platform* platform = current->platform;
 
-		if (Platform_IsOffscreen(platform) || !(platform->visible[activeFilter]))
+		if (Platform_IsOffscreen(platform) || !Platform_IsVisible(platform, activeFilter))
 			continue;
 
 		Platform_Render(platform);

@@ -2,7 +2,7 @@
 #include "engine/Viewport.h"
 #include "engine/Buffer.h"
 
-void Platform_Init(struct Platform* platform, struct Texture* texture, double angle, int spriteIndex, int x, int y, int w, int h)
+void Platform_Init(struct Platform* platform, struct Texture* texture, double angle, int spriteIndex, uint8_t visible, uint8_t sides, int x, int y, int w, int h)
 {
 	platform->texture = texture;
 
@@ -21,9 +21,11 @@ void Platform_Init(struct Platform* platform, struct Texture* texture, double an
 	platform->spriteClipX = spriteClipX;
 	platform->spriteClipY = spriteClipY;
 
-	for (int i = 0; i < NUM_PLATFORM_VISIBLE_OPTIONS; i ++)
-		platform->visible[i] = false;
+	/*for (int i = 0; i < NUM_PLATFORM_VISIBLE_OPTIONS; i ++)
+		platform->visible[i] = false;*/
 
+	platform->visible = visible;
+	platform->sides = sides;
 	platform->angle = angle;
 	platform->x = x;
 	platform->y = y;
@@ -39,6 +41,14 @@ bool Platform_IsOffscreen(struct Platform* platform)
     bool offscreenBelow = platform->y < Viewport_Y;
 
 	return offscreenLeft || offscreenRight || offscreenAbove || offscreenBelow;
+}
+
+bool Platform_IsVisible(struct Platform* platform, uint8_t filterIndex)
+{
+    if (filterIndex >= NUM_PLATFORM_VISIBLE_OPTIONS)
+        return true;
+
+    return (platform->visible >> filterIndex) & 0x1;
 }
 
 void Platform_Render(struct Platform* platform)

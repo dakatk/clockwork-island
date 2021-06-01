@@ -10,7 +10,7 @@
 #define NUM_TEXTURES 2
 
 static struct Texture spritesheets[NUM_TEXTURES];
-
+/*
 static const bool optionsVisible[NUM_VISIBLE_OPTIONS][NUM_PLATFORM_VISIBLE_OPTIONS] = {
 		{true, false, false, false, false, false}, // only NONE					(0)
 		{false, true, false, false, false, false}, // only RED					(1)
@@ -68,6 +68,7 @@ static const bool optionsVisible[NUM_VISIBLE_OPTIONS][NUM_PLATFORM_VISIBLE_OPTIO
 
 		{true, true, true, true, false, false}, // not ORANGE and not VIOLET	(42)
 };
+ */
 
 bool AssetLoader_LoadResources(SDL_Renderer* renderer)
 {
@@ -213,7 +214,9 @@ static int LoadPlatformData(struct Platform* platform, FILE* lvlFile)
     // w = width
     // h = height
     // f = facing
-    int t = (int)platformData.data[0];
+    // c = sides
+    uint8_t t = (uint8_t)platformData.data[0];
+    uint8_t c = 0xF; // TODO (uint8_t)platformData.data[7]
     int s = (int)platformData.data[1];
     int x = (int)platformData.data[2];
     int y = (int)platformData.data[3];
@@ -227,10 +230,10 @@ static int LoadPlatformData(struct Platform* platform, FILE* lvlFile)
         return -1;
     }
     double angle = (double)(f * 90);
-    Platform_Init(platform, &spritesheets[1], angle, s, x, y, w, h);
+    Platform_Init(platform, &spritesheets[1], angle, s, t, c, x, y, w, h);
 
-    for (int j = 0; j < NUM_PLATFORM_VISIBLE_OPTIONS; j ++)
-        platform->visible[j] = optionsVisible[t][j];
+    /*for (int j = 0; j < NUM_PLATFORM_VISIBLE_OPTIONS; j ++)
+        platform->visible[j] = optionsVisible[t][j];*/
 
     return 1;
 }
