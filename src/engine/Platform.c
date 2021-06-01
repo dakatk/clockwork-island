@@ -21,9 +21,6 @@ void Platform_Init(struct Platform* platform, struct Texture* texture, double an
 	platform->spriteClipX = spriteClipX;
 	platform->spriteClipY = spriteClipY;
 
-	/*for (int i = 0; i < NUM_PLATFORM_VISIBLE_OPTIONS; i ++)
-		platform->visible[i] = false;*/
-
 	platform->visible = visible;
 	platform->sides = sides;
 	platform->angle = angle;

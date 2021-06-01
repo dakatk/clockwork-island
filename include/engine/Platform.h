@@ -13,8 +13,9 @@ struct Platform {
 
 	struct Texture* texture;
 
-	//bool visible[NUM_PLATFORM_VISIBLE_OPTIONS];
+	// Encoding = Orange | Violet | Green | Blue | Red
 	uint8_t visible;
+	// Encoding = Left | Bottom | Right | Top
     uint8_t sides;
 
 	double angle;

@@ -10,65 +10,6 @@
 #define NUM_TEXTURES 2
 
 static struct Texture spritesheets[NUM_TEXTURES];
-/*
-static const bool optionsVisible[NUM_VISIBLE_OPTIONS][NUM_PLATFORM_VISIBLE_OPTIONS] = {
-		{true, false, false, false, false, false}, // only NONE					(0)
-		{false, true, false, false, false, false}, // only RED					(1)
-		{false, false, true, false, false, false}, // only GREEN				(2)
-		{false, false, false, true, false, false}, // only BLUE					(3)
-		{false, false, false, false, true, false}, // only ORANGE				(4)
-		{false, false, false, false, false, true}, // only VIOLET				(5)
-
-		{true, true, false, false, false, false}, // NONE and RED				(6)
-		{true, false, true, false, false, false}, // NONE and GREEN				(7)
-		{true, false, false, true, false, false}, // NONE and BLUE				(8)
-		{true, false, false, false, true, false}, // NONE and ORANGE			(9)
-		{true, false, false, false, false, true}, // NONE and VIOLET			(10)
-
-		{false, true, true, false, false, false}, // RED and GREEN				(11)
-		{false, true, false, true, false, false}, // RED and BLUE				(12)
-		{false, true, false, false, true, false}, // RED and ORANGE				(13)
-		{false, true, false, false, false, true}, // RED and VIOLET				(14)
-
-		{false, false, true, true, false, false}, // GREEN and BLUE				(15)
-		{false, false, true, false, true, false}, // GREEN and ORANGE			(16)
-		{false, false, true, false, false, true}, // GREEN and VIOLET			(17)
-
-		{false, false, false, true, true, false}, // BLUE and ORANGE			(18)
-		{false, false, false, true, false, true}, // BLUE and VIOLET			(19)
-
-		{false, false, false, false, true, true}, // ORANGE and VIOLET			(20)
-
-		{true, true, true, true, true, true}, // ALL							(21)
-
-		{false, true, true, true, true, true}, // not NONE						(22)
-		{true, false, true, true, true, true}, // not RED						(23)
-		{true, true, false, true, true, true}, // not GREEN						(24)
-		{true, true, true, false, true, true}, // not BLUE						(25)
-		{true, true, true, true, false, true}, // not ORANGE					(26)
-		{true, true, true, true, true, false}, // not VIOLET					(27)
-
-		{false, false, true, true, true, true}, // not NONE and not RED			(28)
-		{false, true, false, true, true, true}, // not NONE and not GREEN		(29)
-		{false, true, true, false, true, true}, // not NONE and not BLUE		(30)
-		{false, true, true, true, false, true}, // not NONE and not ORANGE		(31)
-		{false, true, true, true, true, false}, // not NONE and not VIOLET		(32)
-
-		{true, false, false, true, true, true}, // not RED and not GREEN		(33)
-		{true, false, true, false, true, true}, // not RED and not BLUE			(34)
-		{true, false, true, true, false, true}, // not RED and not ORANGE		(35)
-		{true, false, true, true, true, false}, // not RED and not VIOLET		(36)
-
-		{true, true, false, false, true, true}, // not GREEN and not BLUE		(37)
-		{true, true, false, true, false, true}, // not GREEN and not ORANGE		(38)
-		{true, true, false, true, true, false}, // not GREEN and not VIOLET		(39)
-
-		{true, true, true, false, false, true}, // not BLUE and not ORANGE		(40)
-		{true, true, true, false, true, false}, // not BLUE and not VIOLET		(41)
-
-		{true, true, true, true, false, false}, // not ORANGE and not VIOLET	(42)
-};
- */
 
 bool AssetLoader_LoadResources(SDL_Renderer* renderer)
 {
@@ -215,8 +156,8 @@ static int LoadPlatformData(struct Platform* platform, FILE* lvlFile)
     // h = height
     // f = facing
     // c = sides
-    uint8_t t = (uint8_t)platformData.data[0];
-    uint8_t c = 0xF; // TODO (uint8_t)platformData.data[7]
+    uint8_t t = 0b00111111; // TODO (uint8_t)platformData.data[0];
+    uint8_t c = 0b00001111; // TODO (uint8_t)platformData.data[7]
     int s = (int)platformData.data[1];
     int x = (int)platformData.data[2];
     int y = (int)platformData.data[3];
