@@ -145,7 +145,6 @@ static inline void UpdatePlayerFilter()
 	else if (Input_KeyTyped(KEY_0 | KEY_1 | KEY_2 | KEY_3 | KEY_4 | KEY_5))
     {
 	    uint16_t buffer = Input_KeysBuffer();
-
 	    for (int i = player.allowedFilters; i >= 0; i --)
         {
 	        if (buffer & (1 << i))
@@ -165,15 +164,16 @@ void UpdateLoop()
 	UpdatePlayerFilter();
 
 	if (Input_KeyPressed(KEY_LEFT))
-		player.vx = -PLAYER_MOVE_SPEED;
+		player.vx -= 0.5f;
 
 	else if (Input_KeyPressed(KEY_RIGHT))
-		player.vx = PLAYER_MOVE_SPEED;
+		player.vx += 0.5f;
 
-	else player.vx = 0.0f;
-
-	if (Input_KeyPressed(KEY_Z))
-		player.vy = -PLAYER_JUMP_SPEED;
+	if (Input_KeyPressed(KEY_Z) && !player.isJumping)
+    {
+	    player.isJumping = true;
+        player.vy -= PLAYER_JUMP_SPEED;
+    }
 
 	Level_CheckPhysics(&level, &player);
 

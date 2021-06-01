@@ -9,7 +9,7 @@
 #include <stdbool.h>
 
 #define PLAYER_MOVE_SPEED 3.25f
-#define PLAYER_JUMP_SPEED 4.0f
+#define PLAYER_JUMP_SPEED 20.0f
 
 #define PLAYER_WIDTH 100
 #define PLAYER_HEIGHT 100
