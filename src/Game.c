@@ -175,7 +175,7 @@ void UpdateLoop()
         player.vy -= PLAYER_JUMP_SPEED;
     }
 
-	Level_CheckPhysics(&level, &player);
+	// Level_CheckPhysics(&level, &player);
 
 	float playerCenterX = player.x + ((float)player.w / 2.0f);
 	float playerCenterY = player.y + ((float)player.h / 2.0f);

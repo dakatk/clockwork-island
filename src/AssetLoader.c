@@ -100,8 +100,8 @@ bool AssetLoader_LoadLevelFile(struct Level* level, struct Player* player, const
 
 static bool LoadPlayerData(struct Player* player, FILE* lvlFile)
 {
-    // REMEMBER: ordering is little-endian
-    // (buffer[0] is LSBs of data[0], buffer[1] is MSBs)
+    // REMEMBER: Ordering is little-endian
+    // ('buffer[0]' is LSBs of 'data[0]', 'buffer[1]' is MSBs)
 	union {
 	    uint8_t buffer[6];
 	    uint16_t data[3];
@@ -134,14 +134,14 @@ static bool LoadPlayerData(struct Player* player, FILE* lvlFile)
 static int LoadPlatformData(struct Platform* platform, FILE* lvlFile)
 {
     union {
-        uint8_t buffer[14];
-        uint16_t data[7];
+        uint8_t buffer[16];
+        uint16_t data[8];
     } platformData;
 
     size_t result = fread(platformData.buffer, sizeof(platformData.buffer), 1, lvlFile);
     if (result != 1)
     {
-        if (platformData.buffer[0] == 0xff) {
+        if (platformData.buffer[0] == 0xFF) {
             return 0;
         }
         fprintf(stderr, "Corrupt or incomplete platform data.\n");
@@ -149,32 +149,24 @@ static int LoadPlatformData(struct Platform* platform, FILE* lvlFile)
     }
 
     // t = visibility index
-    // s = sprite sheet index
+    // s = sides
+    // i = sprite sheet index
     // x = x-coordinate
     // y = y-coordinate
     // w = width
     // h = height
     // f = facing
-    // c = sides
-    uint8_t t = 0b00111111; // TODO (uint8_t)platformData.data[0];
-    uint8_t c = 0b00001111; // TODO (uint8_t)platformData.data[7]
-    int s = (int)platformData.data[1];
-    int x = (int)platformData.data[2];
-    int y = (int)platformData.data[3];
-    int w = (int)platformData.data[4];
-    int h = (int)platformData.data[5];
-    int f = (int)platformData.data[6];
+    uint8_t t = (uint8_t)platformData.data[0];
+    uint8_t s = (uint8_t)platformData.data[1];
+    int i = (int)platformData.data[2];
+    int x = (int)platformData.data[3];
+    int y = (int)platformData.data[4];
+    int w = (int)platformData.data[5];
+    int h = (int)platformData.data[6];
+    int f = (int)platformData.data[7];
 
-    if (t < 0 || t >= NUM_VISIBLE_OPTIONS)
-    {
-        fprintf(stderr, "Error: Invalid visibility index found.\n");
-        return -1;
-    }
     double angle = (double)(f * 90);
-    Platform_Init(platform, &spritesheets[1], angle, s, t, c, x, y, w, h);
-
-    /*for (int j = 0; j < NUM_PLATFORM_VISIBLE_OPTIONS; j ++)
-        platform->visible[j] = optionsVisible[t][j];*/
+    Platform_Init(platform, &spritesheets[1], angle, i, t, s, x, y, w, h);
 
     return 1;
 }

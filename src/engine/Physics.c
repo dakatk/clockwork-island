@@ -1,9 +1,9 @@
 #include "engine/Physics.h"
 
-static bool collideTop(struct Player* player, float platformTop, float playerOldBottom);
-static bool collideLeft(struct Player* player, float platformLeft, float playerOldRight);
-static bool collideRight(struct Player* player, float platformRight, float playerOldLeft);
-static void collideBottom(struct Player* player, float platformBottom, float playerOldTop);
+static bool CollideTop(struct Player* player, float platformTop, float playerOldBottom);
+static bool CollideLeft(struct Player* player, float platformLeft, float playerOldRight);
+static bool CollideRight(struct Player* player, float platformRight, float playerOldLeft);
+static void CollideBottom(struct Player* player, float platformBottom, float playerOldTop);
 
 void Physics_Collide(struct Player* player, struct Platform* platform, float playerOldX, float playerOldY)
 {
@@ -17,7 +17,7 @@ void Physics_Collide(struct Player* player, struct Platform* platform, float pla
         float platformTop = (float)platform->y;
         float playerOldBottom = playerOldY + (float)player->h;
 
-        if (collideTop(player, platformTop, playerOldBottom))
+        if (CollideTop(player, platformTop, playerOldBottom))
             return;
     }
 
@@ -26,25 +26,25 @@ void Physics_Collide(struct Player* player, struct Platform* platform, float pla
         float platformLeft = (float)platform->x;
         float playerOldRight = playerOldX + (float)player->w;
 
-        if (collideLeft(player, platformLeft, playerOldRight))
+        if (CollideLeft(player, platformLeft, playerOldRight))
             return;
     }
 
     if (hasRight)
     {
         float platformRight = (float)(platform->x + platform->w);
-        if (collideRight(player, platformRight, playerOldX))
+        if (CollideRight(player, platformRight, playerOldX))
             return;
     }
 
     if (hasBottom)
     {
         float platformBottom = (float)(platform->y + platform->w);
-        collideBottom(player, platformBottom, playerOldY);
+        CollideBottom(player, platformBottom, playerOldY);
     }
 }
 
-static bool collideTop(struct Player* player, float platformTop, float playerOldBottom)
+static bool CollideTop(struct Player* player, float platformTop, float playerOldBottom)
 {
     float playerBottom = player->y + (float)player->h;
 
@@ -59,7 +59,7 @@ static bool collideTop(struct Player* player, float platformTop, float playerOld
     return false;
 }
 
-static bool collideLeft(struct Player* player, float platformLeft, float playerOldRight)
+static bool CollideLeft(struct Player* player, float platformLeft, float playerOldRight)
 {
     float playerRight = player->x + (float)player->w;
 
@@ -73,7 +73,7 @@ static bool collideLeft(struct Player* player, float platformLeft, float playerO
     return false;
 }
 
-static bool collideRight(struct Player* player, float platformRight, float playerOldLeft)
+static bool CollideRight(struct Player* player, float platformRight, float playerOldLeft)
 {
     if (player->x < platformRight && playerOldLeft >= platformRight)
     {
@@ -85,7 +85,7 @@ static bool collideRight(struct Player* player, float platformRight, float playe
     return false;
 }
 
-static void collideBottom(struct Player* player, float platformBottom, float playerOldTop)
+static void CollideBottom(struct Player* player, float platformBottom, float playerOldTop)
 {
     if (player->y < platformBottom && playerOldTop >= platformBottom)
     {
