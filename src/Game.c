@@ -164,10 +164,10 @@ void UpdateLoop()
 	UpdatePlayerFilter();
 
 	if (Input_KeyPressed(KEY_LEFT))
-		player.vx -= 0.5f;
+		player.vx -= PLAYER_MOVE_SPEED;
 
 	else if (Input_KeyPressed(KEY_RIGHT))
-		player.vx += 0.5f;
+		player.vx += PLAYER_MOVE_SPEED;
 
 	if (Input_KeyPressed(KEY_Z) && !player.isJumping)
     {
@@ -177,7 +177,10 @@ void UpdateLoop()
 
 	Level_CheckPhysics(&level, &player);
 
-	Viewport_SnapTo(player.cx, player.cy);
+	float playerCenterX = player.x + ((float)player.w / 2.0f);
+	float playerCenterY = player.y + ((float)player.h / 2.0f);
+
+	Viewport_SnapTo(playerCenterX, playerCenterY);
 	Viewport_Constrain();
 
 	Background_Scroll();

@@ -19,8 +19,6 @@ void Player_Init(struct Player* player, struct Texture* spritesheet, int x, int 
 
 	player->vx = 0.0f;
 	player->vy = 0.0f;
-	player->cx = (float)x + (float)w / 2.0f;
-	player->cy = (float)y - (float)h / 2.0f;
 	player->x = (float)x;
 	player->y = (float)y;
 	player->w = w;

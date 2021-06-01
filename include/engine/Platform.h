@@ -2,7 +2,6 @@
 #define CLOCKWORKISLAND_PLATFORM_H__
 
 #include "Texture.h"
-#include "Physics.h"
 
 #include <stdbool.h>
 #include <stdint.h>

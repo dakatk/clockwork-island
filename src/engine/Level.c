@@ -33,9 +33,6 @@ void Level_CheckPhysics(struct Level* level, struct Player* player)
     player->x += player->vx;
     player->y += player->vy;
 
-    player->cx += player->vx;
-    player->cy += player->vy;
-
     player->vx *= FRICTION;
 
 #undef GRAVITY

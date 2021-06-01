@@ -3,13 +3,12 @@
 
 #include "Direction.h"
 #include "Texture.h"
-#include "Physics.h"
 #include "Filter.h"
 
 #include <stdbool.h>
 
-#define PLAYER_MOVE_SPEED 3.25f
-#define PLAYER_JUMP_SPEED 20.0f
+#define PLAYER_MOVE_SPEED 0.5f
+#define PLAYER_JUMP_SPEED 15.0f
 
 #define PLAYER_WIDTH 100
 #define PLAYER_HEIGHT 100
@@ -28,7 +27,6 @@ struct Player {
 	int allowedFilters;
 
 	float vx, vy;
-	float cx, cy;
 	float x, y;
 	int w, h;
 };
