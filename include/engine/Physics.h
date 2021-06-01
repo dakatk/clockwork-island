@@ -1,6 +1,9 @@
-#ifndef CLOCKWORKISLAND_BOUNDS_H__
-#define CLOCKWORKISLAND_BOUNDS_H__
+#ifndef CLOCKWORKISLAND_PHYSICS_H__
+#define CLOCKWORKISLAND_PHYSICS_H__
 
-// TODO implement...
+#include "engine/Player.h"
+#include "engine/Platform.h"
 
-#endif /* CLOCKWORKISLAND_BOUNDS_H__ */
+void Physics_Collide(struct Player* player, struct Platform* platform);
+
+#endif /* CLOCKWORKISLAND_PHYSICS_H__ */
