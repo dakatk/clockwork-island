@@ -4,6 +4,6 @@
 #include "engine/Player.h"
 #include "engine/Platform.h"
 
-void Physics_Collide(struct Player* player, struct Platform* platform);
+void Physics_Collide(struct Player* player, struct Platform* platform, float playerOldX, float playerOldY);
 
 #endif /* CLOCKWORKISLAND_PHYSICS_H__ */
