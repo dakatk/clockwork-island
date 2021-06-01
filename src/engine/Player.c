@@ -16,6 +16,7 @@ void Player_Init(struct Player* player, struct Texture* spritesheet, int x, int 
 
 	player->activeFilter = 0;
 	player->allowedFilters = u;
+	player->isJumping = true;
 
 	player->vx = 0.0f;
 	player->vy = 0.0f;
@@ -101,7 +102,7 @@ void Player_Render(struct Player* player)
 		Buffer_RenderFilter(drawFilter);
 
 	float actualX = player->x - (float)Viewport_X;
-	float actualY = BUFFER_HEIGHT - player->y - (float)Viewport_Y + 1.0f;
+	float actualY = BUFFER_HEIGHT - player->y - (float)Viewport_Y + 3.0f;
 
 	Buffer_RenderTexture(player->texture, (int)actualX, (int)actualY, player->w, player->h);
 }

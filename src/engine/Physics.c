@@ -15,7 +15,7 @@ void Physics_Collide(struct Player* player, struct Platform* platform, float pla
     if (hasTop)
     {
         float platformTop = (float)platform->y;
-        float playerOldBottom = playerOldY + (float)player->h;
+        float playerOldBottom = playerOldY - (float)player->h;
 
         if (CollideTop(player, platformTop, playerOldBottom))
             return;
@@ -39,18 +39,18 @@ void Physics_Collide(struct Player* player, struct Platform* platform, float pla
 
     if (hasBottom)
     {
-        float platformBottom = (float)(platform->y + platform->w);
+        float platformBottom = (float)(platform->y - platform->h);
         CollideBottom(player, platformBottom, playerOldY);
     }
 }
 
 static bool CollideTop(struct Player* player, float platformTop, float playerOldBottom)
 {
-    float playerBottom = player->y + (float)player->h;
+    float playerBottom = player->y - (float)player->h;
 
-    if (playerBottom > platformTop && playerOldBottom <= platformTop)
+    if (playerBottom < platformTop && playerOldBottom >= platformTop)
     {
-        player->y = platformTop - (float)player->h;
+        player->y = platformTop + (float)player->h;
         player->vy = 0.0f;
         player->isJumping = false;
 
@@ -87,7 +87,7 @@ static bool CollideRight(struct Player* player, float platformRight, float playe
 
 static void CollideBottom(struct Player* player, float platformBottom, float playerOldTop)
 {
-    if (player->y < platformBottom && playerOldTop >= platformBottom)
+    if (player->y > platformBottom && playerOldTop <= platformBottom)
     {
         player->y = platformBottom;
         player->vy = 0.0f;

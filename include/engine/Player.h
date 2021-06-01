@@ -20,11 +20,9 @@ struct Player {
 	const struct Direction* direction;
 	struct Texture* texture;
 
-	bool isJumping;
-	bool onGround;
-
 	int activeFilter;
 	int allowedFilters;
+    bool isJumping;
 
 	float vx, vy;
 	float x, y;

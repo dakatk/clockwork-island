@@ -25,7 +25,7 @@ void Level_CheckPhysics(struct Level* level, struct Player* player)
     float playerOldX = player->x;
     float playerOldY = player->y;
 
-#define GRAVITY 4.0f
+#define GRAVITY -0.01f
 #define FRICTION 0.9f
 
     player->vy += GRAVITY;
@@ -34,6 +34,9 @@ void Level_CheckPhysics(struct Level* level, struct Player* player)
     player->y += player->vy;
 
     player->vx *= FRICTION;
+
+    if (player->vx <= 0.01f)
+        player->vx = 0.0f;
 
 #undef GRAVITY
 #undef FRICTION

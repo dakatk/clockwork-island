@@ -165,6 +165,8 @@ static int LoadPlatformData(struct Platform* platform, FILE* lvlFile)
     int h = (int)platformData.data[6];
     int f = (int)platformData.data[7];
 
+    printf("%d, %d, %d, %d\n", x, y, w, h);
+
     double angle = (double)(f * 90);
     Platform_Init(platform, &spritesheets[1], angle, i, t, s, x, y, w, h);
 
