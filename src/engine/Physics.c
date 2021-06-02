@@ -1,10 +1,26 @@
 #include "engine/Physics.h"
 
+bool Physics_Intersects(struct Player* player, struct Platform* platform)
+{
+    float playerCenterX = player->x + ((float)player->w / 2.0f);
+    float playerCenterY = player->y - ((float)player->h / 2.0f);
+
+    float platformCenterX = (float)platform->x + ((float)platform->w / 2.0f);
+    float platformCenterY = (float)platform->y - ((float)platform->h / 2.0f);
+
+    float xDiff = fabsf(playerCenterX - platformCenterX) * 2.0f;
+    float yDiff = fabsf(playerCenterY - platformCenterY) * 2.0f;
+
+    return xDiff < (float)(player->w + platform->w) &&
+            yDiff < (float)(player->h + platform->h);
+}
+
 static bool CollideTop(struct Player* player, float platformTop, float playerOldBottom);
 static bool CollideLeft(struct Player* player, float platformLeft, float playerOldRight);
 static bool CollideRight(struct Player* player, float platformRight, float playerOldLeft);
 static void CollideBottom(struct Player* player, float platformBottom, float playerOldTop);
 
+// TODO FUTURE Add support for minimum step height?
 void Physics_Collide(struct Player* player, struct Platform* platform, float playerOldX, float playerOldY)
 {
     uint8_t hasTop = platform->sides & 0x1;

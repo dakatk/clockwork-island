@@ -3,6 +3,7 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 
 void Level_Init(struct Level* level)
 {
@@ -25,17 +26,20 @@ void Level_CheckPhysics(struct Level* level, struct Player* player)
     float playerOldX = player->x;
     float playerOldY = player->y;
 
-#define GRAVITY -0.01f
-#define FRICTION 0.9f
+#define GRAVITY 0.2f
+#define FRICTION 0.92f
 
-    player->vy += GRAVITY;
+    player->vy -= GRAVITY;
+
+    if (player->vy < -PLAYER_JUMP_SPEED)
+        player->vy = -PLAYER_JUMP_SPEED;
 
     player->x += player->vx;
     player->y += player->vy;
 
     player->vx *= FRICTION;
 
-    if (player->vx <= 0.01f)
+    if (fabsf(player->vx) <= 0.05f)
         player->vx = 0.0f;
 
 #undef GRAVITY
@@ -48,7 +52,8 @@ void Level_CheckPhysics(struct Level* level, struct Player* player)
         if (Platform_IsOffscreen(platform) || !Platform_IsVisible(platform, player->activeFilter))
             continue;
 
-        Physics_Collide(player, platform, playerOldX, playerOldY);
+        if (Physics_Intersects(player, platform))
+            Physics_Collide(player, platform, playerOldX, playerOldY);
     }
 }
 

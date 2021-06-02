@@ -53,7 +53,7 @@ void Platform_Render(struct Platform* platform)
 	Texture_MoveClip(platform->texture, platform->spriteClipX, platform->spriteClipY);
 
 	int actualX = platform->x - Viewport_X;
-	int actualY = BUFFER_HEIGHT - platform->y - Viewport_Y;
+	int actualY = BUFFER_HEIGHT - platform->y + Viewport_Y;
 
 	Buffer_RenderTextureRotated(platform->texture, platform->angle, actualX, actualY, platform->w, platform->h);
 }

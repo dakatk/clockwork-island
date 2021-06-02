@@ -102,7 +102,7 @@ void Player_Render(struct Player* player)
 		Buffer_RenderFilter(drawFilter);
 
 	float actualX = player->x - (float)Viewport_X;
-	float actualY = BUFFER_HEIGHT - player->y - (float)Viewport_Y + 3.0f;
+	float actualY = BUFFER_HEIGHT - player->y + (float)Viewport_Y + 3.0f;
 
 	Buffer_RenderTexture(player->texture, (int)actualX, (int)actualY, player->w, player->h);
 }

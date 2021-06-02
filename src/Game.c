@@ -178,10 +178,10 @@ void UpdateLoop()
 	Level_CheckPhysics(&level, &player);
 
 	float playerCenterX = player.x + ((float)player.w / 2.0f);
-	float playerCenterY = player.y + ((float)player.h / 2.0f);
+	float playerCenterY = player.y - ((float)player.h / 2.0f);
 
-	//Viewport_SnapTo(playerCenterX, playerCenterY);
-	//Viewport_Constrain();
+	Viewport_SnapTo(playerCenterX, playerCenterY);
+	Viewport_Constrain();
 
 	Background_Scroll();
 
