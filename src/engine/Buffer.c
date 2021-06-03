@@ -5,10 +5,16 @@
 static SDL_Texture* target;
 static SDL_Renderer* renderer;
 
-void Buffer_Init(SDL_Renderer* renderer_, int w, int h)
+unsigned int Buffer_Width;
+unsigned int Buffer_Height;
+
+void Buffer_Init(SDL_Renderer* renderer_, unsigned int w, unsigned int h)
 {
-    target = SDL_CreateTexture(renderer_, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, w, h);
+    target = SDL_CreateTexture(renderer_, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, (int)w, (int)h);
     renderer = renderer_;
+
+    Buffer_Width = w;
+    Buffer_Height = h;
 }
 
 void Buffer_Begin()
@@ -77,8 +83,8 @@ void Buffer_RenderFilter(const struct Filter* filter)
     SDL_Rect screenBounds = {
             .x = 0,
             .y = 0,
-            .w = BUFFER_WIDTH,
-            .h = BUFFER_HEIGHT
+            .w = (int)Buffer_Width,
+            .h = (int)Buffer_Height
     };
     SDL_RenderFillRect(renderer, &screenBounds);
 }

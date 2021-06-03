@@ -24,9 +24,6 @@ void Player_Init(struct Player* player, struct Texture* spritesheet, int x, int 
 	player->x = (float)x;
 	player->y = (float)y;
 
-	player->oldX = (float)x;
-	player->oldY = (float)y;
-
 	player->w = w;
 	player->h = h;
 }
@@ -38,6 +35,9 @@ void Player_SetBoundingBox(struct Player* player, float bw, float bh)
 
 	player->boundingBox.cx = player->x + ((float)player->w / 2.0f);
 	player->boundingBox.cy = player->y - ((float)player->h / 2.0f);
+
+	player->oldCX = player->boundingBox.cx;
+	player->oldCY = player->boundingBox.cy;
 }
 
 void Player_UpdateDirection(struct Player* player)
@@ -116,7 +116,7 @@ void Player_Render(struct Player* player)
 		Buffer_RenderFilter(drawFilter);
 
 	float actualX = player->x - (float)Viewport_X;
-	float actualY = BUFFER_HEIGHT - player->y + (float)Viewport_Y + 3.0f;
+	float actualY = (float)Buffer_Height - player->y + (float)Viewport_Y;
 
 	Buffer_RenderTexture(player->texture, (int)actualX, (int)actualY, player->w, player->h);
 }

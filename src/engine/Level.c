@@ -51,9 +51,11 @@ void Level_CheckPhysics(struct Level* level, struct Player* player)
         if (Platform_IsOffscreen(platform) || !Platform_IsVisible(platform, player->activeFilter))
             continue;
 
-        if (Physics_Intersects(player, platform))
+        printf("%d\n", Physics_Intersects(&player->boundingBox, &platform->boundingBox));
+        if (Physics_Intersects(&player->boundingBox, &platform->boundingBox))
             Physics_Collide(player, platform);
     }
+    printf("\n");
 }
 
 void Level_Render(struct Level* level, unsigned activeFilter)

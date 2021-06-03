@@ -41,9 +41,9 @@ void Platform_SetBoundingBox(struct Platform* platform, float bw, float bh)
 
 bool Platform_IsOffscreen(struct Platform* platform)
 {
-    bool offscreenLeft = platform->x > Viewport_X + BUFFER_WIDTH;
+    bool offscreenLeft = platform->x > Viewport_X + Buffer_Width;
     bool offscreenRight = platform->x + platform->w < Viewport_X;
-    bool offscreenAbove = platform->y + platform->h > Viewport_Y + BUFFER_HEIGHT;
+    bool offscreenAbove = platform->y + platform->h > Viewport_Y + Buffer_Height;
     bool offscreenBelow = platform->y < Viewport_Y;
 
 	return offscreenLeft || offscreenRight || offscreenAbove || offscreenBelow;
@@ -62,7 +62,7 @@ void Platform_Render(struct Platform* platform)
 	Texture_MoveClip(platform->texture, platform->spriteClipX, platform->spriteClipY);
 
 	int actualX = platform->x - Viewport_X;
-	int actualY = BUFFER_HEIGHT - platform->y + Viewport_Y;
+	int actualY = Buffer_Height - platform->y + Viewport_Y;
 
 	Buffer_RenderTextureRotated(platform->texture, platform->angle, actualX, actualY, platform->w, platform->h);
 }

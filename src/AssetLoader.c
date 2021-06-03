@@ -9,7 +9,9 @@
 
 #define PLAYER_WIDTH 100
 #define PLAYER_HEIGHT 100
+
 #define PLAYER_BB_WIDTH 70
+#define PLAYER_BB_HEIGHT 94
 
 #define NUM_TEXTURES 2
 
@@ -137,7 +139,7 @@ static bool LoadPlayerData(struct Player* player, FILE* lvlFile)
         u = NUM_FILTERS - 1;
 
 	Player_Init(player, &spritesheets[0], px, py, PLAYER_WIDTH, PLAYER_HEIGHT, u);
-    Player_SetBoundingBox(player, PLAYER_BB_WIDTH, PLAYER_HEIGHT);
+    Player_SetBoundingBox(player, PLAYER_BB_WIDTH, PLAYER_BB_HEIGHT);
 
 	return true;
 }
