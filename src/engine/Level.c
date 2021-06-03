@@ -22,28 +22,6 @@ void Level_AddPlatform(struct Level* level, struct Platform* platform)
 
 void Level_CheckPhysics(struct Level* level, struct Player* player)
 {
-/*    float playerOldX = player->x;
-    float playerOldY = player->y;
-
-#define GRAVITY 0.2f
-#define FRICTION 0.8f
-
-    player->vy -= GRAVITY;
-
-    player->vy = fmaxf(fminf(player->vy, PLAYER_MAX_JUMP_SPEED), -PLAYER_MAX_JUMP_SPEED);
-    player->vx = fmaxf(fminf(player->vx, PLAYER_MAX_MOVE_SPEED), -PLAYER_MAX_MOVE_SPEED);
-
-    player->x += player->vx;
-    player->y += player->vy;
-
-    player->vx *= FRICTION;
-
-    if (fabsf(player->vx) <= 0.05f)
-        player->vx = 0.0f;
-
-#undef GRAVITY
-#undef FRICTION*/
-
     for (struct PlatformNode* current = level->platforms; current != NULL; current = current->next) {
 
         struct Platform *platform = current->platform;
@@ -51,11 +29,9 @@ void Level_CheckPhysics(struct Level* level, struct Player* player)
         if (Platform_IsOffscreen(platform) || !Platform_IsVisible(platform, player->activeFilter))
             continue;
 
-        printf("%d\n", Physics_Intersects(&player->boundingBox, &platform->boundingBox));
         if (Physics_Intersects(&player->boundingBox, &platform->boundingBox))
             Physics_Collide(player, platform);
     }
-    printf("\n");
 }
 
 void Level_Render(struct Level* level, unsigned activeFilter)

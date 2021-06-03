@@ -147,8 +147,8 @@ static bool LoadPlayerData(struct Player* player, FILE* lvlFile)
 static int LoadPlatformData(struct Platform* platform, FILE* lvlFile)
 {
     union {
-        uint8_t buffer[16];
-        uint16_t data[8];
+        uint8_t buffer[20];
+        uint16_t data[10];
     } platformData;
 
     size_t result = fread(platformData.buffer, sizeof(platformData.buffer), 1, lvlFile);
@@ -161,28 +161,32 @@ static int LoadPlatformData(struct Platform* platform, FILE* lvlFile)
         return -1;
     }
 
-    // t = visibility index
+    // vi = visibility index
     // s = sides
-    // i = sprite sheet index
+    // si = sprite sheet index
     // x = x-coordinate
     // y = y-coordinate
     // w = width
     // h = height
+    // bw = bounds width
+    // bh = bounds height
     // f = facing
-    uint8_t t = (uint8_t)platformData.data[0];
+    uint8_t vi = (uint8_t)platformData.data[0];
     uint8_t s = (uint8_t)platformData.data[1];
-    int i = (int)platformData.data[2];
+    int si = (int)platformData.data[2];
     int x = (int)platformData.data[3];
     int y = (int)platformData.data[4];
     int w = (int)platformData.data[5];
     int h = (int)platformData.data[6];
-    int f = (int)platformData.data[7];
+    float bw = (float)platformData.data[7];
+    float bh = (float)platformData.data[8];
+    int f = (int)platformData.data[9];
 
     double angle = (double)(f * 90);
 
-    Platform_Init(platform, &spritesheets[1], angle, i, t, s, x, y, w, h);
+    Platform_Init(platform, &spritesheets[1], angle, si, vi, s, x, y, w, h);
     // TODO separate fields for bb width and height
-    Platform_SetBoundingBox(platform, (float)w, (float)h);
+    Platform_SetBoundingBox(platform, bw, bh);
 
     return 1;
 }

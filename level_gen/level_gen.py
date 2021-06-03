@@ -10,6 +10,7 @@ PLAYER_FIELDS = [
 PLATFORM_FIELDS = [
     'visibility', 'sides', 'sprite',
     'x', 'y', 'width', 'height',
+    'boundsWidth', 'boundsHeight',
     'facing'
 ]
 
