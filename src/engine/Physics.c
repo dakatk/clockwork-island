@@ -15,13 +15,32 @@ bool Physics_Intersects(struct Player* player, struct Platform* platform)
             yDiff < (float)(player->h + platform->h);
 }
 
+void Physics_MovePlayer(struct Player* player, float gravity, float friction, float maxJumpSpeed, float maxMoveSpeed, float minMoveSpeed)
+{
+    player->oldX = player->x;
+    player->oldY = player->y;
+
+    player->vy -= gravity;
+
+    player->vy = fmaxf(fminf(player->vy, maxJumpSpeed), -maxJumpSpeed);
+    player->vx = fmaxf(fminf(player->vx, maxMoveSpeed), -maxMoveSpeed);
+
+    player->x += player->vx;
+    player->y += player->vy;
+
+    player->vx *= friction;
+
+    if (fabsf(player->vx) <= minMoveSpeed)
+        player->vx = 0.0f;
+}
+
 static bool CollideTop(struct Player* player, float platformTop, float playerOldBottom);
 static bool CollideLeft(struct Player* player, float platformLeft, float playerOldRight);
 static bool CollideRight(struct Player* player, float platformRight, float playerOldLeft);
 static void CollideBottom(struct Player* player, float platformBottom, float playerOldTop);
 
 // TODO FUTURE Add support for minimum step height?
-void Physics_Collide(struct Player* player, struct Platform* platform, float playerOldX, float playerOldY)
+void Physics_Collide(struct Player* player, struct Platform* platform)
 {
     uint8_t hasTop = platform->sides & 0x1;
     uint8_t hasRight = (platform->sides >> 1) & 0x1;
@@ -31,7 +50,7 @@ void Physics_Collide(struct Player* player, struct Platform* platform, float pla
     if (hasTop)
     {
         float platformTop = (float)platform->y;
-        float playerOldBottom = playerOldY - (float)player->h;
+        float playerOldBottom = player->oldY - (float)player->h;
 
         if (CollideTop(player, platformTop, playerOldBottom))
             return;
@@ -40,7 +59,7 @@ void Physics_Collide(struct Player* player, struct Platform* platform, float pla
     if (hasLeft)
     {
         float platformLeft = (float)platform->x;
-        float playerOldRight = playerOldX + (float)player->w;
+        float playerOldRight = player->oldX + (float)player->w;
 
         if (CollideLeft(player, platformLeft, playerOldRight))
             return;
@@ -49,14 +68,14 @@ void Physics_Collide(struct Player* player, struct Platform* platform, float pla
     if (hasRight)
     {
         float platformRight = (float)(platform->x + platform->w);
-        if (CollideRight(player, platformRight, playerOldX))
+        if (CollideRight(player, platformRight, player->oldX))
             return;
     }
 
     if (hasBottom)
     {
         float platformBottom = (float)(platform->y - platform->h);
-        CollideBottom(player, platformBottom, playerOldY);
+        CollideBottom(player, platformBottom, player->oldY);
     }
 }
 

@@ -1,4 +1,5 @@
 #include "AssetLoader.h"
+#include "engine/Filter.h"
 #include "engine/Texture.h"
 #include "engine/Viewport.h"
 #include "engine/Background.h"
@@ -6,7 +7,6 @@
 #include <stdio.h>
 #include <stdint.h>
 
-#define NUM_VISIBLE_OPTIONS 43
 #define NUM_TEXTURES 2
 
 static struct Texture spritesheets[NUM_TEXTURES];
@@ -23,10 +23,16 @@ bool AssetLoader_LoadResources(SDL_Renderer* renderer)
 #undef PLAYER_IMAGE
 #undef TILES_IMAGE
 
+#define PLAYER_SPRITE_CLIP_SIZE 100
+#define PLATFORM_SPRITE_CLIP_SIZE 128
+
 	const int clipSizes[NUM_TEXTURES] = {
 			PLAYER_SPRITE_CLIP_SIZE,
 			PLATFORM_SPRITE_CLIP_SIZE
 	};
+
+#undef PLAYER_SPRITE_CLIP_SIZE
+#undef PLATFORM_SPRITE_CLIP_SIZE
 
 	for (int i = 0; i < NUM_TEXTURES; i ++)
 	{
@@ -123,10 +129,16 @@ static bool LoadPlayerData(struct Player* player, FILE* lvlFile)
 
     if (u < 0) u = 0;
 
-    else if (u >= PLAYER_NUM_FILTERS)
-        u = PLAYER_NUM_FILTERS - 1;
+    else if (u >= NUM_FILTERS)
+        u = NUM_FILTERS - 1;
+
+#define PLAYER_WIDTH 100
+#define PLAYER_HEIGHT 100
 
 	Player_Init(player, &spritesheets[0], px, py, PLAYER_WIDTH, PLAYER_HEIGHT, u);
+
+#undef PLAYER_WIDTH
+#undef PLAYER_HEIGHT
 
 	return true;
 }

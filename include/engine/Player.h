@@ -8,17 +8,6 @@
 
 #include <stdbool.h>
 
-#define PLAYER_MOVE_SPEED 4.0f
-#define PLAYER_JUMP_SPEED 8.5f
-#define PLAYER_MAX_MOVE_SPEED 4.7f
-#define PLAYER_MAX_JUMP_SPEED 8.5f
-
-#define PLAYER_WIDTH 100
-#define PLAYER_HEIGHT 100
-
-#define PLAYER_SPRITE_CLIP_SIZE 100
-#define PLAYER_NUM_FILTERS 6
-
 struct Player {
 	const struct Direction* direction;
 	struct Texture* texture;
@@ -30,11 +19,11 @@ struct Player {
 
 	float vx, vy;
 	float x, y;
+	float oldX, oldY;
 	int w, h;
 };
 
 void Player_Init(struct Player* player, struct Texture* spritesheet, int x, int y, int w, int h, int u);
-void Player_SetBoundingBox(struct Player* platform, float bx, float by, int bw, int bh);
 void Player_UpdateDirection(struct Player* player);
 void Player_Animate(struct Player* player);
 void Player_Render(struct Player* player);

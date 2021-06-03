@@ -42,7 +42,7 @@ bool Platform_IsOffscreen(struct Platform* platform)
 
 bool Platform_IsVisible(struct Platform* platform, uint8_t filterIndex)
 {
-    if (filterIndex >= NUM_PLATFORM_VISIBLE_OPTIONS)
+    if (filterIndex >= NUM_FILTERS)
         return true;
 
     return (platform->visible >> filterIndex) & 0x1;

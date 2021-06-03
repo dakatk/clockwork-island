@@ -7,9 +7,6 @@
 #include <stdbool.h>
 #include <stdint.h>
 
-#define PLATFORM_SPRITE_CLIP_SIZE 128
-#define NUM_PLATFORM_VISIBLE_OPTIONS 6
-
 struct Platform {
 
 	struct Texture* texture;

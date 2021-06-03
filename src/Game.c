@@ -10,12 +10,21 @@
 
 #include <stdio.h>
 
+#include "engine/Physics.h"
 #include "engine/Input.h"
 #include "engine/Viewport.h"
 #include "engine/Buffer.h"
 #include "engine/Background.h"
 
 #include "AssetLoader.h"
+
+#define GRAVITY 0.2f
+#define FRICTION 0.8f
+#define PLAYER_MOVE_SPEED 4.0f
+#define PLAYER_JUMP_SPEED 8.5f
+#define PLAYER_MAX_MOVE_SPEED 4.7f
+#define PLAYER_MAX_JUMP_SPEED 8.5f
+#define PLAYER_MIN_MOVE_SPEED 0.5f
 
 SDL_Window* window;
 SDL_Renderer* renderer;
@@ -175,6 +184,7 @@ void UpdateLoop()
         player.vy += PLAYER_JUMP_SPEED;
     }
 
+    Physics_MovePlayer(&player, GRAVITY, FRICTION, PLAYER_MAX_JUMP_SPEED, PLAYER_MAX_MOVE_SPEED, PLAYER_MIN_MOVE_SPEED);
 	Level_CheckPhysics(&level, &player);
 
 	float playerCenterX = player.x + ((float)player.w / 2.0f);

@@ -3,7 +3,7 @@
 #include "engine/Buffer.h"
 
 // NULL means no filter active
-static const struct Filter* allFilters[PLAYER_NUM_FILTERS] = { // NOLINT(cppcoreguidelines-interfaces-global-init)
+static const struct Filter* allFilters[NUM_FILTERS] = { // NOLINT(cppcoreguidelines-interfaces-global-init)
 		NULL, &Filter_RED,
 		&Filter_GREEN, &Filter_BLUE,
 		&Filter_ORANGE, &Filter_VIOLET
@@ -14,14 +14,21 @@ void Player_Init(struct Player* player, struct Texture* spritesheet, int x, int 
 	player->direction = &Direction_STAND_RIGHT;
 	player->texture = spritesheet;
 
+	//player->boundingBox.x =
+
 	player->activeFilter = 0;
 	player->allowedFilters = u;
 	player->isJumping = true;
 
 	player->vx = 0.0f;
 	player->vy = 0.0f;
+
 	player->x = (float)x;
 	player->y = (float)y;
+
+	player->oldX = (float)x;
+	player->oldY = (float)y;
+
 	player->w = w;
 	player->h = h;
 }
