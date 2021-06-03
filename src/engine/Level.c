@@ -27,12 +27,16 @@ void Level_CheckPhysics(struct Level* level, struct Player* player)
     float playerOldY = player->y;
 
 #define GRAVITY 0.2f
-#define FRICTION 0.92f
+#define FRICTION 0.8f
 
+    // TODO Move to function in Player.h (?)
     player->vy -= GRAVITY;
 
-    if (player->vy < -PLAYER_JUMP_SPEED)
-        player->vy = -PLAYER_JUMP_SPEED;
+    player->vy = fmaxf(fminf(player->vy, PLAYER_MAX_JUMP_SPEED), -PLAYER_MAX_JUMP_SPEED);
+    player->vx = fmaxf(fminf(player->vx, PLAYER_MAX_MOVE_SPEED), -PLAYER_MAX_MOVE_SPEED);
+
+    /*if (player->vy < -PLAYER_JUMP_SPEED)
+        player->vy = -PLAYER_JUMP_SPEED;*/
 
     player->x += player->vx;
     player->y += player->vy;

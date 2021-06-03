@@ -1,0 +1,37 @@
+{
+    "player_x": "100",
+    "player_y": "250",
+    "upgrades": "5",
+    "platforms": [
+        {
+            "visibility": "63",
+            "sides": "15",
+            "sprite": "16",
+            "x": "76",
+            "y": "120",
+            "width": "64",
+            "height": "64",
+            "facing": "1"
+        },
+        {
+            "visibility": "63",
+            "sides": "15",
+            "sprite": "16",
+            "x": "140",
+            "y": "120",
+            "width": "64",
+            "height": "64",
+            "facing": "3"
+        },
+        {
+            "visibility": "63",
+            "sides": "15",
+            "sprite": "0",
+            "x": "204",
+            "y": "184",
+            "width": "64",
+            "height": "64",
+            "facing": "0"
+        }
+    ]
+}

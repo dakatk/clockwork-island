@@ -7,8 +7,10 @@
 
 #include <stdbool.h>
 
-#define PLAYER_MOVE_SPEED 0.5f
+#define PLAYER_MOVE_SPEED 4.0f
 #define PLAYER_JUMP_SPEED 8.5f
+#define PLAYER_MAX_MOVE_SPEED 4.7f
+#define PLAYER_MAX_JUMP_SPEED 8.5f
 
 #define PLAYER_WIDTH 100
 #define PLAYER_HEIGHT 100
