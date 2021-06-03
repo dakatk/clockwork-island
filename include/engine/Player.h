@@ -19,11 +19,12 @@ struct Player {
 
 	float vx, vy;
 	float x, y;
-	float oldX, oldY;
+	float oldCX, oldCY;
 	int w, h;
 };
 
 void Player_Init(struct Player* player, struct Texture* spritesheet, int x, int y, int w, int h, int u);
+void Player_SetBoundingBox(struct Player* player, float bw, float bh);
 void Player_UpdateDirection(struct Player* player);
 void Player_Animate(struct Player* player);
 void Player_Render(struct Player* player);

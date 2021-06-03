@@ -1,24 +1,24 @@
 #include "engine/Physics.h"
 
-bool Physics_Intersects(struct Player* player, struct Platform* platform)
+bool Physics_Intersects(struct BoundingBox* a, struct BoundingBox* b)
 {
-    float playerCenterX = player->x + ((float)player->w / 2.0f);
+    /*float playerCenterX = player->x + ((float)player->w / 2.0f);
     float playerCenterY = player->y - ((float)player->h / 2.0f);
 
     float platformCenterX = (float)platform->x + ((float)platform->w / 2.0f);
-    float platformCenterY = (float)platform->y - ((float)platform->h / 2.0f);
+    float platformCenterY = (float)platform->y - ((float)platform->h / 2.0f);*/
 
-    float xDiff = fabsf(playerCenterX - platformCenterX) * 2.0f;
-    float yDiff = fabsf(playerCenterY - platformCenterY) * 2.0f;
+    float xDiff = fabsf(a->cx - b->cx) * 2.0f;
+    float yDiff = fabsf(a->cy - b->cy) * 2.0f;
 
-    return xDiff < (float)(player->w + platform->w) &&
-            yDiff < (float)(player->h + platform->h);
+    return xDiff < (float)(a->halfWidth + b->halfWidth) * 2.0f &&
+            yDiff < (float)(a->halfHeight + b->halfHeight) * 2.0f;
 }
 
 void Physics_MovePlayer(struct Player* player, float gravity, float friction, float maxJumpSpeed, float maxMoveSpeed, float minMoveSpeed)
 {
-    player->oldX = player->x;
-    player->oldY = player->y;
+    player->oldCX = player->boundingBox.cx;
+    player->oldCY = player->boundingBox.cy;
 
     player->vy -= gravity;
 
@@ -27,6 +27,9 @@ void Physics_MovePlayer(struct Player* player, float gravity, float friction, fl
 
     player->x += player->vx;
     player->y += player->vy;
+
+    player->boundingBox.cx = player->x + ((float)player->w / 2.0f);
+    player->boundingBox.cy = player->y - ((float)player->h / 2.0f);
 
     player->vx *= friction;
 
@@ -47,10 +50,13 @@ void Physics_Collide(struct Player* player, struct Platform* platform)
     uint8_t hasBottom = (platform->sides >> 2) & 0x1;
     uint8_t hasLeft = (platform->sides >> 3) & 0x1;
 
+    struct BoundingBox* playerBounds = &player->boundingBox;
+    struct BoundingBox* platformBounds = &platform->boundingBox;
+
     if (hasTop)
     {
-        float platformTop = (float)platform->y;
-        float playerOldBottom = player->oldY - (float)player->h;
+        float platformTop = platformBounds->cy + platformBounds->halfHeight;// (float)platform->y;
+        float playerOldBottom = player->oldCY - playerBounds->halfHeight;//player->oldY - (float)player->h;
 
         if (CollideTop(player, platformTop, playerOldBottom))
             return;
@@ -58,8 +64,8 @@ void Physics_Collide(struct Player* player, struct Platform* platform)
 
     if (hasLeft)
     {
-        float platformLeft = (float)platform->x;
-        float playerOldRight = player->oldX + (float)player->w;
+        float platformLeft = platformBounds->cx - platformBounds->halfWidth;// (float)platform->x;
+        float playerOldRight = player->oldCX + playerBounds->halfWidth;// player->oldX + (float)player->w;
 
         if (CollideLeft(player, platformLeft, playerOldRight))
             return;
@@ -67,15 +73,19 @@ void Physics_Collide(struct Player* player, struct Platform* platform)
 
     if (hasRight)
     {
-        float platformRight = (float)(platform->x + platform->w);
-        if (CollideRight(player, platformRight, player->oldX))
+        float platformRight = platformBounds->cx + platformBounds->halfWidth;// (float)(platform->x + platform->w);
+        float playerOldLeft = player->oldCX - playerBounds->halfWidth;
+
+        if (CollideRight(player, platformRight, playerOldLeft))
             return;
     }
 
     if (hasBottom)
     {
-        float platformBottom = (float)(platform->y - platform->h);
-        CollideBottom(player, platformBottom, player->oldY);
+        float platformBottom = platformBounds->cy - platformBounds->halfHeight;// (float)(platform->y - platform->h);
+        float playerOldTop = player->oldCY + playerBounds->halfHeight;
+
+        CollideBottom(player, platformBottom, playerOldTop);
     }
 }
 

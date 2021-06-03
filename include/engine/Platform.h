@@ -27,7 +27,7 @@ struct Platform {
 
 // Long boi:
 void Platform_Init(struct Platform* platform, struct Texture* texture, double angle, int spriteIndex, uint8_t visible, uint8_t sides, int x, int y, int w, int h);
-void Platform_SetBoundingBox(struct Platform* platform, float bx, float by, int bw, int bh);
+void Platform_SetBoundingBox(struct Platform* platform, float bw, float bh);
 bool Platform_IsOffscreen(struct Platform* platform);
 bool Platform_IsVisible(struct Platform* platform, uint8_t filterIndex);
 void Platform_Render(struct Platform* platform);

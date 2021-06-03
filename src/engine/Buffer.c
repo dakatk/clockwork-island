@@ -5,10 +5,9 @@
 static SDL_Texture* target;
 static SDL_Renderer* renderer;
 
-void Buffer_Init(SDL_Renderer* renderer_)
+void Buffer_Init(SDL_Renderer* renderer_, int w, int h)
 {
-    target = SDL_CreateTexture(renderer_, SDL_PIXELFORMAT_RGBA8888,
-                                       SDL_TEXTUREACCESS_TARGET, BUFFER_WIDTH, BUFFER_HEIGHT);
+    target = SDL_CreateTexture(renderer_, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, w, h);
     renderer = renderer_;
 }
 

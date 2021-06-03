@@ -30,6 +30,15 @@ void Platform_Init(struct Platform* platform, struct Texture* texture, double an
 	platform->w = w;
 }
 
+void Platform_SetBoundingBox(struct Platform* platform, float bw, float bh)
+{
+    platform->boundingBox.halfWidth = bw / 2.0f;
+    platform->boundingBox.halfHeight = bh / 2.0f;
+
+    platform->boundingBox.cx = (float)platform->x + ((float)platform->w / 2.0f);
+    platform->boundingBox.cy = (float)platform->y - ((float)platform->h / 2.0f);
+}
+
 bool Platform_IsOffscreen(struct Platform* platform)
 {
     bool offscreenLeft = platform->x > Viewport_X + BUFFER_WIDTH;

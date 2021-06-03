@@ -18,8 +18,12 @@
 
 #include "AssetLoader.h"
 
+#define BUFFER_WIDTH 800
+#define BUFFER_HEIGHT 600
+
 #define GRAVITY 0.2f
 #define FRICTION 0.8f
+
 #define PLAYER_MOVE_SPEED 4.0f
 #define PLAYER_JUMP_SPEED 8.5f
 #define PLAYER_MAX_MOVE_SPEED 4.7f
@@ -107,7 +111,7 @@ bool SDL2_InitAll(const char* title, int imgFlags)
 
 	SDL_RenderClear(renderer);
 
-	Buffer_Init(renderer);
+	Buffer_Init(renderer, BUFFER_WIDTH, BUFFER_HEIGHT);
 
 	return true;
 }
@@ -187,8 +191,8 @@ void UpdateLoop()
     Physics_MovePlayer(&player, GRAVITY, FRICTION, PLAYER_MAX_JUMP_SPEED, PLAYER_MAX_MOVE_SPEED, PLAYER_MIN_MOVE_SPEED);
 	Level_CheckPhysics(&level, &player);
 
-	float playerCenterX = player.x + ((float)player.w / 2.0f);
-	float playerCenterY = player.y - ((float)player.h / 2.0f);
+	float playerCenterX = player.boundingBox.cx;//player.x + ((float)player.w / 2.0f);
+	float playerCenterY = player.boundingBox.cy;//player.y - ((float)player.h / 2.0f);
 
 	Viewport_SnapTo(playerCenterX, playerCenterY);
 	Viewport_Constrain();

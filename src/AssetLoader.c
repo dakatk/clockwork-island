@@ -7,6 +7,10 @@
 #include <stdio.h>
 #include <stdint.h>
 
+#define PLAYER_WIDTH 100
+#define PLAYER_HEIGHT 100
+#define PLAYER_BB_WIDTH 70
+
 #define NUM_TEXTURES 2
 
 static struct Texture spritesheets[NUM_TEXTURES];
@@ -132,13 +136,8 @@ static bool LoadPlayerData(struct Player* player, FILE* lvlFile)
     else if (u >= NUM_FILTERS)
         u = NUM_FILTERS - 1;
 
-#define PLAYER_WIDTH 100
-#define PLAYER_HEIGHT 100
-
 	Player_Init(player, &spritesheets[0], px, py, PLAYER_WIDTH, PLAYER_HEIGHT, u);
-
-#undef PLAYER_WIDTH
-#undef PLAYER_HEIGHT
+    Player_SetBoundingBox(player, PLAYER_BB_WIDTH, PLAYER_HEIGHT);
 
 	return true;
 }
@@ -178,10 +177,10 @@ static int LoadPlatformData(struct Platform* platform, FILE* lvlFile)
     int f = (int)platformData.data[7];
 
     double angle = (double)(f * 90);
+
     Platform_Init(platform, &spritesheets[1], angle, i, t, s, x, y, w, h);
+    // TODO separate fields for bb width and height
+    Platform_SetBoundingBox(platform, (float)w, (float)h);
 
     return 1;
 }
-
-#undef NUM_VISIBLE_OPTIONS
-#undef NUM_TEXTURES

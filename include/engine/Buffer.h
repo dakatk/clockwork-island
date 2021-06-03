@@ -6,10 +6,7 @@
 
 #include <SDL.h>
 
-#define BUFFER_WIDTH 800
-#define BUFFER_HEIGHT 600
-
-void Buffer_Init(SDL_Renderer* renderer);
+void Buffer_Init(SDL_Renderer* renderer, int w, int h);
 void Buffer_Begin();
 void Buffer_Present();
 void Buffer_RenderTexture(struct Texture* texture, int x, int y, int w, int h);

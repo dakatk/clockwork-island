@@ -5,7 +5,7 @@
 #include "Player.h"
 #include "Platform.h"
 
-bool Physics_Intersects(struct Player* player, struct Platform* platform);
+bool Physics_Intersects(struct BoundingBox* a, struct BoundingBox* b);
 void Physics_MovePlayer(struct Player* player, float gravity, float friction, float maxJumpSpeed, float maxMoveSpeed, float minMoveSpeed);
 void Physics_Collide(struct Player* player, struct Platform* platform);
 

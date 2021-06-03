@@ -2,13 +2,11 @@
 #define CLOCKWORKISLAND_BOUNDINGBOX_H__
 
 struct BoundingBox {
-    float x;
-    float y;
-    float dx;
-    float dy;
+    float cx;
+    float cy;
 
-    int w;
-    int h;
+    float halfWidth;
+    float halfHeight;
 };
 
 #endif /* CLOCKWORKISLAND_BOUNDINGBOX_H__ */

@@ -14,8 +14,6 @@ void Player_Init(struct Player* player, struct Texture* spritesheet, int x, int 
 	player->direction = &Direction_STAND_RIGHT;
 	player->texture = spritesheet;
 
-	//player->boundingBox.x =
-
 	player->activeFilter = 0;
 	player->allowedFilters = u;
 	player->isJumping = true;
@@ -31,6 +29,15 @@ void Player_Init(struct Player* player, struct Texture* spritesheet, int x, int 
 
 	player->w = w;
 	player->h = h;
+}
+
+void Player_SetBoundingBox(struct Player* player, float bw, float bh)
+{
+	player->boundingBox.halfWidth = bw / 2.0f;
+	player->boundingBox.halfHeight = bh / 2.0f;
+
+	player->boundingBox.cx = player->x + ((float)player->w / 2.0f);
+	player->boundingBox.cy = player->y - ((float)player->h / 2.0f);
 }
 
 void Player_UpdateDirection(struct Player* player)
