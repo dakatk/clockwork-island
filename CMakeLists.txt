@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.17)
+ cmake_minimum_required(VERSION 3.17)
 project(ClockworkIsland C)
 
 set(CMAKE_C_STANDARD 11)
@@ -28,8 +28,9 @@ add_executable(ClockworkIsland
         src/engine/Texture.c include/engine/Texture.h
         src/engine/Viewport.c include/engine/Viewport.h
         src/AssetLoader.c include/AssetLoader.h
+        include/engine/BoundingBox.h
         src/Game.c)
 
 file(COPY resources DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
-target_link_libraries(${PROJECT_NAME} SDL2::Main SDL2::Image)
+target_link_libraries(${PROJECT_NAME} SDL2::Main SDL2::Image m)

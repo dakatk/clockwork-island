@@ -3,7 +3,7 @@
 #include "engine/Buffer.h"
 
 // NULL means no filter active
-static const struct Filter* allFilters[PLAYER_NUM_FILTERS] = { // NOLINT(cppcoreguidelines-interfaces-global-init)
+static const struct Filter* allFilters[NUM_FILTERS] = { // NOLINT(cppcoreguidelines-interfaces-global-init)
 		NULL, &Filter_RED,
 		&Filter_GREEN, &Filter_BLUE,
 		&Filter_ORANGE, &Filter_VIOLET
@@ -16,15 +16,28 @@ void Player_Init(struct Player* player, struct Texture* spritesheet, int x, int 
 
 	player->activeFilter = 0;
 	player->allowedFilters = u;
+	player->isJumping = true;
 
 	player->vx = 0.0f;
 	player->vy = 0.0f;
-	player->cx = (float)x + (float)w / 2.0f;
-	player->cy = (float)y - (float)h / 2.0f;
+
 	player->x = (float)x;
 	player->y = (float)y;
+
 	player->w = w;
 	player->h = h;
+}
+
+void Player_SetBoundingBox(struct Player* player, float bw, float bh)
+{
+	player->boundingBox.halfWidth = bw / 2.0f;
+	player->boundingBox.halfHeight = bh / 2.0f;
+
+	player->boundingBox.cx = player->x + ((float)player->w / 2.0f);
+	player->boundingBox.cy = player->y - ((float)player->h / 2.0f);
+
+	player->oldCX = player->boundingBox.cx;
+	player->oldCY = player->boundingBox.cy;
 }
 
 void Player_UpdateDirection(struct Player* player)
@@ -103,7 +116,7 @@ void Player_Render(struct Player* player)
 		Buffer_RenderFilter(drawFilter);
 
 	float actualX = player->x - (float)Viewport_X;
-	float actualY = BUFFER_HEIGHT - player->y - (float)Viewport_Y + 1.0f;
+	float actualY = (float)Buffer_Height - player->y + (float)Viewport_Y;
 
 	Buffer_RenderTexture(player->texture, (int)actualX, (int)actualY, player->w, player->h);
 }

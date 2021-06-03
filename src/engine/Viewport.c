@@ -21,6 +21,6 @@ void Viewport_Constrain()
 
 void Viewport_SnapTo(float centerX, float centerY) 
 {
-	Viewport_X = (int)(centerX - (BUFFER_WIDTH / 2.0f));
-	Viewport_Y = (int)(centerY - (BUFFER_HEIGHT / 2.0f));
+	Viewport_X = (int)(centerX - ((float)Buffer_Width / 2.0f));
+	Viewport_Y = (int)(centerY - ((float)Buffer_Height / 2.0f));
 }

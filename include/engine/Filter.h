@@ -1,6 +1,7 @@
 #ifndef CLOCKWORKISLAND_FILTER_H__
 #define CLOCKWORKISLAND_FILTER_H__
 
+#define NUM_FILTERS 6
 #define FILTER_ALPHA 55
 
 struct Filter {

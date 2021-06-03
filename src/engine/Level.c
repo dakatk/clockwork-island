@@ -1,6 +1,5 @@
 #include "engine/Level.h"
 #include "engine/Physics.h"
-#include "engine/Viewport.h"
 
 #include <stdlib.h>
 #include <string.h>
@@ -23,17 +22,15 @@ void Level_AddPlatform(struct Level* level, struct Platform* platform)
 
 void Level_CheckPhysics(struct Level* level, struct Player* player)
 {
-    player->x += player->vx;
-    player->cx += player->vx;
-
     for (struct PlatformNode* current = level->platforms; current != NULL; current = current->next) {
 
         struct Platform *platform = current->platform;
 
-        if (Platform_IsOffscreen(platform) || !(platform->visible[player->activeFilter]))
+        if (Platform_IsOffscreen(platform) || !Platform_IsVisible(platform, player->activeFilter))
             continue;
 
-        // TODO implement...
+        if (Physics_Intersects(&player->boundingBox, &platform->boundingBox))
+            Physics_Collide(player, platform);
     }
 }
 
@@ -46,7 +43,7 @@ void Level_Render(struct Level* level, unsigned activeFilter)
 	    count ++;
 		struct Platform* platform = current->platform;
 
-		if (Platform_IsOffscreen(platform) || !(platform->visible[activeFilter]))
+		if (Platform_IsOffscreen(platform) || !Platform_IsVisible(platform, activeFilter))
 			continue;
 
 		Platform_Render(platform);

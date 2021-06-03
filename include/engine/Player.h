@@ -1,39 +1,30 @@
 #ifndef CLOCKWORKISLAND_PLAYER_H__
 #define CLOCKWORKISLAND_PLAYER_H__
 
+#include "BoundingBox.h"
 #include "Direction.h"
 #include "Texture.h"
-#include "Physics.h"
 #include "Filter.h"
 
 #include <stdbool.h>
 
-#define PLAYER_MOVE_SPEED 3.25f
-#define PLAYER_JUMP_SPEED 4.0f
-
-#define PLAYER_WIDTH 100
-#define PLAYER_HEIGHT 100
-
-#define PLAYER_SPRITE_CLIP_SIZE 100
-#define PLAYER_NUM_FILTERS 6
-
 struct Player {
 	const struct Direction* direction;
 	struct Texture* texture;
-
-	bool isJumping;
-	bool onGround;
+	struct BoundingBox boundingBox;
 
 	int activeFilter;
 	int allowedFilters;
+    bool isJumping;
 
 	float vx, vy;
-	float cx, cy;
 	float x, y;
+	float oldCX, oldCY;
 	int w, h;
 };
 
 void Player_Init(struct Player* player, struct Texture* spritesheet, int x, int y, int w, int h, int u);
+void Player_SetBoundingBox(struct Player* player, float bw, float bh);
 void Player_UpdateDirection(struct Player* player);
 void Player_Animate(struct Player* player);
 void Player_Render(struct Player* player);

@@ -10,12 +10,26 @@
 
 #include <stdio.h>
 
+#include "engine/Physics.h"
 #include "engine/Input.h"
 #include "engine/Viewport.h"
 #include "engine/Buffer.h"
 #include "engine/Background.h"
 
 #include "AssetLoader.h"
+
+#define BUFFER_WIDTH 800
+#define BUFFER_HEIGHT 600
+
+#define GRAVITY 0.2f
+#define FRICTION 0.85f
+
+#define PLAYER_MOVE_SPEED 3.5f
+#define PLAYER_JUMP_SPEED 8.5f
+
+#define PLAYER_MAX_MOVE_SPEED 4.1f
+#define PLAYER_MAX_JUMP_SPEED 8.4f
+#define PLAYER_MIN_MOVE_SPEED 0.5f
 
 SDL_Window* window;
 SDL_Renderer* renderer;
@@ -98,7 +112,7 @@ bool SDL2_InitAll(const char* title, int imgFlags)
 
 	SDL_RenderClear(renderer);
 
-	Buffer_Init(renderer);
+	Buffer_Init(renderer, BUFFER_WIDTH, BUFFER_HEIGHT);
 
 	return true;
 }
@@ -145,7 +159,6 @@ static inline void UpdatePlayerFilter()
 	else if (Input_KeyTyped(KEY_0 | KEY_1 | KEY_2 | KEY_3 | KEY_4 | KEY_5))
     {
 	    uint16_t buffer = Input_KeysBuffer();
-
 	    for (int i = player.allowedFilters; i >= 0; i --)
         {
 	        if (buffer & (1 << i))
@@ -165,19 +178,24 @@ void UpdateLoop()
 	UpdatePlayerFilter();
 
 	if (Input_KeyPressed(KEY_LEFT))
-		player.vx = -PLAYER_MOVE_SPEED;
+		player.vx -= PLAYER_MOVE_SPEED;
 
 	else if (Input_KeyPressed(KEY_RIGHT))
-		player.vx = PLAYER_MOVE_SPEED;
+		player.vx += PLAYER_MOVE_SPEED;
 
-	else player.vx = 0.0f;
+	if (Input_KeyPressed(KEY_Z) && !player.isJumping)
+    {
+	    player.isJumping = true;
+        player.vy += PLAYER_JUMP_SPEED;
+    }
 
-	if (Input_KeyPressed(KEY_Z))
-		player.vy = -PLAYER_JUMP_SPEED;
-
+    Physics_MovePlayer(&player, GRAVITY, FRICTION, PLAYER_MAX_JUMP_SPEED, PLAYER_MAX_MOVE_SPEED, PLAYER_MIN_MOVE_SPEED);
 	Level_CheckPhysics(&level, &player);
 
-	Viewport_SnapTo(player.cx, player.cy);
+	float playerCenterX = player.boundingBox.cx;
+	float playerCenterY = player.boundingBox.cy;
+
+	Viewport_SnapTo(playerCenterX, playerCenterY);
 	Viewport_Constrain();
 
 	Background_Scroll();
