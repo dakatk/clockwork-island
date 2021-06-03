@@ -1,6 +1,7 @@
 #ifndef CLOCKWORKISLAND_PHYSICS_H__
 #define CLOCKWORKISLAND_PHYSICS_H__
 
+#include "BoundingBox.h"
 #include "Player.h"
 #include "Platform.h"
 

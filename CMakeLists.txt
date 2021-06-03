@@ -28,7 +28,7 @@ add_executable(ClockworkIsland
         src/engine/Texture.c include/engine/Texture.h
         src/engine/Viewport.c include/engine/Viewport.h
         src/AssetLoader.c include/AssetLoader.h
-        src/Game.c)
+        src/Game.c include/engine/BoundingBox.h)
 
 file(COPY resources DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
