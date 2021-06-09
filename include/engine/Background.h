@@ -1,13 +1,34 @@
-#ifndef CLOCKWORKISLAND_BACKGROUND_H__
-#define CLOCKWORKISLAND_BACKGROUND_H__
+#ifndef ENGINE_BACKGROUND_H__
+#define ENGINE_BACKGROUND_H__
 
-#include "Texture.h"
+#include "engine/Texture.h"
+#include <string>
+#include <SDL.h>
 
-#include <stdbool.h>
+#define BACKGROUND_NUM_LAYERS 3
 
-bool Background_Init(SDL_Renderer* renderer, const char* image0, const char* image1);
-void Background_Scroll();
-void Background_Render();
-void Background_Destroy();
+namespace engine
+{
+    class Background
+    {
+    private:
+        struct Layer
+        {
+            Texture *texture;
+            int texHeight;
 
-#endif /* CLOCKWORKISLAND_BACKGROUND_H__ */
+            int maxScrollX;
+            int maxScrollY;
+        };
+        struct Layer layers[BACKGROUND_NUM_LAYERS]{};
+
+    public:
+        explicit Background(std::string filenames[BACKGROUND_NUM_LAYERS]);
+        ~Background();
+
+        void Scroll();
+        void Render();
+    };
+}
+
+#endif /* ENGINE_BACKGROUND_H__ */

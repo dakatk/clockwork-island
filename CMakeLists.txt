@@ -1,8 +1,8 @@
- cmake_minimum_required(VERSION 3.17)
-project(ClockworkIsland C)
+cmake_minimum_required(VERSION 3.19)
+project(ClockworkIsland_NewEngine)
 
-set(CMAKE_C_STANDARD 11)
-set(CMAKE_CXX_FLAGS "-O3 -g -Wall -Wextra")
+set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_FLAGS "-g -Wall -Wextra")
 
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR})
 set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR})
@@ -15,21 +15,21 @@ find_package(SDL2_image REQUIRED)
 include_directories(${PROJECT_SOURCE_DIR}/include)
 include_directories(${SDL2_INCLUDE_DIRS})
 
-add_executable(ClockworkIsland
-        src/engine/Background.c include/engine/Background.h
-        src/engine/Buffer.c include/engine/Buffer.h
-        src/engine/Direction.c include/engine/Direction.h
-        src/engine/Filter.c include/engine/Filter.h
-        src/engine/Input.c include/engine/Input.h
-        src/engine/Level.c include/engine/Level.h
-        src/engine/Physics.c include/engine/Physics.h
-        src/engine/Platform.c include/engine/Platform.h
-        src/engine/Player.c include/engine/Player.h
-        src/engine/Texture.c include/engine/Texture.h
-        src/engine/Viewport.c include/engine/Viewport.h
-        src/AssetLoader.c include/AssetLoader.h
-        include/engine/BoundingBox.h
-        src/Game.c)
+add_executable(ClockworkIsland_NewEngine src/Game.cpp
+        include/engine/BoundingBox.h src/engine/BoundingBox.cpp
+        include/engine/Texture.h src/engine/Texture.cpp
+        include/engine/Viewport.h src/engine/Viewport.cpp
+        include/Level.h src/Level.cpp
+        include/engine/Player.h src/engine/Player.cpp
+        include/engine/Tile.h src/engine/Tile.cpp
+        include/engine/Background.h src/engine/Background.cpp
+        include/engine/Sprite.h src/engine/Sprite.cpp
+        include/engine/Input.h src/engine/Input.cpp
+        include/engine/Window.h src/engine/Window.cpp
+        include/Robot.h src/Robot.cpp
+        include/Filter.h
+        include/Direction.h
+        include/Platform.h src/Platform.cpp include/Assets.h src/Assets.cpp src/Direction.cpp src/Filter.cpp)
 
 file(COPY resources DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 

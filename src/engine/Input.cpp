@@ -1,33 +1,43 @@
 #include "engine/Input.h"
-
 #include <SDL.h>
 
-static uint16_t keysBuffer = 0;
-static uint16_t prevKeysBuffer = 0;
+using namespace engine;
 
-static uint8_t mouseBuffer = 0;
+int Input::mouseX;
+int Input::mouseY;
 
-int Input_MouseX;
-int Input_MouseY;
+uint16_t Input::keysBuffer;
+uint16_t Input::prevKeysBuffer;
+uint8_t Input::mouseBuffer;
 
-void Input_Capture()
+int Input::GetMouseX()
 {
-	prevKeysBuffer = keysBuffer;
+    return mouseX;
+}
+
+int Input::GetMouseY()
+{
+    return mouseY;
+}
+
+void Input::Capture()
+{
+    prevKeysBuffer = keysBuffer;
 
     SDL_Event e;
-	while (SDL_PollEvent(&e))
-	{
-		if (e.type == SDL_QUIT)
-			keysBuffer |= KEY_QUIT;
+    while (SDL_PollEvent(&e))
+    {
+        if (e.type == SDL_QUIT)
+            keysBuffer |= KEY_QUIT;
 
-		else if (e.type == SDL_KEYDOWN)
-		{
-			if (e.key.keysym.sym == SDLK_q &&
-				e.key.keysym.mod == KMOD_LCTRL)
-                    keysBuffer |= KEY_QUIT;
+        else if (e.type == SDL_KEYDOWN)
+        {
+            if (e.key.keysym.sym == SDLK_q &&
+                e.key.keysym.mod == KMOD_LCTRL)
+                keysBuffer |= KEY_QUIT;
 
-			switch (e.key.keysym.sym)
-			{
+            switch (e.key.keysym.sym)
+            {
                 case SDLK_LEFT:
                     keysBuffer |= KEY_LEFT;
                     break;
@@ -53,22 +63,22 @@ void Input_Capture()
                     break;
 
                 case SDLK_0:
-			    case SDLK_1:
-			    case SDLK_2:
-			    case SDLK_3:
-			    case SDLK_4:
-			    case SDLK_5:
+                case SDLK_1:
+                case SDLK_2:
+                case SDLK_3:
+                case SDLK_4:
+                case SDLK_5:
                     keysBuffer |= 1 << (e.key.keysym.sym - SDLK_0);
 
                 default:
                     break;
-			}
-		}
+            }
+        }
 
-		else if (e.type == SDL_KEYUP)
-		{
-			switch (e.key.keysym.sym)
-			{
+        else if (e.type == SDL_KEYUP)
+        {
+            switch (e.key.keysym.sym)
+            {
                 case SDLK_LEFT:
                     keysBuffer &= ~KEY_LEFT;
                     break;
@@ -102,12 +112,12 @@ void Input_Capture()
 
                 default:
                     break;
-			}
-		}
+            }
+        }
 
-		else if (e.type == SDL_MOUSEBUTTONDOWN)
+        else if (e.type == SDL_MOUSEBUTTONDOWN)
         {
-		    switch (e.button.button)
+            switch (e.button.button)
             {
                 case SDL_BUTTON_LEFT:
                     mouseBuffer |= BUTTON_LEFT;
@@ -125,7 +135,7 @@ void Input_Capture()
             }
         }
 
-		else if (e.type == SDL_MOUSEBUTTONUP)
+        else if (e.type == SDL_MOUSEBUTTONUP)
         {
             switch (e.button.button)
             {
@@ -145,33 +155,33 @@ void Input_Capture()
             }
         }
 
-		else if (e.type == SDL_MOUSEMOTION)
+        else if (e.type == SDL_MOUSEMOTION)
         {
-		    Input_MouseX = e.motion.x;
-		    Input_MouseY = e.motion.y;
+            mouseX = e.motion.x;
+            mouseY = e.motion.y;
         }
-	}
+    }
 }
 
-bool Input_KeyPressed(uint16_t key)
-{
-    return keysBuffer & key;
-}
-
-bool Input_KeyTyped(uint16_t key)
-{
-	bool keyPressed = keysBuffer & key;
-	bool prevKeyPressed = prevKeysBuffer & key;
-    
-    return keyPressed && !prevKeyPressed;
-}
-
-uint16_t Input_KeysBuffer()
+uint16_t Input::KeysBuffer()
 {
     return keysBuffer;
 }
 
-bool Input_ButtonPressed(uint8_t button)
+bool Input::KeyPressed(uint16_t key)
 {
-    return mouseBuffer & button;
+    return (bool)(keysBuffer & key);
+}
+
+bool Input::KeyTyped(uint16_t key)
+{
+    bool keyPressed = (bool)(keysBuffer & key);
+    bool prevKeyPressed = (bool)(prevKeysBuffer & key);
+
+    return keyPressed && !prevKeyPressed;
+}
+
+bool Input::ButtonPressed(uint8_t button)
+{
+    return (bool)(mouseBuffer & button);
 }

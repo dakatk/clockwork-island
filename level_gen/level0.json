@@ -6,7 +6,8 @@
         {
             "visibility": "63",
             "sides": "15",
-            "sprite": "16",
+            "spriteX": "1",
+            "spriteY": "1",
             "x": "76",
             "y": "120",
             "width": "64",
@@ -18,7 +19,8 @@
         {
             "visibility": "63",
             "sides": "15",
-            "sprite": "15",
+            "spriteX": "0",
+            "spriteY": "1",
             "x": "140",
             "y": "120",
             "width": "64",
@@ -30,7 +32,8 @@
         {
             "visibility": "63",
             "sides": "15",
-            "sprite": "15",
+            "spriteX": "0",
+            "spriteY": "1",
             "x": "204",
             "y": "120",
             "width": "64",
@@ -42,7 +45,8 @@
         {
             "visibility": "63",
             "sides": "15",
-            "sprite": "15",
+            "spriteX": "0",
+            "spriteY": "1",
             "x": "268",
             "y": "120",
             "width": "64",
@@ -54,7 +58,8 @@
         {
             "visibility": "63",
             "sides": "15",
-            "sprite": "16",
+            "spriteX": "1",
+            "spriteY": "1",
             "x": "332",
             "y": "120",
             "width": "64",
@@ -66,7 +71,8 @@
         {
             "visibility": "63",
             "sides": "15",
-            "sprite": "0",
+            "spriteX": "0",
+            "spriteY": "0",
             "x": "396",
             "y": "184",
             "width": "64",
