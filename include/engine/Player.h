@@ -38,7 +38,7 @@ namespace engine
 
         void Move(float gravity, float friction, float maxJumpSpeed, float maxMoveSpeed, float minMoveSpeed);
 
-        void Collide(Tile *platform);
+        void Collide(Tile *tile);
     };
 }
 
