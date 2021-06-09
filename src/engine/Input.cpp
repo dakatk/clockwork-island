@@ -101,6 +101,7 @@ void Input::Capture()
 
                 case SDLK_F1:
                     keysBuffer &= ~KEY_F1;
+                    break;
 
                 case SDLK_0:
                 case SDLK_1:

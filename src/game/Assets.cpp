@@ -43,9 +43,10 @@ void Assets::Load()
 #define BACKGROUND_LAYER_1 "resources/images/background_layer_1.png"
 #define BACKGROUND_LAYER_2 "resources/images/background_layer_2.png"
 
-    background = new Background(new string[] {
-        "", BACKGROUND_LAYER_1, BACKGROUND_LAYER_2
-    });
+    string backgroundLayers[BACKGROUND_NUM_LAYERS] = {
+            "", BACKGROUND_LAYER_1, BACKGROUND_LAYER_2
+    };
+    background = new Background(backgroundLayers);
 
 #undef BACKGROUND_LAYER_1
 #undef BACKGROUND_LAYER_2
