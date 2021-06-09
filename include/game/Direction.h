@@ -6,8 +6,11 @@ namespace game
     class Direction
     {
     private:
+        // Spritesheet y-index (row selector)
         int value;
+        // How many frames of animation
         int frames;
+        // How many game ticks to wait between frames
         int sleep;
 
     public:

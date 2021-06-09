@@ -110,6 +110,7 @@ void Robot::Animate()
 {
     int frames = this->direction->GetFrames();
     int waitTime = this->direction->GetSleep();
+
     this->spriteClipY = this->direction->GetValue();
 
     if (this->ticks >= waitTime)
