@@ -18,9 +18,7 @@ namespace game
         static Platform* LoadPlatformData(ifstream* file);
 
     public:
-        static void Load();
-        static void Unload();
-
+        static Texture* LoadPlayerSpritesheet();
         static Level* LoadLevel(Robot** player, unsigned int levelNum);
     };
 

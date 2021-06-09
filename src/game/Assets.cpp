@@ -4,46 +4,19 @@
 #include <sstream>
 #include <cstdint>
 
-#define NUM_SPRITESHEETS 2
-
 using namespace engine;
 using namespace std;
 using namespace game;
 
-static Texture* spritesheets[NUM_SPRITESHEETS];
-
-void Assets::Load()
+Texture* Assets::LoadPlayerSpritesheet()
 {
 #define PLAYER_IMAGE "resources/images/player_character.png"
-#define TILES_IMAGE "resources/images/tiles.png"
+#define PLAYER_SPRITE_CLIP_SIZE 100
 
-    string filenames[NUM_SPRITESHEETS] = {
-            PLAYER_IMAGE,
-            TILES_IMAGE
-    };
+    return new Texture(PLAYER_IMAGE, PLAYER_SPRITE_CLIP_SIZE, PLAYER_SPRITE_CLIP_SIZE);
 
 #undef PLAYER_IMAGE
-#undef TILES_IMAGE
-
-#define PLAYER_SPRITE_CLIP_SIZE 100
-#define PLATFORM_SPRITE_CLIP_SIZE 128
-
-    const int clipSizes[NUM_SPRITESHEETS] = {
-            PLAYER_SPRITE_CLIP_SIZE,
-            PLATFORM_SPRITE_CLIP_SIZE
-    };
-
 #undef PLAYER_SPRITE_CLIP_SIZE
-#undef PLATFORM_SPRITE_CLIP_SIZE
-
-    for (int i = 0; i < NUM_SPRITESHEETS; i ++)
-        spritesheets[i] = new Texture(filenames[i], clipSizes[i], clipSizes[i]);
-}
-
-void Assets::Unload()
-{
-    for (auto& spritesheet : spritesheets)
-        delete spritesheet;
 }
 
 Level* Assets::LoadLevel(Robot** player, unsigned int levelNum)
@@ -59,8 +32,8 @@ Level* Assets::LoadLevel(Robot** player, unsigned int levelNum)
 
     ifstream lvlFile(stream.str(), ios::in | ios::binary);
 
-#define BACKGROUND_LAYER_1 "resources/images/background_layer_1.png"
-#define BACKGROUND_LAYER_2 "resources/images/background_layer_2.png"
+#define BACKGROUND_LAYER_1 "resources/images/level0/background_layer_1.png"
+#define BACKGROUND_LAYER_2 "resources/images/level0/background_layer_2.png"
 
     string backgroundLayers[BACKGROUND_NUM_LAYERS] = {
             "", BACKGROUND_LAYER_1, BACKGROUND_LAYER_2

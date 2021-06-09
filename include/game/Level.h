@@ -18,9 +18,10 @@ namespace game
         struct PlatformNode* head;
 
         Background* background;
+        Texture* tileSheet;
 
     public:
-        explicit Level(Background* background_);
+        Level(Background* background_, Texture* tileSheet_);
         ~Level();
 
         void AddPlatform(Platform* platform);

@@ -3,15 +3,18 @@
 
 using namespace game;
 
-Level::Level(Background* background_)
+Level::Level(Background* background_, Texture* tileSheet_)
 {
-    this->head = nullptr;
     this->background = background_;
+    this->tileSheet = tileSheet_;
+
+    this->head = nullptr;
 }
 
 Level::~Level()
 {
-    delete background;
+    delete this->background;
+    delete this->tileSheet;
 
     struct PlatformNode* current = this->head;
 

@@ -14,6 +14,11 @@ Player::Player(Texture *spritesheet, int x, int y, int width, int height) : Spri
     this->oldCY = (float)y + ((float)height / 2.0f);
 }
 
+Player::~Player()
+{
+    delete this->spritesheet;
+}
+
 float Player::GetVX() const
 {
     return this->vx;

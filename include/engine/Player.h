@@ -26,6 +26,7 @@ namespace engine
 
     public:
         Player(Texture* spritesheet, int x, int y, int width, int height);
+        ~Player() override;
 
         float GetVX() const;
         float GetVY() const;
