@@ -25,12 +25,12 @@ namespace game
         static Level* LoadLevel(Robot* player, uint8_t levelNum);
     };
 
-    class DataParsingException : public exception
+    class AssetException : public exception
     {
     private:
         string message;
     public:
-        explicit DataParsingException(string message_) : message(move(message_)) {}
+        explicit AssetException(string message_) : message(move(message_)) {}
         const char* what() const noexcept override { return message.c_str(); }
     };
 }

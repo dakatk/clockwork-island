@@ -24,13 +24,16 @@ Level* Assets::LoadLevel(Robot* player, uint8_t levelNum)
 #define LEVEL_FILE_REL_PATH "resources/levels/level"
 #define LEVEL_FILE_EXT ".bin"
 
-    stringstream stream;
-    stream << LEVEL_FILE_REL_PATH << (int)levelNum << LEVEL_FILE_EXT;
+    stringstream levelFile;
+    levelFile << LEVEL_FILE_REL_PATH << (int)levelNum << LEVEL_FILE_EXT;
 
 #undef LEVEL_FILE_REL_PATH
 #undef LEVEL_FILE_EXT
 
-    ifstream lvlFile(stream.str(), ios::in | ios::binary);
+    ifstream lvlFile(levelFile.str(), ios::in | ios::binary);
+
+    if (!lvlFile.good())
+        throw AssetException("Failed to load level file: " + levelFile.str());
 
     Background* background = Assets::LoadBackground(levelNum);
     Texture* tileSheet = Assets::LoadTileSheet(levelNum);
@@ -54,7 +57,7 @@ Level* Assets::LoadLevel(Robot* player, uint8_t levelNum)
     catch (exception& e)
     {
         lvlFile.close();
-        throw e;
+        throw AssetException(e.what());
     }
     return level;
 }
@@ -113,13 +116,13 @@ void Assets::LoadPlayerData(Robot* player, ifstream* file)
     file->read(playerData.buffer, sizeof(playerData.buffer));
 
     if (file->fail())
-        throw DataParsingException("Corrupt or incomplete player data");
+        throw AssetException("Corrupt or incomplete player data");
 
-    // px = player x-coordinate
-    // py = player y-coordinate
-    // u = player upgrades
+    // Player x-coordinate
     auto px = (int)playerData.data[0];
+    // Player y-coordinate
     auto py = (int)playerData.data[1];
+    // Upgrades
     auto u = (uint8_t)playerData.data[2];
 
     player->MoveTo(px, py);
@@ -138,32 +141,32 @@ Platform* Assets::LoadPlatformData(Texture* tileSheet, ifstream* file)
     if (file->fail())
     {
         if (file->gcount() != 1 || platformData.buffer[0] != (char)0xFF)
-            throw DataParsingException("Corrupt or incomplete platform data");
+            throw AssetException("Corrupt or incomplete platform data");
 
         return nullptr;
     }
 
-    // vi = visibility index
-    // s = sides
-    // sx = sprite sheet index x
-    // sy = sprite sheet index y
-    // x = x-coordinate
-    // y = y-coordinate
-    // w = width
-    // h = height
-    // bw = bounds width
-    // bh = bounds height
-    // f = facing
+    // Visibility index
     auto vi = (uint8_t)platformData.data[0];
+    // Sides
     auto s = (uint8_t)platformData.data[1];
+    // Spritesheet x-index
     auto sx = (int)platformData.data[2];
+    // Spritesheet y-index
     auto sy = (int)platformData.data[3];
+    // X-coordinate
     auto x = (int)platformData.data[4];
+    // Y-coordinate
     auto y = (int)platformData.data[5];
+    // Width
     auto w = (int)platformData.data[6];
+    // Height
     auto h = (int)platformData.data[7];
+    // Bounds width
     auto bw = (float)platformData.data[8];
+    // Bounds height
     auto bh = (float)platformData.data[9];
+    // Facing
     auto f = (int)platformData.data[10];
 
     auto* platform = new Platform(tileSheet, f * 90, sx, sy, s, x, y, w, h);
