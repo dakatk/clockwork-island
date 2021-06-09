@@ -1,4 +1,5 @@
 #include "game/Level.h"
+#include "engine/Viewport.h"
 
 using namespace game;
 
@@ -51,7 +52,13 @@ void Level::CheckPhysics(Robot* player)
 
 void Level::ScrollBackground(Robot* player)
 {
+    float playerCenterX = player->GetBoundingBox()->GetCenterX();
+    float playerCenterY = player->GetBoundingBox()->GetCenterY();
 
+    Viewport::SnapTo(playerCenterX, playerCenterY);
+    Viewport::Constrain();
+
+    this->background->Scroll();
 }
 
 void Level::Render(uint8_t activeFilter)

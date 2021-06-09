@@ -1,6 +1,5 @@
 #include "engine/Window.h"
 #include "engine/Input.h"
-#include "engine/Viewport.h"
 #include "engine/Timer.h"
 #include "game/Robot.h"
 #include "game/Level.h"
@@ -122,15 +121,9 @@ void Update()
     }
 
     player->Move(GRAVITY, FRICTION, PLAYER_MAX_JUMP_SPEED, PLAYER_MAX_MOVE_SPEED, PLAYER_MIN_MOVE_SPEED);
+
     level->CheckPhysics(player);
-
-    float playerCenterX = player->GetBoundingBox()->GetCenterX();
-    float playerCenterY = player->GetBoundingBox()->GetCenterY();
-
-    Viewport::SnapTo(playerCenterX, playerCenterY);
-    Viewport::Constrain();
-
-    Assets::GetBackground()->Scroll();
+    level->ScrollBackground(player);
 
     player->UpdateDirection();
     player->Animate();
@@ -138,7 +131,6 @@ void Update()
 
 void Render()
 {
-    Assets::GetBackground()->Render();
     level->Render(player->GetActiveFilter());
     player->Render();
 
