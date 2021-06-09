@@ -1,6 +1,6 @@
 #include "engine/Window.h"
-#include "Robot.h"
-#include "Filter.h"
+#include "game/Robot.h"
+#include "game/Filter.h"
 
 #define PLAYER_WIDTH 100
 #define PLAYER_HEIGHT 100
@@ -9,6 +9,7 @@
 #define PLAYER_BB_HEIGHT 94
 
 using namespace engine;
+using namespace game;
 
 static const Filter* FILTERS[NUM_FILTERS] = {
         nullptr, &filters::RED, &filters::GREEN, &filters::BLUE, &filters::ORANGE, &filters::VIOLET

@@ -1,4 +1,4 @@
-#include "Assets.h"
+#include "game/Assets.h"
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -7,6 +7,7 @@
 
 using namespace engine;
 using namespace std;
+using namespace game;
 
 static Texture* spritesheets[NUM_SPRITESHEETS];
 
@@ -91,7 +92,7 @@ Level* Assets::LoadLevel(Robot** player, unsigned int levelNum)
             level->AddPlatform(platform);
         }
     }
-    catch (std::exception& e)
+    catch (exception& e)
     {
         lvlFile.close();
         throw e;
@@ -124,7 +125,7 @@ void Assets::LoadPlayerData(Robot** player, ifstream* file)
     *player = new Robot(spritesheets[0], px, py, u);
 }
 
-Platform* Assets::LoadPlatformData(std::ifstream* file)
+Platform* Assets::LoadPlatformData(ifstream* file)
 {
     union {
         char buffer[22];

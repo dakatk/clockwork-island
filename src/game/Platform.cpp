@@ -1,5 +1,7 @@
-#include "Platform.h"
-#include "Filter.h"
+#include "game/Platform.h"
+#include "game/Filter.h"
+
+using namespace game;
 
 Platform::Platform(Texture *spritesheet, int angle, int spriteClipX, int spriteClipY, uint8_t sides, int x, int y, int width, int height)
 : Tile(spritesheet, angle, spriteClipX, spriteClipY, sides, x, y, width, height)

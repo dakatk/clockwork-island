@@ -19,17 +19,18 @@ add_executable(ClockworkIsland_NewEngine src/Game.cpp
         include/engine/BoundingBox.h src/engine/BoundingBox.cpp
         include/engine/Texture.h src/engine/Texture.cpp
         include/engine/Viewport.h src/engine/Viewport.cpp
-        include/Level.h src/Level.cpp
         include/engine/Player.h src/engine/Player.cpp
         include/engine/Tile.h src/engine/Tile.cpp
         include/engine/Background.h src/engine/Background.cpp
         include/engine/Sprite.h src/engine/Sprite.cpp
         include/engine/Input.h src/engine/Input.cpp
         include/engine/Window.h src/engine/Window.cpp
-        include/Robot.h src/Robot.cpp
-        include/Filter.h
-        include/Direction.h
-        include/Platform.h src/Platform.cpp include/Assets.h src/Assets.cpp src/Direction.cpp src/Filter.cpp)
+        include/game/Level.h src/game/Level.cpp
+        include/game/Platform.h src/game/Platform.cpp
+        include/game/Robot.h src/game/Robot.cpp
+        include/game/Filter.h src/game/Filter.cpp
+        include/game/Direction.h src/game/Direction.cpp
+        include/game/Assets.h src/game/Assets.cpp)
 
 file(COPY resources DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 

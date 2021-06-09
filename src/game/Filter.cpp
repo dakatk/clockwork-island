@@ -1,4 +1,6 @@
-#include "Filter.h"
+#include "game/Filter.h"
+
+using namespace game;
 
 Filter::Filter(uint8_t r_, uint8_t g_, uint8_t b_)
 {

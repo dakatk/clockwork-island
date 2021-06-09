@@ -1,4 +1,6 @@
-#include "Level.h"
+#include "game/Level.h"
+
+using namespace game;
 
 Level::Level()
 {

@@ -1,4 +1,6 @@
-#include "Direction.h"
+#include "game/Direction.h"
+
+using namespace game;
 
 Direction::Direction(int value_, int frames_, int sleep_)
 {

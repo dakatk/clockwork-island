@@ -1,9 +1,9 @@
 #include "engine/Window.h"
 #include "engine/Input.h"
 #include "engine/Viewport.h"
-#include "Robot.h"
-#include "Level.h"
-#include "Assets.h"
+#include "game/Robot.h"
+#include "game/Level.h"
+#include "game/Assets.h"
 #include <iostream>
 
 #define BUFFER_WIDTH 800
@@ -19,8 +19,9 @@
 #define PLAYER_MAX_JUMP_SPEED 8.4f
 #define PLAYER_MIN_MOVE_SPEED 0.45f
 
-using namespace std;
 using namespace engine;
+using namespace std;
+using namespace game;
 
 Robot* player;
 Level* level;
