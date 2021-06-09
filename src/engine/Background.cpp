@@ -46,12 +46,13 @@ void Background::Scroll()
         if (layer.texture == nullptr)
             continue;
 
+        int viewportFlippedY = Viewport::GetMaxY() - Viewport::GetY();
+
         int clipX = (Viewport::GetX() * layer.maxScrollX) / Viewport::GetMaxX();
-        // TODO clipY should move UP (decrease)
-        int clipY = (Viewport::GetY() * layer.maxScrollY) / Viewport::GetMaxY();
+        int clipY = (viewportFlippedY * layer.maxScrollY) / Viewport::GetMaxY();
 
         layer.texture->GetClip()->x = clipX;
-        layer.texture->GetClip()->y = this->layers->texHeight - clipY;
+        layer.texture->GetClip()->y = clipY;
     }
 }
 
