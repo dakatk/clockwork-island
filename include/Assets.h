@@ -16,7 +16,7 @@ private:
     static Platform* LoadPlatformData(std::ifstream* file);
 
 public:
-    static bool Load();
+    static void Load();
     static void Unload();
 
     static Background* GetBackground();

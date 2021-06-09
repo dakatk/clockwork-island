@@ -12,7 +12,7 @@ static Texture* spritesheets[NUM_SPRITESHEETS];
 
 Background* Assets::background;
 
-bool Assets::Load()
+void Assets::Load()
 {
 #define PLAYER_IMAGE "resources/images/player_character.png"
 #define TILES_IMAGE "resources/images/tiles.png"
@@ -21,6 +21,7 @@ bool Assets::Load()
             PLAYER_IMAGE,
             TILES_IMAGE
     };
+
 #undef PLAYER_IMAGE
 #undef TILES_IMAGE
 
@@ -36,36 +37,17 @@ bool Assets::Load()
 #undef PLATFORM_SPRITE_CLIP_SIZE
 
     for (int i = 0; i < NUM_SPRITESHEETS; i ++)
-    {
-        try
-        {
-            spritesheets[i] = new Texture(filenames[i], clipSizes[i], clipSizes[i]);
-        }
-        catch (TextureLoadException& e)
-        {
-            cerr << e.what() << endl;
-            return false;
-        }
-    }
+        spritesheets[i] = new Texture(filenames[i], clipSizes[i], clipSizes[i]);
+
 #define BACKGROUND_LAYER_1 "resources/images/background_layer_1.png"
 #define BACKGROUND_LAYER_2 "resources/images/background_layer_2.png"
 
-    try
-    {
-        background = new Background(new string[] {
-            "", BACKGROUND_LAYER_1, BACKGROUND_LAYER_2
-        });
-    }
-    catch (TextureLoadException& e)
-    {
-        cerr << e.what() << endl;
-        return false;
-    }
+    background = new Background(new string[] {
+        "", BACKGROUND_LAYER_1, BACKGROUND_LAYER_2
+    });
 
 #undef BACKGROUND_LAYER_1
 #undef BACKGROUND_LAYER_2
-
-    return true;
 }
 
 void Assets::Unload()
@@ -93,41 +75,26 @@ Level* Assets::LoadLevel(Robot** player, unsigned int levelNum)
 #undef LEVEL_FILE_EXT
 
     ifstream lvlFile(stream.str(), ios::in | ios::binary);
+    auto* level = new Level();
 
     try
     {
         Assets::LoadPlayerData(player, &lvlFile);
+
+        while (!lvlFile.eof())
+        {
+            Platform* platform = Assets::LoadPlatformData(&lvlFile);
+
+            if (platform == nullptr)
+                break;
+
+            level->AddPlatform(platform);
+        }
     }
-    catch (DataParsingException& e)
+    catch (std::exception& e)
     {
-        cerr << e.what() << endl;
         lvlFile.close();
-
-        return nullptr;
-    }
-
-    auto* level = new Level();
-
-    while (!lvlFile.eof())
-    {
-        Platform* platform;
-
-        try
-        {
-            platform = Assets::LoadPlatformData(&lvlFile);
-        }
-        catch (DataParsingException& e)
-        {
-            cerr << e.what() << endl;
-            lvlFile.close();
-
-            return nullptr;
-        }
-
-        if (platform == nullptr)
-            break;
-
-        level->AddPlatform(platform);
+        throw e;
     }
     return level;
 }

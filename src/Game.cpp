@@ -35,18 +35,14 @@ int main(__attribute__((unused)) int argc, char* argv[])
 
     Window::Create("Clockwork Island (Alpha v0.0.1)", BUFFER_WIDTH, BUFFER_HEIGHT);
 
-    if (!Assets::Load())
+    try
     {
-        cerr << "Failed to load game assets" << endl;
-        Cleanup();
-
-        return 1;
+        Assets::Load();
+        level = Assets::LoadLevel(&player, 0);
     }
-
-    level = Assets::LoadLevel(&player, 0);
-    if (level == nullptr)
+    catch(std::exception& e)
     {
-        cerr << "Failed to load level data" << endl;
+        cerr << e.what() << endl;
         Cleanup();
 
         return 1;
