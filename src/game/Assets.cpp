@@ -19,7 +19,7 @@ Texture* Assets::LoadPlayerSpritesheet()
 #undef PLAYER_SPRITE_CLIP_SIZE
 }
 
-Level* Assets::LoadLevel(Robot** player, unsigned int levelNum)
+Level* Assets::LoadLevel(Robot* player, uint8_t levelNum)
 {
 #define LEVEL_FILE_REL_PATH "resources/levels/level"
 #define LEVEL_FILE_EXT ".bin"
@@ -32,17 +32,7 @@ Level* Assets::LoadLevel(Robot** player, unsigned int levelNum)
 
     ifstream lvlFile(stream.str(), ios::in | ios::binary);
 
-#define BACKGROUND_LAYER_1 "resources/images/level0/background_layer_1.png"
-#define BACKGROUND_LAYER_2 "resources/images/level0/background_layer_2.png"
-
-    string backgroundLayers[BACKGROUND_NUM_LAYERS] = {
-            "", BACKGROUND_LAYER_1, BACKGROUND_LAYER_2
-    };
-
-#undef BACKGROUND_LAYER_1
-#undef BACKGROUND_LAYER_2
-
-    auto* background = new Background(backgroundLayers);
+    Background* background = Assets::LoadBackground(levelNum);
     auto* level = new Level(background);
 
     try
@@ -67,7 +57,33 @@ Level* Assets::LoadLevel(Robot** player, unsigned int levelNum)
     return level;
 }
 
-void Assets::LoadPlayerData(Robot** player, ifstream* file)
+Background* Assets::LoadBackground(uint8_t levelNum)
+{
+#define IMAGE_FILE_REL_PATH "resources/images/level"
+#define BACKGROUND_LAYER_0 "/background_layer_0.png"
+#define BACKGROUND_LAYER_1 "/background_layer_1.png"
+#define BACKGROUND_LAYER_2 "/background_layer_2.png"
+
+    stringstream backgroundFile0;
+    stringstream backgroundFile1;
+    stringstream backgroundFile2;
+
+    backgroundFile0 << IMAGE_FILE_REL_PATH << levelNum << BACKGROUND_LAYER_0;
+    backgroundFile1 << IMAGE_FILE_REL_PATH << levelNum << BACKGROUND_LAYER_1;
+    backgroundFile2 << IMAGE_FILE_REL_PATH << levelNum << BACKGROUND_LAYER_2;
+
+    string backgroundLayers[BACKGROUND_NUM_LAYERS] = {
+            backgroundFile0.str(), backgroundFile1.str(), backgroundFile2.str()
+    };
+    return new Background(backgroundLayers);
+
+#undef IMAGE_FILE_REL_PATH
+#undef BACKGROUND_LAYER_0
+#undef BACKGROUND_LAYER_1
+#undef BACKGROUND_LAYER_2
+}
+
+void Assets::LoadPlayerData(Robot* player, ifstream* file)
 {
     // REMEMBER: Ordering is little-endian
     // ('buffer[0]' is LSBs of 'data[0]', 'buffer[1]' is MSBs)
@@ -88,11 +104,11 @@ void Assets::LoadPlayerData(Robot** player, ifstream* file)
     auto py = (int)playerData.data[1];
     auto u = (uint8_t)playerData.data[2];
 
-    delete *player;
-    *player = new Robot(spritesheets[0], px, py, u);
+    player->MoveTo(px, py);
+    player->SetAllowedFilters(u);
 }
 
-Platform* Assets::LoadPlatformData(ifstream* file)
+Platform* Assets::LoadPlatformData(Texture* tileSheet, ifstream* file)
 {
     union {
         char buffer[22];
@@ -132,7 +148,7 @@ Platform* Assets::LoadPlatformData(ifstream* file)
     auto bh = (float)platformData.data[9];
     auto f = (int)platformData.data[10];
 
-    auto* platform = new Platform(spritesheets[1], f * 90, sx, sy, s, x, y, w, h);
+    auto* platform = new Platform(tileSheet, f * 90, sx, sy, s, x, y, w, h);
     platform->SetBoundingBox(bw, bh);
     platform->SetVisibility(vi);
 

@@ -19,15 +19,18 @@ namespace game
         int ticks;
 
     public:
-        Robot(Texture* spritesheet, int x, int y, uint8_t allowedFilters);
+        explicit Robot(Texture* spritesheet);
 
         uint8_t GetAllowedFilters() const;
+        void SetAllowedFilters(uint8_t allowedFilters_);
+
         uint8_t GetActiveFilter() const;
+        void SetActiveFilter(uint8_t activeFilter_);
 
         void IncFilter();
         void DecFilter();
-        void SetFilter(uint8_t activeFilter);
 
+        void MoveTo(int x, int y);
         void UpdateDirection();
         void Animate();
 

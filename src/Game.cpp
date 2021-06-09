@@ -94,7 +94,7 @@ static inline void UpdatePlayerFilter()
         {
             if (buffer & (1 << i))
             {
-                player->SetFilter(i);
+                player->SetActiveFilter(i);
                 break;
             }
         }
