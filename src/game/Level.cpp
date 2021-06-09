@@ -1,14 +1,21 @@
 #include "game/Level.h"
+#include "engine/Viewport.h"
 
 using namespace game;
 
-Level::Level()
+Level::Level(Background* background_, Texture* tileSheet_)
 {
+    this->background = background_;
+    this->tileSheet = tileSheet_;
+
     this->head = nullptr;
 }
 
 Level::~Level()
 {
+    delete this->background;
+    delete this->tileSheet;
+
     struct PlatformNode* current = this->head;
 
     while (current != nullptr)
@@ -46,8 +53,21 @@ void Level::CheckPhysics(Robot* player)
     }
 }
 
+void Level::ScrollBackground(Robot* player)
+{
+    float playerCenterX = player->GetBoundingBox()->GetCenterX();
+    float playerCenterY = player->GetBoundingBox()->GetCenterY();
+
+    Viewport::SnapTo(playerCenterX, playerCenterY);
+    Viewport::Constrain();
+
+    this->background->Scroll();
+}
+
 void Level::Render(uint8_t activeFilter)
 {
+    this->background->Render();
+
     for (struct PlatformNode* current = this->head; current != nullptr; current = current->next)
     {
         Platform* platform = current->platform;

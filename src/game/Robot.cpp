@@ -15,14 +15,14 @@ static const Filter* FILTERS[NUM_FILTERS] = {
         nullptr, &filters::RED, &filters::GREEN, &filters::BLUE, &filters::ORANGE, &filters::VIOLET
 };
 
-Robot::Robot(Texture *spritesheet, int x, int y, uint8_t allowedFilters) : Player(spritesheet, x, y, PLAYER_WIDTH, PLAYER_HEIGHT)
+Robot::Robot(Texture *spritesheet) : Player(spritesheet, 0, 0, PLAYER_WIDTH, PLAYER_HEIGHT)
 {
     if (allowedFilters >= NUM_FILTERS)
         allowedFilters = NUM_FILTERS - 1;
 
     this->direction = &directions::STAND_RIGHT;
 
-    this->allowedFilters = allowedFilters;
+    this->allowedFilters = 0;
     this->activeFilter = 0;
     this->ticks = 0;
 
@@ -34,9 +34,19 @@ uint8_t Robot::GetAllowedFilters() const
     return this->allowedFilters;
 }
 
+void Robot::SetAllowedFilters(uint8_t allowedFilters_)
+{
+    this->allowedFilters = allowedFilters_;
+}
+
 uint8_t Robot::GetActiveFilter() const
 {
     return this->activeFilter;
+}
+
+void Robot::SetActiveFilter(uint8_t activeFilter_)
+{
+    this->activeFilter = activeFilter_;
 }
 
 void Robot::IncFilter()
@@ -53,11 +63,6 @@ void Robot::DecFilter()
         this->activeFilter = this->allowedFilters;
     else
         this->activeFilter --;
-}
-
-void Robot::SetFilter(uint8_t activeFilter_)
-{
-    this->activeFilter = activeFilter_;
 }
 
 void Robot::UpdateDirection()
@@ -123,7 +128,6 @@ void Robot::Animate()
     }
     else this->ticks ++;
 }
-
 void Robot::Render()
 {
     const Filter* drawFilter = FILTERS[this->activeFilter];

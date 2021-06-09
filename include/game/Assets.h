@@ -14,25 +14,23 @@ namespace game
     class Assets
     {
     private:
-        static Background* background;
+        static Background* LoadBackground(uint8_t levelNum);
+        static Texture* LoadTileSheet(uint8_t levelNum);
 
-        static void LoadPlayerData(Robot** player, ifstream* file);
-        static Platform* LoadPlatformData(ifstream* file);
+        static void LoadPlayerData(Robot* player, ifstream* file);
+        static Platform* LoadPlatformData(Texture* tileSheet, ifstream* file);
 
     public:
-        static void Load();
-        static void Unload();
-
-        static Background* GetBackground();
-        static Level* LoadLevel(Robot** player, unsigned int levelNum);
+        static Texture* LoadPlayerSpritesheet();
+        static Level* LoadLevel(Robot* player, uint8_t levelNum);
     };
 
-    class DataParsingException : public exception
+    class AssetException : public exception
     {
     private:
         string message;
     public:
-        explicit DataParsingException(string message_) : message(move(message_)) {}
+        explicit AssetException(string message_) : message(move(message_)) {}
         const char* what() const noexcept override { return message.c_str(); }
     };
 }

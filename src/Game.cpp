@@ -1,6 +1,5 @@
 #include "engine/Window.h"
 #include "engine/Input.h"
-#include "engine/Viewport.h"
 #include "engine/Timer.h"
 #include "game/Robot.h"
 #include "game/Level.h"
@@ -43,8 +42,8 @@ int main(__attribute__((unused)) int argc, char* argv[])
 
     try
     {
-        Assets::Load();
-        level = Assets::LoadLevel(&player, 0);
+        player = new Robot(Assets::LoadPlayerSpritesheet());
+        level = Assets::LoadLevel(player, 0);
     }
     catch(std::exception& e)
     {
@@ -95,7 +94,7 @@ static inline void UpdatePlayerFilter()
         {
             if (buffer & (1 << i))
             {
-                player->SetFilter(i);
+                player->SetActiveFilter(i);
                 break;
             }
         }
@@ -122,15 +121,9 @@ void Update()
     }
 
     player->Move(GRAVITY, FRICTION, PLAYER_MAX_JUMP_SPEED, PLAYER_MAX_MOVE_SPEED, PLAYER_MIN_MOVE_SPEED);
+
     level->CheckPhysics(player);
-
-    float playerCenterX = player->GetBoundingBox()->GetCenterX();
-    float playerCenterY = player->GetBoundingBox()->GetCenterY();
-
-    Viewport::SnapTo(playerCenterX, playerCenterY);
-    Viewport::Constrain();
-
-    Assets::GetBackground()->Scroll();
+    level->ScrollBackground(player);
 
     player->UpdateDirection();
     player->Animate();
@@ -138,7 +131,6 @@ void Update()
 
 void Render()
 {
-    Assets::GetBackground()->Render();
     level->Render(player->GetActiveFilter());
     player->Render();
 
@@ -150,6 +142,5 @@ void Cleanup()
     delete player;
     delete level;
 
-    Assets::Unload();
     Window::Destroy();
 }
