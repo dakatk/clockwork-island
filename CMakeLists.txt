@@ -32,6 +32,7 @@ add_executable(ClockworkIsland_NewEngine src/Game.cpp
         include/game/Direction.h src/game/Direction.cpp
         include/game/Assets.h src/game/Assets.cpp include/engine/Timer.h src/engine/Timer.cpp)
 
+file(REMOVE_RECURSE ${CMAKE_CURRENT_BINARY_DIR}/resources)
 file(COPY resources DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
 target_link_libraries(${PROJECT_NAME} SDL2::Main SDL2::Image m)
