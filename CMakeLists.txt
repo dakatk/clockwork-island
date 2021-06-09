@@ -30,7 +30,7 @@ add_executable(ClockworkIsland_NewEngine src/Game.cpp
         include/game/Robot.h src/game/Robot.cpp
         include/game/Filter.h src/game/Filter.cpp
         include/game/Direction.h src/game/Direction.cpp
-        include/game/Assets.h src/game/Assets.cpp)
+        include/game/Assets.h src/game/Assets.cpp include/engine/Timer.h src/engine/Timer.cpp)
 
 file(COPY resources DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 

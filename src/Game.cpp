@@ -1,23 +1,27 @@
 #include "engine/Window.h"
 #include "engine/Input.h"
 #include "engine/Viewport.h"
+#include "engine/Timer.h"
 #include "game/Robot.h"
 #include "game/Level.h"
 #include "game/Assets.h"
 #include <iostream>
 
+#define CAPPED_FPS 60
+#define CAPPED_TICKS_PER_FRAME (1000 / CAPPED_FPS)
+
 #define BUFFER_WIDTH 800
 #define BUFFER_HEIGHT 600
 
 #define GRAVITY 0.2f
-#define FRICTION 0.85f
+#define FRICTION 0.88f
 
 #define PLAYER_MOVE_SPEED 3.5f
 #define PLAYER_JUMP_SPEED 8.5f
 
 #define PLAYER_MAX_MOVE_SPEED 4.1f
-#define PLAYER_MAX_JUMP_SPEED 8.4f
-#define PLAYER_MIN_MOVE_SPEED 0.45f
+#define PLAYER_MAX_JUMP_SPEED 8.5f
+#define PLAYER_MIN_MOVE_SPEED 0.2f
 
 using namespace engine;
 using namespace std;
@@ -26,6 +30,7 @@ using namespace game;
 Robot* player;
 Level* level;
 
+void Loop();
 void Update();
 void Render();
 void Cleanup();
@@ -48,21 +53,31 @@ int main(__attribute__((unused)) int argc, char* argv[])
 
         return 1;
     }
+    Loop();
+    Cleanup();
+
+    return 0;
+}
+
+void Loop()
+{
+    Timer capTimer;
 
     do {
-        Input::Capture();
+        capTimer.Start();
 
+        Input::Capture();
         if (Input::KeyPressed(KEY_QUIT))
             break;
 
         Update();
         Render();
 
+        uint32_t frameTicks = capTimer.Ticks();
+        if (frameTicks < CAPPED_TICKS_PER_FRAME)
+            SDL_Delay(CAPPED_TICKS_PER_FRAME - frameTicks);
+
     } while (true);
-
-    Cleanup();
-
-    return 0;
 }
 
 static inline void UpdatePlayerFilter()

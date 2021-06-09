@@ -72,39 +72,39 @@ void Player::Move(float gravity, float friction, float maxJumpSpeed, float maxMo
         this->vx = 0.0f;
 }
 
-void Player::Collide(Tile* platform)
+void Player::Collide(Tile* tile)
 {
-    BoundingBox* platformBounds = platform->GetBoundingBox();
+    BoundingBox* tileBounds = tile->GetBoundingBox();
     BoundingBox* playerBounds = this->boundingBox;
 
-    if (platformBounds == nullptr || playerBounds == nullptr)
+    if (tileBounds == nullptr || playerBounds == nullptr)
         return;
 
-    if (platform->HasTop())
+    if (tile->HasTop())
     {
         float playerOldBottom = this->oldCY - playerBounds->GetHalfHeight();
-        if (this->CollideTop(platformBounds->Top(), playerBounds->Bottom(), playerOldBottom))
+        if (this->CollideTop(tileBounds->Top(), playerBounds->Bottom(), playerOldBottom))
             return;
     }
 
-    if (platform->HasLeft())
+    if (tile->HasLeft())
     {
         float playerOldRight = this->oldCX + playerBounds->GetHalfWidth();
-        if (this->CollideLeft(platformBounds->Left(), playerBounds->Right(), playerOldRight))
+        if (this->CollideLeft(tileBounds->Left(), playerBounds->Right(), playerOldRight))
             return;
     }
 
-    if (platform->HasRight())
+    if (tile->HasRight())
     {
         float playerOldLeft = this->oldCX - playerBounds->GetHalfWidth();
-        if (this->CollideRight(platformBounds->Right(), playerBounds->Left(), playerOldLeft))
+        if (this->CollideRight(tileBounds->Right(), playerBounds->Left(), playerOldLeft))
             return;
     }
 
-    if (platform->HasBottom())
+    if (tile->HasBottom())
     {
         float playerOldTop = this->oldCY + playerBounds->GetHalfHeight();
-        if (this->CollideBottom(platformBounds->Bottom(), playerBounds->Top(), playerOldTop))
+        if (this->CollideBottom(tileBounds->Bottom(), playerBounds->Top(), playerOldTop))
             return;
     }
 }
