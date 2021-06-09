@@ -1,8 +1,7 @@
-#ifndef CLOCKWORKISLAND_INPUT_H__
-#define CLOCKWORKISLAND_INPUT_H__
+#ifndef ENGINE_INPUT_H__
+#define ENGINE_INPUT_H__
 
-#include <stdbool.h>
-#include <stdint.h>
+#include <cstdint>
 
 #define KEY_1           0x1
 #define KEY_2           0x2
@@ -22,16 +21,29 @@
 #define BUTTON_RIGHT    0x2
 #define BUTTON_MIDDLE   0x4
 
-extern int Input_MouseX;
-extern int Input_MouseY;
+namespace engine
+{
+    class Input
+    {
+    private:
+        static int mouseX;
+        static int mouseY;
 
-void Input_Capture();
+        static uint16_t keysBuffer;
+        static uint16_t prevKeysBuffer;
+        static uint8_t mouseBuffer;
 
-bool Input_KeyPressed(uint16_t key);
-bool Input_KeyTyped(uint16_t key);
+    public:
+        static int GetMouseX();
+        static int GetMouseY();
 
-uint16_t Input_KeysBuffer();
+        static void Capture();
+        static uint16_t KeysBuffer();
 
-bool Input_ButtonPressed(uint8_t button);
+        static bool KeyPressed(uint16_t key);
+        static bool KeyTyped(uint16_t key);
+        static bool ButtonPressed(uint8_t button);
+    };
+}
 
-#endif /* CLOCKWORKISLAND_INPUT_H__ */
+#endif /* ENGINE_INPUT_H__ */

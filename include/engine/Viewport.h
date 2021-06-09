@@ -1,17 +1,24 @@
-#ifndef CLOCKWORKISLAND_VIEWPORT_H__
-#define CLOCKWORKISLAND_VIEWPORT_H__
+#ifndef ENGINE_VIEWPORT_H__
+#define ENGINE_VIEWPORT_H__
 
-#include <stdbool.h>
+namespace engine
+{
+    class Viewport
+    {
+    private:
+        static int x;
+        static int y;
 
-// Leave space for one extra viewport, since the viewport
-// is moved from the bottom-left corner
-#define VIEWPORT_MAX_X 1600 // Levels are three viewports wide...
-#define VIEWPORT_MAX_Y 1200 // and three viewports tall
+    public:
+        static int GetX();
+        static int GetY();
 
-extern int Viewport_X;
-extern int Viewport_Y;
+        static int GetMaxX();
+        static int GetMaxY();
 
-void Viewport_Constrain();
-void Viewport_SnapTo(float centerX, float centerY);
+        static void Constrain();
+        static void SnapTo(float centerX, float centerY);
+    };
+}
 
-#endif /* CLOCKWORKISLAND_VIEWPORT_H__ */
+#endif /* ENGINE_VIEWPORT_H__ */

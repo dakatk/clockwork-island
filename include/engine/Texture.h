@@ -1,18 +1,39 @@
-#ifndef CLOCKWORKISLAND_TEXTURE_H__
-#define CLOCKWORKISLAND_TEXTURE_H__
+#ifndef ENGINE_TEXTURE_H__
+#define ENGINE_TEXTURE_H__
 
 #include <SDL.h>
-#include <stdbool.h>
+#include <SDL_image.h>
+#include <string>
 
 #define FULL_IMAGE (-1)
 
-struct Texture {
-	SDL_Texture* bitmap;
-	SDL_Rect clip;
-};
+namespace engine
+{
+    class Texture
+    {
+    private:
+        SDL_Texture* bitmap;
+        SDL_Rect clip{};
 
-bool Texture_Init(struct Texture* texture, SDL_Renderer* renderer, const char* filename, int clipSize);
-void Texture_MoveClip(struct Texture* texture, int col, int row);
-void Texture_Destroy(struct Texture* texture);
+    public:
+        Texture(const std::string &filename, int clipWidth, int clipHeight);
+        ~Texture();
 
-#endif /* CLOCKWORKISLAND_TEXTURE_H__ */
+        SDL_Texture* GetBitmap();
+
+        SDL_Rect* GetClip();
+        void MoveClip(int col, int row);
+
+        void QueryBitmapDims(int *bitmapWidth, int *bitmapHeight);
+    };
+
+    class TextureLoadException : public std::exception {
+    private:
+        std::string message;
+    public:
+        explicit TextureLoadException(std::string message_) : message(std::move(message_)) {}
+        const char* what() const noexcept override { return message.c_str(); }
+    };
+}
+
+#endif /* ENGINE_TEXTURE_H__ */

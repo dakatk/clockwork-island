@@ -1,32 +1,45 @@
-#ifndef CLOCKWORKISLAND_PLAYER_H__
-#define CLOCKWORKISLAND_PLAYER_H__
+#ifndef ENGINE_PLAYER_H__
+#define ENGINE_PLAYER_H__
 
-#include "BoundingBox.h"
-#include "Direction.h"
-#include "Texture.h"
-#include "Filter.h"
+#include "engine/Texture.h"
+#include "engine/BoundingBox.h"
+#include "engine/Sprite.h"
+#include "engine/Tile.h"
 
-#include <stdbool.h>
+namespace engine
+{
+    class Player : public Sprite
+    {
+    private:
+        bool jumping;
 
-struct Player {
-	const struct Direction* direction;
-	struct Texture* texture;
-	struct BoundingBox boundingBox;
+        float oldCX;
+        float oldCY;
 
-	int activeFilter;
-	int allowedFilters;
-    bool isJumping;
+        float vx;
+        float vy;
 
-	float vx, vy;
-	float x, y;
-	float oldCX, oldCY;
-	int w, h;
-};
+        bool CollideTop(float platformTop, float playerBottom, float playerOldBottom);
+        bool CollideLeft(float platformLeft, float playerRight, float playerOldRight);
+        bool CollideRight(float platformRight, float playerLeft, float playerOldLeft);
+        bool CollideBottom(float platformBottom, float playerTop, float playerOldTop);
 
-void Player_Init(struct Player* player, struct Texture* spritesheet, int x, int y, int w, int h, int u);
-void Player_SetBoundingBox(struct Player* player, float bw, float bh);
-void Player_UpdateDirection(struct Player* player);
-void Player_Animate(struct Player* player);
-void Player_Render(struct Player* player);
+    public:
+        Player(Texture* spritesheet, int x, int y, int width, int height);
 
-#endif /* CLOCKWORKISLAND_PLAYER_H__ */
+        float GetVX() const;
+        float GetVY() const;
+
+        void ChangeVX(float dvx);
+        void ChangeVY(float dvy);
+
+        void SetJumping();
+        bool IsJumping() const;
+
+        void Move(float gravity, float friction, float maxJumpSpeed, float maxMoveSpeed, float minMoveSpeed);
+
+        void Collide(Tile *platform);
+    };
+}
+
+#endif /* ENGINE_PLAYER_H__ */
