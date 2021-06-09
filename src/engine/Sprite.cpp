@@ -42,6 +42,9 @@ BoundingBox* Sprite::GetBoundingBox()
 
 void Sprite::Render()
 {
+    if (this->spritesheet == nullptr)
+        return;
+
     this->spritesheet->MoveClip(this->spriteClipX, this->spriteClipY);
 
     int actualX = (int)(this->x - (float)Viewport::GetX());

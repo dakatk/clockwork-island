@@ -2,13 +2,16 @@
 
 using namespace game;
 
-Level::Level()
+Level::Level(Background* background_)
 {
     this->head = nullptr;
+    this->background = background_;
 }
 
 Level::~Level()
 {
+    delete background;
+
     struct PlatformNode* current = this->head;
 
     while (current != nullptr)
@@ -46,8 +49,15 @@ void Level::CheckPhysics(Robot* player)
     }
 }
 
+void Level::ScrollBackground(Robot* player)
+{
+
+}
+
 void Level::Render(uint8_t activeFilter)
 {
+    this->background->Render();
+
     for (struct PlatformNode* current = this->head; current != nullptr; current = current->next)
     {
         Platform* platform = current->platform;

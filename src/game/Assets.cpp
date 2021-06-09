@@ -12,8 +12,6 @@ using namespace game;
 
 static Texture* spritesheets[NUM_SPRITESHEETS];
 
-Background* Assets::background;
-
 void Assets::Load()
 {
 #define PLAYER_IMAGE "resources/images/player_character.png"
@@ -40,30 +38,12 @@ void Assets::Load()
 
     for (int i = 0; i < NUM_SPRITESHEETS; i ++)
         spritesheets[i] = new Texture(filenames[i], clipSizes[i], clipSizes[i]);
-
-#define BACKGROUND_LAYER_1 "resources/images/background_layer_1.png"
-#define BACKGROUND_LAYER_2 "resources/images/background_layer_2.png"
-
-    string backgroundLayers[BACKGROUND_NUM_LAYERS] = {
-            "", BACKGROUND_LAYER_1, BACKGROUND_LAYER_2
-    };
-    background = new Background(backgroundLayers);
-
-#undef BACKGROUND_LAYER_1
-#undef BACKGROUND_LAYER_2
 }
 
 void Assets::Unload()
 {
     for (auto& spritesheet : spritesheets)
         delete spritesheet;
-
-    delete background;
-}
-
-Background* Assets::GetBackground()
-{
-    return Assets::background;
 }
 
 Level* Assets::LoadLevel(Robot** player, unsigned int levelNum)
@@ -78,7 +58,19 @@ Level* Assets::LoadLevel(Robot** player, unsigned int levelNum)
 #undef LEVEL_FILE_EXT
 
     ifstream lvlFile(stream.str(), ios::in | ios::binary);
-    auto* level = new Level();
+
+#define BACKGROUND_LAYER_1 "resources/images/background_layer_1.png"
+#define BACKGROUND_LAYER_2 "resources/images/background_layer_2.png"
+
+    string backgroundLayers[BACKGROUND_NUM_LAYERS] = {
+            "", BACKGROUND_LAYER_1, BACKGROUND_LAYER_2
+    };
+
+#undef BACKGROUND_LAYER_1
+#undef BACKGROUND_LAYER_2
+
+    auto* background = new Background(backgroundLayers);
+    auto* level = new Level(background);
 
     try
     {

@@ -14,8 +14,6 @@ namespace game
     class Assets
     {
     private:
-        static Background* background;
-
         static void LoadPlayerData(Robot** player, ifstream* file);
         static Platform* LoadPlatformData(ifstream* file);
 
@@ -23,7 +21,6 @@ namespace game
         static void Load();
         static void Unload();
 
-        static Background* GetBackground();
         static Level* LoadLevel(Robot** player, unsigned int levelNum);
     };
 
