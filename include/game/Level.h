@@ -16,6 +16,8 @@ namespace game
         };
         struct PlatformNode* head;
 
+        Robot* player;
+
     public:
         Level();
         ~Level();
