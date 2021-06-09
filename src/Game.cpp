@@ -8,20 +8,20 @@
 #include <iostream>
 
 #define CAPPED_FPS 60
-#define CAPPED_TICKS_PER_FRAME 1000 / CAPPED_FPS
+#define CAPPED_TICKS_PER_FRAME (1000 / CAPPED_FPS)
 
 #define BUFFER_WIDTH 800
 #define BUFFER_HEIGHT 600
 
 #define GRAVITY 0.2f
-#define FRICTION 0.82f
+#define FRICTION 0.88f
 
 #define PLAYER_MOVE_SPEED 3.5f
 #define PLAYER_JUMP_SPEED 8.5f
 
 #define PLAYER_MAX_MOVE_SPEED 4.1f
-#define PLAYER_MAX_JUMP_SPEED 8.4f
-#define PLAYER_MIN_MOVE_SPEED 0.3f
+#define PLAYER_MAX_JUMP_SPEED 8.5f
+#define PLAYER_MIN_MOVE_SPEED 0.2f
 
 using namespace engine;
 using namespace std;
