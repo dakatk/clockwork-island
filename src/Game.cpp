@@ -42,8 +42,8 @@ int main(__attribute__((unused)) int argc, char* argv[])
 
     try
     {
-        Assets::Load();
-        level = Assets::LoadLevel(&player, 0);
+        player = new Robot(Assets::LoadPlayerSpritesheet());
+        level = Assets::LoadLevel(player, 0);
     }
     catch(std::exception& e)
     {
@@ -142,6 +142,5 @@ void Cleanup()
     delete player;
     delete level;
 
-    Assets::Unload();
     Window::Destroy();
 }

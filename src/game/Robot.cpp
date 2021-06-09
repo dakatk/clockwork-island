@@ -65,12 +65,6 @@ void Robot::DecFilter()
         this->activeFilter --;
 }
 
-void Robot::MoveTo(int x, int y)
-{
-    this->x = (float)x;
-    this->y = (float)y;
-}
-
 void Robot::UpdateDirection()
 {
 
@@ -134,7 +128,6 @@ void Robot::Animate()
     }
     else this->ticks ++;
 }
-
 void Robot::Render()
 {
     const Filter* drawFilter = FILTERS[this->activeFilter];

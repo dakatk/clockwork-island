@@ -15,6 +15,8 @@ namespace game
     {
     private:
         static Background* LoadBackground(uint8_t levelNum);
+        static Texture* LoadTileSheet(uint8_t levelNum);
+
         static void LoadPlayerData(Robot* player, ifstream* file);
         static Platform* LoadPlatformData(Texture* tileSheet, ifstream* file);
 

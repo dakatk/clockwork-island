@@ -38,6 +38,7 @@ namespace engine
         bool IsJumping() const;
 
         void Move(float gravity, float friction, float maxJumpSpeed, float maxMoveSpeed, float minMoveSpeed);
+        void MoveTo(int x, int y);
 
         void Collide(Tile *tile);
     };

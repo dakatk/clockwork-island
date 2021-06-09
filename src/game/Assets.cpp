@@ -25,7 +25,7 @@ Level* Assets::LoadLevel(Robot* player, uint8_t levelNum)
 #define LEVEL_FILE_EXT ".bin"
 
     stringstream stream;
-    stream << LEVEL_FILE_REL_PATH << levelNum << LEVEL_FILE_EXT;
+    stream << LEVEL_FILE_REL_PATH << (int)levelNum << LEVEL_FILE_EXT;
 
 #undef LEVEL_FILE_REL_PATH
 #undef LEVEL_FILE_EXT
@@ -33,7 +33,9 @@ Level* Assets::LoadLevel(Robot* player, uint8_t levelNum)
     ifstream lvlFile(stream.str(), ios::in | ios::binary);
 
     Background* background = Assets::LoadBackground(levelNum);
-    auto* level = new Level(background);
+    Texture* tileSheet = Assets::LoadTileSheet(levelNum);
+
+    auto* level = new Level(background, tileSheet);
 
     try
     {
@@ -41,7 +43,7 @@ Level* Assets::LoadLevel(Robot* player, uint8_t levelNum)
 
         while (!lvlFile.eof())
         {
-            Platform* platform = Assets::LoadPlatformData(&lvlFile);
+            Platform* platform = Assets::LoadPlatformData(tileSheet, &lvlFile);
 
             if (platform == nullptr)
                 break;
@@ -57,31 +59,47 @@ Level* Assets::LoadLevel(Robot* player, uint8_t levelNum)
     return level;
 }
 
+#define IMAGE_FILE_REL_PATH "resources/images/level"
+
 Background* Assets::LoadBackground(uint8_t levelNum)
 {
-#define IMAGE_FILE_REL_PATH "resources/images/level"
-#define BACKGROUND_LAYER_0 "/background_layer_0.png"
-#define BACKGROUND_LAYER_1 "/background_layer_1.png"
-#define BACKGROUND_LAYER_2 "/background_layer_2.png"
+#define BACKGROUND_LAYER_0_NAME "/background_layer_0.png"
+#define BACKGROUND_LAYER_1_NAME "/background_layer_1.png"
+#define BACKGROUND_LAYER_2_NAME "/background_layer_2.png"
 
     stringstream backgroundFile0;
     stringstream backgroundFile1;
     stringstream backgroundFile2;
 
-    backgroundFile0 << IMAGE_FILE_REL_PATH << levelNum << BACKGROUND_LAYER_0;
-    backgroundFile1 << IMAGE_FILE_REL_PATH << levelNum << BACKGROUND_LAYER_1;
-    backgroundFile2 << IMAGE_FILE_REL_PATH << levelNum << BACKGROUND_LAYER_2;
+    backgroundFile0 << IMAGE_FILE_REL_PATH << (int)levelNum << BACKGROUND_LAYER_0_NAME;
+    backgroundFile1 << IMAGE_FILE_REL_PATH << (int)levelNum << BACKGROUND_LAYER_1_NAME;
+    backgroundFile2 << IMAGE_FILE_REL_PATH << (int)levelNum << BACKGROUND_LAYER_2_NAME;
 
     string backgroundLayers[BACKGROUND_NUM_LAYERS] = {
             backgroundFile0.str(), backgroundFile1.str(), backgroundFile2.str()
     };
     return new Background(backgroundLayers);
 
-#undef IMAGE_FILE_REL_PATH
-#undef BACKGROUND_LAYER_0
-#undef BACKGROUND_LAYER_1
-#undef BACKGROUND_LAYER_2
+#undef BACKGROUND_LAYER_0_NAME
+#undef BACKGROUND_LAYER_1_NAME
+#undef BACKGROUND_LAYER_2_NAME
 }
+
+Texture* Assets::LoadTileSheet(uint8_t levelNum)
+{
+#define TILE_SHEET_NAME "/tiles.png"
+#define TILE_CLIP_SIZE 128
+
+    stringstream tileSheet;
+    tileSheet << IMAGE_FILE_REL_PATH << (int)levelNum << TILE_SHEET_NAME;
+
+    return new Texture(tileSheet.str(), TILE_CLIP_SIZE, TILE_CLIP_SIZE);
+
+#undef TILE_SHEET_NAME
+#undef TILE_CLIP_SIZE
+}
+
+#undef IMAGE_FILE_REL_PATH
 
 void Assets::LoadPlayerData(Robot* player, ifstream* file)
 {

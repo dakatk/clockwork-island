@@ -30,6 +30,9 @@ namespace engine
         void SetBoundingBox(float boundsWidth, float boundsHeight);
         BoundingBox* GetBoundingBox();
 
+        float GetX() const;
+        float GetY() const;
+
         virtual void Render();
     };
 }

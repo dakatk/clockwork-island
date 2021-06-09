@@ -63,8 +63,8 @@ void Player::Move(float gravity, float friction, float maxJumpSpeed, float maxMo
 
         this->boundingBox->Move(this->vx, this->vy);
 
-        this->x = this->boundingBox->GetCenterX() - ((float) this->width / 2.0f);
-        this->y = this->boundingBox->GetCenterY() + ((float) this->height / 2.0f);
+        this->x = this->boundingBox->GetCenterX() - ((float)this->width / 2.0f);
+        this->y = this->boundingBox->GetCenterY() + ((float)this->height / 2.0f);
     }
     else
     {
@@ -75,6 +75,15 @@ void Player::Move(float gravity, float friction, float maxJumpSpeed, float maxMo
 
     if (fabsf(this->vx) <= minMoveSpeed)
         this->vx = 0.0f;
+}
+
+void Player::MoveTo(int x, int y)
+{
+    this->x = (float)x;
+    this->y = (float)y;
+
+    this->boundingBox->SetCenterX(this->x + ((float)this->width / 2.0f));
+    this->boundingBox->SetCenterY(this->y - ((float)this->height / 2.0f));
 }
 
 void Player::Collide(Tile* tile)

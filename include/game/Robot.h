@@ -30,7 +30,6 @@ namespace game
         void IncFilter();
         void DecFilter();
 
-        void MoveTo(int x, int y);
         void UpdateDirection();
         void Animate();
 

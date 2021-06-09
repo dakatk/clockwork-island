@@ -40,6 +40,16 @@ BoundingBox* Sprite::GetBoundingBox()
     return this->boundingBox;
 }
 
+float Sprite::GetX() const
+{
+    return this->x;
+}
+
+float Sprite::GetY() const
+{
+    return this->y;
+}
+
 void Sprite::Render()
 {
     if (this->spritesheet == nullptr)
