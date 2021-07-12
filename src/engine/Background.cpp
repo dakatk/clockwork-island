@@ -27,7 +27,6 @@ Background::Background(std::string filenames[BACKGROUND_NUM_LAYERS])
         this->layers[i].texture = new Texture(filenames[i], clipWidth, clipHeight);
         this->layers[i].texture->QueryBitmapDims(&texWidth, &texHeight);
 
-        this->layers[i].texHeight = texHeight;
         this->layers[i].maxScrollX = texWidth - clipWidth;
         this->layers[i].maxScrollY = texHeight - clipHeight;
     }

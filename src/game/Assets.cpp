@@ -47,7 +47,6 @@ Level* Assets::LoadLevel(Robot* player, uint8_t levelNum)
         while (!lvlFile.eof())
         {
             Platform* platform = Assets::LoadPlatformData(tileSheet, &lvlFile);
-
             if (platform == nullptr)
                 break;
 

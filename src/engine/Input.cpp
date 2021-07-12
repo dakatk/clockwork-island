@@ -24,8 +24,7 @@ void Input::Capture()
 {
     prevKeysBuffer = keysBuffer;
 
-    SDL_Event e;
-    while (SDL_PollEvent(&e))
+    for (SDL_Event e; SDL_PollEvent(&e);)
     {
         if (e.type == SDL_QUIT)
             keysBuffer |= KEY_QUIT;

@@ -15,7 +15,6 @@ namespace engine
         struct Layer
         {
             Texture *texture;
-            int texHeight;
 
             int maxScrollX;
             int maxScrollY;
