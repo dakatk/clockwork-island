@@ -67,7 +67,7 @@ void Robot::DecFilter()
 
 void Robot::UpdateDirection()
 {
-
+    // Right
     if (this->GetVX() > 0.0f)
     {
         if (this->GetVY() != 0.0f)
@@ -86,6 +86,7 @@ void Robot::UpdateDirection()
     // Neither
     else
     {
+        // Jumping/Falling
         if (this->GetVY() != 0.0f)
         {
             bool prevLeft = this->direction == &directions::WALK_LEFT || this->direction == &directions::STAND_LEFT;
@@ -97,6 +98,7 @@ void Robot::UpdateDirection()
             else if (prevRight)
                 this->direction = &directions::JUMP_RIGHT;
         }
+        // Standing
         else
         {
             bool prevLeft = this->direction == &directions::WALK_LEFT || this->direction == &directions::JUMP_LEFT;
