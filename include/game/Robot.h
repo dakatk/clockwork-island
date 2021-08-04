@@ -11,12 +11,11 @@ namespace game
     class Robot : public Player
     {
     private:
-        const Direction* direction;
+        const struct Direction* direction;
+        int ticks;
 
         uint8_t activeFilter;
         uint8_t allowedFilters;
-
-        int ticks;
 
     public:
         explicit Robot(Texture* spritesheet);

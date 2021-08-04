@@ -11,7 +11,7 @@
 using namespace engine;
 using namespace game;
 
-static const Filter* FILTERS[NUM_FILTERS] = {
+static const struct Filter* FILTERS[NUM_FILTERS] = {
         nullptr, &filters::RED, &filters::GREEN, &filters::BLUE, &filters::ORANGE, &filters::VIOLET
 };
 
@@ -113,15 +113,12 @@ void Robot::UpdateDirection()
 
 void Robot::Animate()
 {
-    int frames = this->direction->GetFrames();
-    int waitTime = this->direction->GetSleep();
+    this->spriteClipY = this->direction->value;
 
-    this->spriteClipY = this->direction->GetValue();
-
-    if (this->ticks >= waitTime)
+    if (this->ticks >= this->direction->sleep)
     {
         this->spriteClipX ++;
-        if (this->spriteClipX >= frames)
+        if (this->spriteClipX >= this->direction->frames)
             this->spriteClipX = 0;
 
         this->ticks = 0;
@@ -130,10 +127,10 @@ void Robot::Animate()
 }
 void Robot::Render()
 {
-    const Filter* drawFilter = FILTERS[this->activeFilter];
+    const struct Filter* drawFilter = FILTERS[this->activeFilter];
 
     if (drawFilter != nullptr)
-        Window::RenderFullScreenRect(drawFilter->GetR(), drawFilter->GetG(), drawFilter->GetB(), FILTER_ALPHA);
+        Window::RenderFullScreenRect(drawFilter->r, drawFilter->g, drawFilter->b, FILTER_ALPHA);
 
     Player::Render();
 }

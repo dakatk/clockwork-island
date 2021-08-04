@@ -12,11 +12,11 @@
 #define BUFFER_WIDTH 800
 #define BUFFER_HEIGHT 600
 
-#define GRAVITY 0.2f
+#define GRAVITY 0.25f
 #define FRICTION 0.88f
 
 #define PLAYER_MOVE_SPEED 3.5f
-#define PLAYER_JUMP_SPEED 8.5f
+#define PLAYER_JUMP_SPEED 8.3f
 
 #define PLAYER_MAX_MOVE_SPEED 4.1f
 #define PLAYER_MAX_JUMP_SPEED 8.5f

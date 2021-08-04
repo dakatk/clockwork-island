@@ -8,28 +8,22 @@
 
 namespace game
 {
-    class Filter
+    struct Filter
     {
-    private:
         uint8_t r;
         uint8_t g;
         uint8_t b;
 
-    public:
-        Filter(uint8_t r_, uint8_t g_, uint8_t b_);
-
-        uint8_t GetR() const;
-        uint8_t GetG() const;
-        uint8_t GetB() const;
+        Filter(uint8_t r_, uint8_t g_, uint8_t b_): r(r_), g(g_), b(b_) {}
     };
 
     namespace filters
     {
-        const Filter RED(255, 0, 0);
-        const Filter GREEN(0, 255, 0);
-        const Filter BLUE(0, 0, 255);
-        const Filter ORANGE(255, 175, 0);
-        const Filter VIOLET(255, 0, 221);
+        const struct Filter RED(255, 0, 0); // NOLINT(cert-err58-cpp)
+        const struct Filter GREEN(0, 255, 0); // NOLINT(cert-err58-cpp)
+        const struct Filter BLUE(0, 0, 255); // NOLINT(cert-err58-cpp)
+        const struct Filter ORANGE(255, 175, 0); // NOLINT(cert-err58-cpp)
+        const struct Filter VIOLET(255, 0, 221); // NOLINT(cert-err58-cpp)
     }
 }
 
