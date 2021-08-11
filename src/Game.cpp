@@ -37,7 +37,6 @@ void Cleanup();
 int main(__attribute__((unused)) int argc, char* argv[])
 {
     cout << "Running from executable '" << argv[0] << "'" << endl;
-
     Window::Create("Clockwork Island (Alpha v0.0.1)", BUFFER_WIDTH, BUFFER_HEIGHT);
 
     try
@@ -81,23 +80,20 @@ void Loop()
 
 static inline void UpdatePlayerFilter()
 {
-    if (Input::KeyTyped(KEY_A))
-        player->DecFilter();
+    int activeFilter = -1;
 
-    else if (Input::KeyTyped(KEY_S))
-        player->IncFilter();
+    if (Input::KeyTyped(KEY_Q | KEY_P)) {
+        activeFilter = 1;
+    }
+    else if (Input::KeyTyped(KEY_W | KEY_L_BRACKET)) {
+        activeFilter = 0;
+    }
+    else if (Input::KeyTyped(KEY_E | KEY_R_BRACKET)) {
+        activeFilter = 2;
+    }
 
-    else if (Input::KeyTyped(KEY_0 | KEY_1 | KEY_2 | KEY_3 | KEY_4 | KEY_5))
-    {
-        uint16_t buffer = Input::KeysBuffer();
-        for (int i = player->GetAllowedFilters(); i >= 0; i --)
-        {
-            if (buffer & (1 << i))
-            {
-                player->SetActiveFilter(i);
-                break;
-            }
-        }
+    if (activeFilter >= 0 && activeFilter <= player->GetAllowedFilters()) {
+        player->SetActiveFilter(activeFilter);
     }
 }
 
@@ -108,15 +104,15 @@ void Update()
 
     UpdatePlayerFilter();
 
-    if (Input::KeyPressed(KEY_LEFT))
+    if (Input::KeyPressed(KEY_LEFT | KEY_A))
         player->ChangeVX(-PLAYER_MOVE_SPEED);
 
-    else if (Input::KeyPressed(KEY_RIGHT))
+    else if (Input::KeyPressed(KEY_RIGHT | KEY_D))
         player->ChangeVX(PLAYER_MOVE_SPEED);
 
-    if (Input::KeyPressed(KEY_Z) && !player->IsJumping())
+    if (Input::KeyPressed(KEY_Z | KEY_SPACE) && !player->IsJumping())
     {
-        player->SetJumping();
+        player->SetJumping(true);
         player->ChangeVY(PLAYER_JUMP_SPEED);
     }
 

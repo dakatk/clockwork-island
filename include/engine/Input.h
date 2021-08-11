@@ -3,19 +3,20 @@
 
 #include <cstdint>
 
-#define KEY_1           0x1
-#define KEY_2           0x2
-#define KEY_3           0x4
-#define KEY_4           0x8
-#define KEY_5           0x10
-#define KEY_0           0x20
-#define KEY_LEFT        0x40
-#define KEY_RIGHT       0x80
-#define KEY_Z           0x100
-#define KEY_A           0x200
-#define KEY_S           0x400
+#define KEY_Q           0x1
+#define KEY_W           0x2
+#define KEY_E           0x4
+#define KEY_A           0x8
+#define KEY_D           0x10
+#define KEY_P           0x20
+#define KEY_L_BRACKET   0x40
+#define KEY_R_BRACKET   0x80
+#define KEY_LEFT        0x100
+#define KEY_RIGHT       0x200
+#define KEY_Z           0x400
 #define KEY_F1          0x800
 #define KEY_QUIT        0x1000
+#define KEY_SPACE       0x2000
 
 #define BUTTON_LEFT     0x1
 #define BUTTON_RIGHT    0x2
@@ -38,7 +39,6 @@ namespace engine
         static int GetMouseY();
 
         static void Capture();
-        static uint16_t KeysBuffer();
 
         static bool KeyPressed(uint16_t key);
         static bool KeyTyped(uint16_t key);

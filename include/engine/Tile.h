@@ -23,6 +23,11 @@ namespace engine
         bool HasBottom() const;
 
         bool IsOffscreen();
+
+        virtual void CollideTop(Sprite* sprite) = 0;
+        virtual void CollideBottom(Sprite* sprite) = 0;
+        virtual void CollideLeft(Sprite* sprite) = 0;
+        virtual void CollideRight(Sprite* sprite) = 0;
     };
 }
 

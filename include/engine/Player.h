@@ -19,10 +19,10 @@ namespace engine
         float vx;
         float vy;
 
-        bool CollideTop(float platformTop, float playerBottom, float playerOldBottom);
-        bool CollideLeft(float platformLeft, float playerRight, float playerOldRight);
-        bool CollideRight(float platformRight, float playerLeft, float playerOldLeft);
-        bool CollideBottom(float platformBottom, float playerTop, float playerOldTop);
+        bool CollideTop(Tile* tile, float playerBottom, float playerOldBottom);
+        bool CollideLeft(Tile* tile, float playerRight, float playerOldRight);
+        bool CollideRight(Tile* tile, float playerLeft, float playerOldLeft);
+        bool CollideBottom(Tile* tile, float playerTop, float playerOldTop);
 
     public:
         Player(Texture* spritesheet, int x, int y, int width, int height);
@@ -31,10 +31,13 @@ namespace engine
         float GetVX() const;
         float GetVY() const;
 
+        void SetVX(float vx);
+        void SetVY(float vy);
+
         void ChangeVX(float dvx);
         void ChangeVY(float dvy);
 
-        void SetJumping();
+        void SetJumping(bool jumping);
         bool IsJumping() const;
 
         void Move(float gravity, float friction, float maxJumpSpeed, float maxMoveSpeed, float minMoveSpeed);

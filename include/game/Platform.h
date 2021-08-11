@@ -17,6 +17,11 @@ namespace game
 
         void SetVisibility(uint8_t visible);
         bool IsVisible(uint8_t filter) const;
+
+        void CollideTop(Sprite* entity) override;
+        void CollideBottom(Sprite* entity) override;
+        void CollideLeft(Sprite* entity) override;
+        void CollideRight(Sprite* entity) override;
     };
 }
 

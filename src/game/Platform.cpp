@@ -1,3 +1,4 @@
+#include <engine/Player.h>
 #include "game/Platform.h"
 #include "game/Filter.h"
 
@@ -22,3 +23,47 @@ bool Platform::IsVisible(uint8_t filter) const
     return (bool)((this->visible >> filter) & 0x1);
 }
 
+void Platform::CollideTop(Sprite* entity)
+{
+    auto* player = (Player*)entity;
+
+    float platformTop = this->boundingBox->Top();
+    float halfHeight = player->GetBoundingBox()->GetHalfHeight();
+
+    player->GetBoundingBox()->SetCenterY(platformTop + halfHeight);
+    player->SetVY(0.0f);
+    player->SetJumping(false);
+}
+
+void Platform::CollideBottom(Sprite* entity)
+{
+    auto* player = (Player*)entity;
+
+    float platformBottom = this->boundingBox->Bottom();
+    float halfHeight = player->GetBoundingBox()->GetHalfHeight();
+
+    player->GetBoundingBox()->SetCenterY(platformBottom - halfHeight);
+    player->SetVY(0.0f);
+}
+
+void Platform::CollideLeft(Sprite* entity)
+{
+    auto* player = (Player*)entity;
+
+    float platformLeft = this->boundingBox->Left();
+    float halfWidth = player->GetBoundingBox()->GetHalfWidth();
+
+    player->GetBoundingBox()->SetCenterX(platformLeft - halfWidth);
+    player->SetVX(0.0f);
+}
+
+void Platform::CollideRight(Sprite* entity)
+{
+    auto* player = (Player*)entity;
+
+    float platformRight = this->boundingBox->Right();
+    float halfWidth = player->GetBoundingBox()->GetHalfWidth();
+
+    player->GetBoundingBox()->SetCenterX(platformRight + halfWidth);
+    player->SetVX(0.0f);
+}

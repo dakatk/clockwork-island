@@ -12,7 +12,7 @@ using namespace engine;
 using namespace game;
 
 static const struct Filter* FILTERS[NUM_FILTERS] = {
-        nullptr, &filters::RED, &filters::GREEN, &filters::BLUE, &filters::ORANGE, &filters::VIOLET
+        nullptr, &filters::PAST, &filters::FUTURE
 };
 
 Robot::Robot(Texture *spritesheet) : Player(spritesheet, 0, 0, PLAYER_WIDTH, PLAYER_HEIGHT)
@@ -47,22 +47,6 @@ uint8_t Robot::GetActiveFilter() const
 void Robot::SetActiveFilter(uint8_t activeFilter_)
 {
     this->activeFilter = activeFilter_;
-}
-
-void Robot::IncFilter()
-{
-    this->activeFilter ++;
-
-    if (this->activeFilter > this->allowedFilters)
-        this->activeFilter = 0;
-}
-
-void Robot::DecFilter()
-{
-    if (this->activeFilter == 0)
-        this->activeFilter = this->allowedFilters;
-    else
-        this->activeFilter --;
 }
 
 void Robot::UpdateDirection()

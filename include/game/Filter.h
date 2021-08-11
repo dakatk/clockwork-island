@@ -3,7 +3,7 @@
 
 #include <cstdint>
 
-#define NUM_FILTERS 6
+#define NUM_FILTERS 3
 #define FILTER_ALPHA 55
 
 namespace game
@@ -19,11 +19,8 @@ namespace game
 
     namespace filters
     {
-        const struct Filter RED(255, 0, 0); // NOLINT(cert-err58-cpp)
-        const struct Filter GREEN(0, 255, 0); // NOLINT(cert-err58-cpp)
-        const struct Filter BLUE(0, 0, 255); // NOLINT(cert-err58-cpp)
-        const struct Filter ORANGE(255, 175, 0); // NOLINT(cert-err58-cpp)
-        const struct Filter VIOLET(255, 0, 221); // NOLINT(cert-err58-cpp)
+        const struct Filter PAST(255, 175, 0); // NOLINT(cert-err58-cpp
+        const struct Filter FUTURE(0, 0, 255); // NOLINT(cert-err58-cpp)
     }
 }
 

@@ -26,9 +26,6 @@ namespace game
         uint8_t GetActiveFilter() const;
         void SetActiveFilter(uint8_t activeFilter_);
 
-        void IncFilter();
-        void DecFilter();
-
         void UpdateDirection();
         void Animate();
 

@@ -37,6 +37,38 @@ void Input::Capture()
 
             switch (e.key.keysym.sym)
             {
+                case SDLK_q:
+                    keysBuffer |= KEY_Q;
+                    break;
+
+                case SDLK_w:
+                    keysBuffer |= KEY_W;
+                    break;
+
+                case SDLK_e:
+                    keysBuffer |= KEY_E;
+                    break;
+
+                case SDLK_a:
+                    keysBuffer |= KEY_A;
+                    break;
+
+                case SDLK_d:
+                    keysBuffer |= KEY_D;
+                    break;
+
+                case SDLK_p:
+                    keysBuffer |= KEY_P;
+                    break;
+
+                case SDLK_LEFTBRACKET:
+                    keysBuffer |= KEY_L_BRACKET;
+                    break;
+
+                case SDLK_RIGHTBRACKET:
+                    keysBuffer |= KEY_R_BRACKET;
+                    break;
+
                 case SDLK_LEFT:
                     keysBuffer |= KEY_LEFT;
                     break;
@@ -49,25 +81,13 @@ void Input::Capture()
                     keysBuffer |= KEY_Z;
                     break;
 
-                case SDLK_a:
-                    keysBuffer |= KEY_A;
-                    break;
-
-                case SDLK_s:
-                    keysBuffer |= KEY_S;
-                    break;
-
                 case SDLK_F1:
                     keysBuffer |= KEY_F1;
                     break;
 
-                case SDLK_0:
-                case SDLK_1:
-                case SDLK_2:
-                case SDLK_3:
-                case SDLK_4:
-                case SDLK_5:
-                    keysBuffer |= 1 << (e.key.keysym.sym - SDLK_0);
+                case SDLK_SPACE:
+                    keysBuffer |= KEY_SPACE;
+                    break;
 
                 default:
                     break;
@@ -78,6 +98,38 @@ void Input::Capture()
         {
             switch (e.key.keysym.sym)
             {
+                case SDLK_q:
+                    keysBuffer &= ~KEY_Q;
+                    break;
+
+                case SDLK_w:
+                    keysBuffer &= ~KEY_W;
+                    break;
+
+                case SDLK_e:
+                    keysBuffer &= ~KEY_E;
+                    break;
+
+                case SDLK_a:
+                    keysBuffer &= ~KEY_A;
+                    break;
+
+                case SDLK_d:
+                    keysBuffer &= ~KEY_D;
+                    break;
+
+                case SDLK_p:
+                    keysBuffer &= ~KEY_P;
+                    break;
+
+                case SDLK_LEFTBRACKET:
+                    keysBuffer &= ~KEY_L_BRACKET;
+                    break;
+
+                case SDLK_RIGHTBRACKET:
+                    keysBuffer &= ~KEY_R_BRACKET;
+                    break;
+
                 case SDLK_LEFT:
                     keysBuffer &= ~KEY_LEFT;
                     break;
@@ -90,25 +142,13 @@ void Input::Capture()
                     keysBuffer &= ~KEY_Z;
                     break;
 
-                case SDLK_a:
-                    keysBuffer &= ~KEY_A;
-                    break;
-
-                case SDLK_s:
-                    keysBuffer &= ~KEY_S;
-                    break;
-
                 case SDLK_F1:
                     keysBuffer &= ~KEY_F1;
                     break;
 
-                case SDLK_0:
-                case SDLK_1:
-                case SDLK_2:
-                case SDLK_3:
-                case SDLK_4:
-                case SDLK_5:
-                    keysBuffer &= ~(1 << (e.key.keysym.sym - SDLK_0));
+                case SDLK_SPACE:
+                    keysBuffer &= ~KEY_SPACE;
+                    break;
 
                 default:
                     break;
@@ -161,11 +201,6 @@ void Input::Capture()
             mouseY = e.motion.y;
         }
     }
-}
-
-uint16_t Input::KeysBuffer()
-{
-    return keysBuffer;
 }
 
 bool Input::KeyPressed(uint16_t key)
