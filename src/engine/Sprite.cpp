@@ -12,7 +12,7 @@ Sprite::Sprite(Texture* spritesheet, float x, float y, int width, int height)
     this->width = width;
     this->height = height;
 
-    this->angle = 0;
+    this->rotation = 0;
     this->spriteClipX = 0;
     this->spriteClipY = 0;
 
@@ -60,8 +60,8 @@ void Sprite::Render()
     int actualX = (int)(this->x - (float)Viewport::GetX());
     int actualY = (int)Window::GetBufferHeight() - (int)(this->y - (float)Viewport::GetY());
 
-    if (this->angle != 0)
-        Window::RenderTextureRotated(this->spritesheet, this->angle, actualX, actualY, this->width, this->height);
+    if (this->rotation != 0)
+        Window::RenderTextureRotated(this->spritesheet, this->rotation * 90, actualX, actualY, this->width, this->height);
     else
         Window::RenderTexture(this->spritesheet, actualX, actualY, this->width, this->height);
 }

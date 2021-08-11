@@ -13,7 +13,7 @@ namespace game
         uint8_t visible;
 
     public:
-        Platform(Texture* spritesheet, int angle, int spriteClipX, int spriteClipY, uint8_t sides, int x, int y, int width, int height);
+        Platform(Texture* spritesheet, int rotation, int spriteClipX, int spriteClipY, uint8_t sides, int x, int y, int width, int height);
 
         void SetVisibility(uint8_t visible);
         bool IsVisible(uint8_t filter) const;

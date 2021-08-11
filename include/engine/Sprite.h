@@ -21,7 +21,7 @@ namespace engine
         int spriteClipX;
         int spriteClipY;
 
-        int angle;
+        int rotation;
 
     public:
         Sprite(Texture *spritesheet, float x, float y, int width, int height);

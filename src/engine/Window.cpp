@@ -128,10 +128,11 @@ void Window::RenderTextureRotated(Texture *texture, int angle, int x, int y, int
 
     SDL_Rect* clip = texture->GetClip();
     SDL_Rect* dest = nullptr;
+    SDL_Rect destClip;
 
     if (!ClipFullImage(clip))
     {
-        SDL_Rect destClip = {
+        destClip = {
                 .x = x,
                 .y = y,
                 .w = w,

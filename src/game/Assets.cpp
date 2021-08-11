@@ -90,7 +90,7 @@ Background* Assets::LoadBackground(uint8_t levelNum)
 Texture* Assets::LoadTileSheet(uint8_t levelNum)
 {
 #define TILE_SHEET_NAME "/tiles.png"
-#define TILE_CLIP_SIZE 128
+#define TILE_CLIP_SIZE 64
 
     stringstream tileSheet;
     tileSheet << IMAGE_FILE_REL_PATH << (int)levelNum << TILE_SHEET_NAME;
@@ -168,7 +168,7 @@ Platform* Assets::LoadPlatformData(Texture* tileSheet, ifstream* file)
     // Facing
     auto f = (int)platformData.data[10];
 
-    auto* platform = new Platform(tileSheet, f * 90, sx, sy, s, x, y, w, h);
+    auto* platform = new Platform(tileSheet, f, sx, sy, s, x, y, w, h);
     platform->SetBoundingBox(bw, bh);
     platform->SetVisibility(vi);
 

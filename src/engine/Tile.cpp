@@ -8,11 +8,11 @@ using namespace engine;
 #define RIGHT_BIT 1
 #define BOTTOM_BIT 2
 
-Tile::Tile(Texture* spritesheet, int angle, int spriteClipX, int spriteClipY, uint8_t sides, int x, int y, int width, int height) : Sprite(spritesheet, (float)x, (float)y, width, height)
+Tile::Tile(Texture* spritesheet, int rotation, int spriteClipX, int spriteClipY, uint8_t sides, int x, int y, int width, int height) : Sprite(spritesheet, (float)x, (float)y, width, height)
 {
     this->spriteClipX = spriteClipX;
     this->spriteClipY = spriteClipY;
-    this->angle = angle;
+    this->rotation = rotation;
     this->sides = sides;
 }
 
