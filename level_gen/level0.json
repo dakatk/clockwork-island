@@ -6,79 +6,79 @@
         {
             "visibility": "63",
             "sides": "15",
-            "spriteX": "1",
-            "spriteY": "1",
+            "spriteX": "0",
+            "spriteY": "0",
             "x": "76",
             "y": "120",
             "width": "64",
             "height": "64",
             "boundsWidth": "64",
             "boundsHeight": "64",
-            "facing": "1"
+            "facing": "0"
         },
         {
             "visibility": "63",
             "sides": "15",
-            "spriteX": "0",
-            "spriteY": "1",
+            "spriteX": "1",
+            "spriteY": "0",
             "x": "140",
             "y": "120",
             "width": "64",
             "height": "64",
             "boundsWidth": "64",
             "boundsHeight": "64",
-            "facing": "1"
+            "facing": "0"
         },
         {
             "visibility": "63",
             "sides": "15",
-            "spriteX": "0",
-            "spriteY": "1",
+            "spriteX": "1",
+            "spriteY": "0",
             "x": "204",
             "y": "120",
             "width": "64",
             "height": "64",
             "boundsWidth": "64",
             "boundsHeight": "64",
-            "facing": "1"
+            "facing": "0"
         },
         {
             "visibility": "63",
             "sides": "15",
-            "spriteX": "0",
-            "spriteY": "1",
+            "spriteX": "1",
+            "spriteY": "0",
             "x": "268",
             "y": "120",
             "width": "64",
             "height": "64",
             "boundsWidth": "64",
             "boundsHeight": "64",
-            "facing": "1"
+            "facing": "0"
         },
         {
             "visibility": "63",
             "sides": "15",
-            "spriteX": "1",
-            "spriteY": "1",
+            "spriteX": "2",
+            "spriteY": "0",
             "x": "332",
             "y": "120",
             "width": "64",
             "height": "64",
             "boundsWidth": "64",
             "boundsHeight": "64",
-            "facing": "3"
+            "facing": "0"
         },
         {
             "visibility": "63",
             "sides": "15",
-            "spriteX": "0",
-            "spriteY": "0",
+            "spriteX": "4",
+            "spriteY": "3",
             "x": "396",
             "y": "184",
             "width": "64",
             "height": "64",
             "boundsWidth": "64",
-            "boundsHeight": "64",
+            "boundsHeight": "27",
             "facing": "0"
         }
     ]
