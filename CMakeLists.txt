@@ -2,7 +2,14 @@ cmake_minimum_required(VERSION 3.19)
 project(ClockworkIsland_NewEngine)
 
 set(CMAKE_CXX_STANDARD 14)
-set(CMAKE_CXX_FLAGS "-g -Wall -Wextra")
+
+if (CMAKE_BUILD_TYPE MATCHES Release)
+    message("CMAKE IN RELEASE MODE")
+    set(CMAKE_CXX_FLAGS "-O3")
+elseif(CMAKE_BUILD_TYPE MATCHES Debug)
+    message("CMAKE IN DEBUG MODE")
+    set(CMAKE_CXX_FLAGS "-g3 -O0 -Wall -Wextra")
+endif()
 
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR})
 set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR})

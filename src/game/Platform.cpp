@@ -4,7 +4,7 @@
 
 using namespace game;
 
-Platform::Platform(Texture *spritesheet, int rotation, int spriteClipX, int spriteClipY, uint8_t sides, int x, int y, int width, int height)
+Platform::Platform(Texture* spritesheet, int rotation, int spriteClipX, int spriteClipY, uint8_t sides, int x, int y, int width, int height)
 : Tile(spritesheet, rotation, spriteClipX, spriteClipY, sides, x, y, width, height)
 {
     this->visible = 0x3F;

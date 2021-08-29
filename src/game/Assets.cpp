@@ -19,7 +19,7 @@ Texture* Assets::LoadPlayerSpritesheet()
 #undef PLAYER_SPRITE_CLIP_SIZE
 }
 
-Level* Assets::LoadLevel(Robot* player, uint8_t levelNum)
+Level Assets::LoadLevel(Robot& player, Texture* tileSheet, uint8_t levelNum)
 {
 #define LEVEL_FILE_REL_PATH "resources/levels/level"
 #define LEVEL_FILE_EXT ".bin"
@@ -36,9 +36,7 @@ Level* Assets::LoadLevel(Robot* player, uint8_t levelNum)
         throw AssetException("Failed to load level file: " + levelFile.str());
 
     Background* background = Assets::LoadBackground(levelNum);
-    Texture* tileSheet = Assets::LoadTileSheet(levelNum);
-
-    auto* level = new Level(background, tileSheet);
+    auto level = Level(background);
 
     try
     {
@@ -47,10 +45,7 @@ Level* Assets::LoadLevel(Robot* player, uint8_t levelNum)
         while (!lvlFile.eof())
         {
             Platform* platform = Assets::LoadPlatformData(tileSheet, &lvlFile);
-            if (platform == nullptr)
-                break;
-
-            level->AddPlatform(platform);
+            level.AddPlatform(platform);
         }
     }
     catch (exception& e)
@@ -87,7 +82,7 @@ Background* Assets::LoadBackground(uint8_t levelNum)
 #undef BACKGROUND_LAYER_2_NAME
 }
 
-Texture* Assets::LoadTileSheet(uint8_t levelNum)
+Texture* Assets::LoadLevelTileSheet(uint8_t levelNum)
 {
 #define TILE_SHEET_NAME "/tiles.png"
 #define TILE_CLIP_SIZE 64
@@ -103,7 +98,7 @@ Texture* Assets::LoadTileSheet(uint8_t levelNum)
 
 #undef IMAGE_FILE_REL_PATH
 
-void Assets::LoadPlayerData(Robot* player, ifstream* file)
+void Assets::LoadPlayerData(Robot& player, ifstream* file)
 {
     // REMEMBER: Ordering is little-endian
     // ('buffer[0]' is LSBs of 'data[0]', 'buffer[1]' is MSBs)
@@ -124,8 +119,8 @@ void Assets::LoadPlayerData(Robot* player, ifstream* file)
     // Upgrades
     auto u = (uint8_t)playerData.data[2];
 
-    player->MoveTo(px, py);
-    player->SetAllowedFilters(u);
+    player.MoveTo(px, py);
+    player.SetAllowedFilters(u);
 }
 
 Platform* Assets::LoadPlatformData(Texture* tileSheet, ifstream* file)
@@ -141,8 +136,6 @@ Platform* Assets::LoadPlatformData(Texture* tileSheet, ifstream* file)
     {
         if (file->gcount() != 1 || platformData.buffer[0] != (char)0xFF)
             throw AssetException("Corrupt or incomplete platform data");
-
-        return nullptr;
     }
 
     // Visibility index
@@ -168,7 +161,9 @@ Platform* Assets::LoadPlatformData(Texture* tileSheet, ifstream* file)
     // Facing
     auto f = (int)platformData.data[10];
 
-    auto* platform = new Platform(tileSheet, f, sx, sy, s, x, y, w, h);
+    auto rotation = f * 90;
+    auto* platform = new Platform(tileSheet, rotation, sx, sy, s, x, y, w, h);
+
     platform->SetBoundingBox(bw, bh);
     platform->SetVisibility(vi);
 

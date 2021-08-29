@@ -15,16 +15,19 @@ namespace engine
         SDL_Texture* bitmap;
         SDL_Rect clip{};
 
+        int bitmapWidth;
+        int bitmapHeight;
+
     public:
         Texture(const std::string &filename, int clipWidth, int clipHeight);
         ~Texture();
 
         SDL_Texture* GetBitmap();
-
         SDL_Rect* GetClip();
         void MoveClip(int col, int row);
 
-        void QueryBitmapDims(int *bitmapWidth, int *bitmapHeight);
+        int GetBitmapWidth() const;
+        int GetBitmapHeight() const;
     };
 
     class TextureLoadException : public std::exception {

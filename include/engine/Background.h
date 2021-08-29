@@ -14,12 +14,12 @@ namespace engine
     private:
         struct Layer
         {
-            Texture *texture;
+            Texture* texture;
 
             int maxScrollX;
             int maxScrollY;
         };
-        struct Layer layers[BACKGROUND_NUM_LAYERS]{};
+        struct Layer layers[BACKGROUND_NUM_LAYERS] {};
 
     public:
         explicit Background(std::string filenames[BACKGROUND_NUM_LAYERS]);

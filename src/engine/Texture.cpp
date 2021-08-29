@@ -16,6 +16,11 @@ Texture::Texture(const std::string& filename, int clipWidth, int clipHeight)
     }
     this->bitmap = SDL_CreateTextureFromSurface(Window::GetRenderingContext(), image);
 
+    this->bitmapWidth = 0;
+    this->bitmapHeight = 0;
+
+    SDL_QueryTexture(this->bitmap, nullptr, nullptr, &this->bitmapWidth, &this->bitmapHeight);
+
     this->clip.x = 0;
     this->clip.y = 0;
     this->clip.w = clipWidth;
@@ -43,8 +48,18 @@ void Texture::MoveClip(int col, int row)
     this->clip.y = row * this->clip.w;
 }
 
-void Texture::QueryBitmapDims(int* bitmapWidth, int* bitmapHeight)
+int Texture::GetBitmapWidth() const
 {
-    SDL_QueryTexture(this->bitmap, nullptr, nullptr, bitmapWidth, bitmapHeight);
+    int bitmapWidth_;
+    SDL_QueryTexture(this->bitmap, nullptr, nullptr, &bitmapWidth_, nullptr);
+
+    return bitmapWidth_;
 }
 
+int Texture::GetBitmapHeight() const
+{
+    int bitmapHeight_;
+    SDL_QueryTexture(this->bitmap, nullptr, nullptr, nullptr, &bitmapHeight_);
+
+    return bitmapHeight_;
+}

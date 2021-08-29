@@ -6,7 +6,6 @@ using namespace engine;
 
 Sprite::Sprite(Texture* spritesheet, float x, float y, int width, int height)
 {
-    this->spritesheet = spritesheet;
     this->x = x;
     this->y = y;
     this->width = width;
@@ -16,6 +15,7 @@ Sprite::Sprite(Texture* spritesheet, float x, float y, int width, int height)
     this->spriteClipX = 0;
     this->spriteClipY = 0;
 
+    this->spritesheet = spritesheet;
     this->boundingBox = nullptr;
 }
 
@@ -40,16 +40,6 @@ BoundingBox* Sprite::GetBoundingBox()
     return this->boundingBox;
 }
 
-float Sprite::GetX() const
-{
-    return this->x;
-}
-
-float Sprite::GetY() const
-{
-    return this->y;
-}
-
 void Sprite::Render()
 {
     if (this->spritesheet == nullptr)
@@ -61,7 +51,7 @@ void Sprite::Render()
     int actualY = (int)Window::GetBufferHeight() - (int)(this->y - (float)Viewport::GetY());
 
     if (this->rotation != 0)
-        Window::RenderTextureRotated(this->spritesheet, this->rotation * 90, actualX, actualY, this->width, this->height);
+        Window::RenderTextureRotated(*this->spritesheet, this->rotation, actualX, actualY, this->width, this->height);
     else
-        Window::RenderTexture(this->spritesheet, actualX, actualY, this->width, this->height);
+        Window::RenderTexture(*this->spritesheet, actualX, actualY, this->width, this->height);
 }

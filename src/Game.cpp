@@ -26,12 +26,9 @@ using namespace engine;
 using namespace std;
 using namespace game;
 
-Robot* player;
-Level* level;
-
-void Loop();
-void Update();
-void Render();
+void Loop(Robot& player, Level& level);
+void Update(Robot& player, Level& level);
+void Render(Robot& player, Level& level);
 void Cleanup();
 
 int main(__attribute__((unused)) int argc, char* argv[])
@@ -41,8 +38,18 @@ int main(__attribute__((unused)) int argc, char* argv[])
 
     try
     {
-        player = new Robot(Assets::LoadPlayerSpritesheet());
-        level = Assets::LoadLevel(player, 0);
+        Texture* playerSpritesheet = Assets::LoadPlayerSpritesheet();
+        Texture* levelTilesheet = Assets::LoadLevelTileSheet(0);
+
+        Robot player = Robot(playerSpritesheet);
+        Level level = Assets::LoadLevel(player, levelTilesheet, 0);
+
+        Loop(player, level);
+
+        delete playerSpritesheet;
+        delete levelTilesheet;
+
+        Cleanup();
     }
     catch(std::exception& e)
     {
@@ -51,13 +58,10 @@ int main(__attribute__((unused)) int argc, char* argv[])
 
         return 1;
     }
-    Loop();
-    Cleanup();
-
     return 0;
 }
 
-void Loop()
+void Loop(Robot& player, Level& level)
 {
     Timer capTimer;
 
@@ -68,8 +72,8 @@ void Loop()
         if (Input::KeyPressed(KEY_QUIT))
             break;
 
-        Update();
-        Render();
+        Update(player, level);
+        Render(player, level);
 
         uint32_t frameTicks = capTimer.Ticks();
         if (frameTicks < CAPPED_TICKS_PER_FRAME)
@@ -78,7 +82,7 @@ void Loop()
     } while (true);
 }
 
-static inline void UpdatePlayerFilter()
+static inline void UpdatePlayerFilter(Robot& player)
 {
     int activeFilter = -1;
 
@@ -92,51 +96,47 @@ static inline void UpdatePlayerFilter()
         activeFilter = 2;
     }
 
-    if (activeFilter >= 0 && activeFilter <= player->GetAllowedFilters()) {
-        player->SetActiveFilter(activeFilter);
+    if (activeFilter >= 0 && activeFilter <= player.GetAllowedFilters()) {
+        player.SetActiveFilter(activeFilter);
     }
 }
 
-void Update()
+void Update(Robot& player, Level& level)
 {
     if (Input::KeyTyped(KEY_F1))
         Window::ToggleFullscreen();
 
-    UpdatePlayerFilter();
+    UpdatePlayerFilter(player);
 
     if (Input::KeyPressed(KEY_LEFT | KEY_A))
-        player->ChangeVX(-PLAYER_MOVE_SPEED);
+        player.ChangeVX(-PLAYER_MOVE_SPEED);
 
     else if (Input::KeyPressed(KEY_RIGHT | KEY_D))
-        player->ChangeVX(PLAYER_MOVE_SPEED);
+        player.ChangeVX(PLAYER_MOVE_SPEED);
 
-    if (Input::KeyPressed(KEY_Z | KEY_SPACE) && !player->IsJumping())
+    if (Input::KeyPressed(KEY_Z | KEY_SPACE) && !player.IsJumping())
     {
-        player->SetJumping(true);
-        player->ChangeVY(PLAYER_JUMP_SPEED);
+        player.SetJumping(true);
+        player.ChangeVY(PLAYER_JUMP_SPEED);
     }
+    player.Move(GRAVITY, FRICTION, PLAYER_MAX_JUMP_SPEED, PLAYER_MAX_MOVE_SPEED, PLAYER_MIN_MOVE_SPEED);
 
-    player->Move(GRAVITY, FRICTION, PLAYER_MAX_JUMP_SPEED, PLAYER_MAX_MOVE_SPEED, PLAYER_MIN_MOVE_SPEED);
+    level.CheckPhysics(player);
+    level.ScrollBackground(player);
 
-    level->CheckPhysics(player);
-    level->ScrollBackground(player);
-
-    player->UpdateDirection();
-    player->Animate();
+    player.UpdateDirection();
+    player.Animate();
 }
 
-void Render()
+void Render(Robot& player, Level& level)
 {
-    level->Render(player->GetActiveFilter());
-    player->Render();
+    level.Render(player.GetActiveFilter());
+    player.Render();
 
     Window::PresentBuffer();
 }
 
 void Cleanup()
 {
-    delete player;
-    delete level;
-
     Window::Destroy();
 }

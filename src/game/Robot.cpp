@@ -15,7 +15,7 @@ static const struct Filter* FILTERS[NUM_FILTERS] = {
         nullptr, &filters::PAST, &filters::FUTURE
 };
 
-Robot::Robot(Texture *spritesheet) : Player(spritesheet, 0, 0, PLAYER_WIDTH, PLAYER_HEIGHT)
+Robot::Robot(Texture* spritesheet) : Player(spritesheet, 0, 0, PLAYER_WIDTH, PLAYER_HEIGHT)
 {
     if (allowedFilters >= NUM_FILTERS)
         allowedFilters = NUM_FILTERS - 1;

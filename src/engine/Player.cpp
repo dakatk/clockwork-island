@@ -3,7 +3,7 @@
 
 using namespace engine;
 
-Player::Player(Texture *spritesheet, int x, int y, int width, int height) : Sprite(spritesheet, (float)x, (float)y, width, height)
+Player::Player(Texture* spritesheet, int x, int y, int width, int height) : Sprite(spritesheet, (float)x, (float)y, width, height)
 {
     this->jumping = true;
 
@@ -12,11 +12,6 @@ Player::Player(Texture *spritesheet, int x, int y, int width, int height) : Spri
 
     this->oldCX = (float)x + ((float)width / 2.0f);
     this->oldCY = (float)y + ((float)height / 2.0f);
-}
-
-Player::~Player()
-{
-    delete this->spritesheet;
 }
 
 float Player::GetVX() const
