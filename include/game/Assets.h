@@ -11,6 +11,8 @@ using namespace std;
 
 namespace game
 {
+    using namespace platforms;
+
     class Assets
     {
     private:

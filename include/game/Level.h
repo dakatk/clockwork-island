@@ -3,10 +3,12 @@
 
 #include "engine/Background.h"
 #include "Robot.h"
-#include "Platform.h"
+#include "platforms/Platform.h"
 
 namespace game
 {
+    using namespace platforms;
+
     class Level
     {
     private:

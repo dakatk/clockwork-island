@@ -2,6 +2,7 @@
 #include "engine/Viewport.h"
 
 using namespace game;
+using namespace platforms;
 
 Level::Level(Background* background)
 {
@@ -67,7 +68,6 @@ void Level::Render(uint8_t activeFilter)
     for (struct PlatformNode* current = this->head; current != nullptr; current = current->next)
     {
         Platform* platform = current->platform;
-
         if (platform->IsOffscreen() || !platform->IsVisible(activeFilter))
             continue;
 

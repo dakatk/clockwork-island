@@ -27,7 +27,7 @@ namespace engine
         Sprite(Texture* spritesheet, float x, float y, int width, int height);
         virtual ~Sprite();
 
-        void SetBoundingBox(float boundsWidth, float boundsHeight);
+        virtual void SetBoundingBox(float boundsWidth, float boundsHeight);
         BoundingBox* GetBoundingBox();
 
         virtual void Render();

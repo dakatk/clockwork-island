@@ -54,4 +54,11 @@ void Sprite::Render()
         Window::RenderTextureRotated(*this->spritesheet, this->rotation, actualX, actualY, this->width, this->height);
     else
         Window::RenderTexture(*this->spritesheet, actualX, actualY, this->width, this->height);
+
+    int bx = (int)(this->boundingBox->Left() - (float)Viewport::GetX());
+    int by = (int)Window::GetBufferHeight() - (int)(this->boundingBox->Top() - (float)Viewport::GetY());
+    int bw = (int)(this->boundingBox->GetHalfWidth() * 2.0f);
+    int bh = (int)(this->boundingBox->GetHalfHeight() * 2.0f);
+
+    Window::RenderRect(bx, by, bw, bh, 255, 0, 0, 255);
 }

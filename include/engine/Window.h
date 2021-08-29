@@ -32,6 +32,7 @@ namespace engine
         static void RenderFullScreenTexture(Texture& texture);
 
         static void RenderRect(int x, int y, int w, int h, uint8_t r, uint8_t g, uint8_t b, uint8_t a);
+        static void RenderFilledRect(int x, int y, int w, int h, uint8_t r, uint8_t g, uint8_t b, uint8_t a);
         static void RenderFullScreenRect(uint8_t r, uint8_t g, uint8_t b, uint8_t a);
 
         static void PresentBuffer();

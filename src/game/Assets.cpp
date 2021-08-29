@@ -1,4 +1,5 @@
 #include "game/Assets.h"
+#include "game/platforms/Spring.h"
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -162,7 +163,12 @@ Platform* Assets::LoadPlatformData(Texture* tileSheet, ifstream* file)
     auto f = (int)platformData.data[10];
 
     auto rotation = f * 90;
-    auto* platform = new Platform(tileSheet, rotation, sx, sy, s, x, y, w, h);
+
+    Platform* platform;
+    if (sx == 4 && sy == 3)
+        platform = new Spring(tileSheet, rotation, sx, sy, s, x, y, w, h);
+    else
+        platform = new Platform(tileSheet, rotation, sx, sy, s, x, y, w, h);
 
     platform->SetBoundingBox(bw, bh);
     platform->SetVisibility(vi);

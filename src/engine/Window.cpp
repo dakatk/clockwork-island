@@ -160,12 +160,26 @@ void Window::RenderRect(int x, int y, int w, int h, uint8_t r, uint8_t g, uint8_
             .w = w,
             .h = h
     };
+    SDL_RenderDrawRect(renderer, &dest);
+}
+
+void Window::RenderFilledRect(int x, int y, int w, int h, uint8_t r, uint8_t g, uint8_t b, uint8_t a)
+{
+    SDL_SetRenderTarget(renderer, target);
+    SDL_SetRenderDrawColor(renderer, r, g, b, a);
+
+    SDL_Rect dest = {
+            .x = x,
+            .y = y,
+            .w = w,
+            .h = h
+    };
     SDL_RenderFillRect(renderer, &dest);
 }
 
 void Window::RenderFullScreenRect(uint8_t r, uint8_t g, uint8_t b, uint8_t a)
 {
-    Window::RenderRect(0, 0, (int)bufferWidth, (int)bufferHeight, r, g, b, a);
+    Window::RenderFilledRect(0, 0, (int)bufferWidth, (int)bufferHeight, r, g, b, a);
 }
 
 void Window::PresentBuffer()

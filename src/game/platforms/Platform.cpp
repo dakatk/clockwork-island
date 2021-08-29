@@ -1,8 +1,9 @@
 #include <engine/Player.h>
-#include "game/Platform.h"
+#include "game/platforms/Platform.h"
 #include "game/Filter.h"
 
 using namespace game;
+using namespace platforms;
 
 Platform::Platform(Texture* spritesheet, int rotation, int spriteClipX, int spriteClipY, uint8_t sides, int x, int y, int width, int height)
 : Tile(spritesheet, rotation, spriteClipX, spriteClipY, sides, x, y, width, height)

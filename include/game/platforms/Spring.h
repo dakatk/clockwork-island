@@ -1,8 +1,22 @@
-//
-// Created by Dusten Knull on 8/28/21.
-//
+#ifndef CLOCKWORKISLAND_NEWENGINE_SPRING_H__
+#define CLOCKWORKISLAND_NEWENGINE_SPRING_H__
 
-#ifndef CLOCKWORKISLAND_NEWENGINE_SPRING_H
-#define CLOCKWORKISLAND_NEWENGINE_SPRING_H
+#include "game/platforms/Platform.h"
 
-#endif //CLOCKWORKISLAND_NEWENGINE_SPRING_H
+namespace game
+{
+    namespace platforms
+    {
+        class Spring : public Platform
+        {
+        public:
+            Spring(Texture* spritesheet, int rotation, int spriteClipX, int spriteClipY, uint8_t sides, int x, int y, int width, int height)
+                : Platform(spritesheet, rotation, spriteClipX, spriteClipY, sides, x, y, width, height) {}
+
+            void CollideTop(Sprite* entity) override;
+            void SetBoundingBox(float boundsWidth, float boundsHeight) override;
+        };
+    }
+}
+
+#endif //CLOCKWORKISLAND_NEWENGINE_SPRING_H__

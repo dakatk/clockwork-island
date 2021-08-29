@@ -7,22 +7,25 @@ using namespace engine;
 
 namespace game
 {
-    class Platform : public Tile
+    namespace platforms
     {
-    private:
-        uint8_t visible;
+        class Platform : public Tile
+        {
+        private:
+            uint8_t visible;
 
-    public:
-        Platform(Texture* spritesheet, int rotation, int spriteClipX, int spriteClipY, uint8_t sides, int x, int y, int width, int height);
+        public:
+            Platform(Texture* spritesheet, int rotation, int spriteClipX, int spriteClipY, uint8_t sides, int x, int y, int width, int height);
 
-        void SetVisibility(uint8_t visible);
-        bool IsVisible(uint8_t filter) const;
+            void SetVisibility(uint8_t visible);
+            bool IsVisible(uint8_t filter) const;
 
-        void CollideTop(Sprite* entity) override;
-        void CollideBottom(Sprite* entity) override;
-        void CollideLeft(Sprite* entity) override;
-        void CollideRight(Sprite* entity) override;
-    };
+            void CollideTop(Sprite* entity) override;
+            void CollideBottom(Sprite* entity) override;
+            void CollideLeft(Sprite* entity) override;
+            void CollideRight(Sprite* entity) override;
+        };
+    }
 }
 
 #endif /* CLOCKWORKISLAND_PLATFORM_H__ */
