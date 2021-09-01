@@ -1,13 +1,25 @@
 #include "game/platforms/Spring.h"
 #include "engine/Player.h"
 
-#define BOUNCE_SPEED 10.5f
+#define BOUNCE_SPEED 11.5f
 
 #define SPRITE_CLIP_START_X 3
 #define SPRITE_CLIP_END_X 5
 
+#define ANIM_TIMER_SHORT_TICKS 34
+#define ANIM_TIMER_LONG_TICKS 150
+
 using namespace game;
 using namespace platforms;
+
+Spring::Spring(Texture* spritesheet, int rotation, int spriteClipX, int spriteClipY, uint8_t sides, int x, int y, int width, int height)
+        : Platform(spritesheet, rotation, spriteClipX, spriteClipY, sides, x, y, width, height)
+{
+    this->animTimer = Timer();
+    this->activated = false;
+    this->animDirection = 1;
+    this->animWait = ANIM_TIMER_SHORT_TICKS;
+}
 
 void Spring::CollideTop(Sprite* entity)
 {
@@ -17,10 +29,13 @@ void Spring::CollideTop(Sprite* entity)
     if (player == nullptr)
         return;
 
+    // TODO bounce is good, but needs higher top speed and quicker decel
     player->SetJumping(true);
     player->ChangeVY(BOUNCE_SPEED);
 
-    this->spriteClipX = 5;
+    this->animTimer.Start();
+    this->spriteClipX = 4;
+    this->activated = true;
 }
 
 void Spring::SetBoundingBox(float boundsWidth, float boundsHeight)
@@ -36,5 +51,25 @@ void Spring::SetBoundingBox(float boundsWidth, float boundsHeight)
 
 void Spring::Animate()
 {
+    if (!this->activated)
+        return;
 
+    if (this->animTimer.Ticks() >= this->animWait)
+    {
+        this->spriteClipX += this->animDirection;
+
+        if (this->spriteClipX == SPRITE_CLIP_END_X)
+        {
+            this->animWait = ANIM_TIMER_LONG_TICKS;
+            this->animDirection = -1;
+        }
+
+        else if (this->spriteClipX == SPRITE_CLIP_START_X)
+        {
+            this->activated = false;
+            this->animDirection = 1;
+            this->animWait = ANIM_TIMER_SHORT_TICKS;
+        }
+        this->animTimer.Start();
+    }
 }

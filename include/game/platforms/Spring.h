@@ -1,6 +1,7 @@
 #ifndef CLOCKWORKISLAND_NEWENGINE_SPRING_H__
 #define CLOCKWORKISLAND_NEWENGINE_SPRING_H__
 
+#include <engine/Timer.h>
 #include "game/platforms/Platform.h"
 
 namespace game
@@ -9,9 +10,14 @@ namespace game
     {
         class Spring : public Platform
         {
+        private:
+            Timer animTimer;
+            bool activated;
+            int animDirection;
+            uint32_t animWait;
+
         public:
-            Spring(Texture* spritesheet, int rotation, int spriteClipX, int spriteClipY, uint8_t sides, int x, int y, int width, int height)
-                : Platform(spritesheet, rotation, spriteClipX, spriteClipY, sides, x, y, width, height) {}
+            Spring(Texture* spritesheet, int rotation, int spriteClipX, int spriteClipY, uint8_t sides, int x, int y, int width, int height);
 
             void CollideTop(Sprite* entity) override;
             void SetBoundingBox(float boundsWidth, float boundsHeight) override;
