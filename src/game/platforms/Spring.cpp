@@ -6,8 +6,8 @@
 #define SPRITE_CLIP_START_X 3
 #define SPRITE_CLIP_END_X 5
 
-#define ANIM_TIMER_SHORT_TICKS 34
-#define ANIM_TIMER_LONG_TICKS 150
+#define ANIM_TIMER_SHORT_TICKS 17
+#define ANIM_TIMER_LONG_TICKS 200
 
 using namespace game;
 using namespace platforms;
@@ -29,12 +29,12 @@ void Spring::CollideTop(Sprite* entity)
     if (player == nullptr)
         return;
 
-    // TODO bounce is good, but needs higher top speed and quicker decel
+    // TODO bounce is good, but needs quicker decel (?)
     player->SetJumping(true);
-    player->ChangeVY(BOUNCE_SPEED);
+    player->SetVY(BOUNCE_SPEED);
 
     this->animTimer.Start();
-    this->spriteClipX = 4;
+    this->spriteClipX = SPRITE_CLIP_START_X + 1;
     this->activated = true;
 }
 
@@ -51,10 +51,19 @@ void Spring::SetBoundingBox(float boundsWidth, float boundsHeight)
 
 void Spring::Animate()
 {
-    if (!this->activated)
+    if (this->IsOffscreen())
+    {
+        this->activated = false;
+        this->animDirection = 1;
+        this->animWait = ANIM_TIMER_SHORT_TICKS;
+        this->spriteClipX = SPRITE_CLIP_START_X;
+
+        return;
+    }
+    else if (!this->activated)
         return;
 
-    if (this->animTimer.Ticks() >= this->animWait)
+    else if (this->animTimer.Ticks() >= this->animWait)
     {
         this->spriteClipX += this->animDirection;
 
