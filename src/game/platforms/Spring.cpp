@@ -4,6 +4,7 @@
 #define BOUNCE_SPEED 11.5f
 
 #define SPRITE_CLIP_START_X 3
+#define SPRITE_CLIP_START_Y 3
 #define SPRITE_CLIP_END_X 5
 
 #define ANIM_TIMER_SHORT_TICKS 17
@@ -12,13 +13,13 @@
 using namespace game;
 using namespace platforms;
 
-Spring::Spring(Texture* spritesheet, int rotation, int spriteClipX, int spriteClipY, uint8_t sides, int x, int y, int width, int height)
-        : Platform(spritesheet, rotation, spriteClipX, spriteClipY, sides, x, y, width, height)
+Spring::Spring(Texture* spritesheet, int rotation, uint8_t sides, int x, int y, int width, int height)
+    : Platform(spritesheet, rotation, SPRITE_CLIP_START_X, SPRITE_CLIP_START_Y, sides, x, y, width, height)
 {
     this->animTimer = Timer();
-    this->activated = false;
-    this->animDirection = 1;
     this->animWait = ANIM_TIMER_SHORT_TICKS;
+    this->animDirection = 1;
+    this->activated = false;
 }
 
 void Spring::CollideTop(Sprite* entity)

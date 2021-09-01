@@ -17,7 +17,7 @@ namespace game
             uint32_t animWait;
 
         public:
-            Spring(Texture* spritesheet, int rotation, int spriteClipX, int spriteClipY, uint8_t sides, int x, int y, int width, int height);
+            Spring(Texture* spritesheet, int rotation, uint8_t sides, int x, int y, int width, int height);
 
             void CollideTop(Sprite* entity) override;
             void SetBoundingBox(float boundsWidth, float boundsHeight) override;

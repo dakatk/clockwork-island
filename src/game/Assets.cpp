@@ -46,6 +46,9 @@ Level Assets::LoadLevel(Robot& player, Texture* tileSheet, uint8_t levelNum)
         while (!lvlFile.eof())
         {
             Platform* platform = Assets::LoadPlatformData(tileSheet, &lvlFile);
+            if (platform == nullptr)
+                break;
+
             level.AddPlatform(platform);
         }
     }
@@ -124,11 +127,29 @@ void Assets::LoadPlayerData(Robot& player, ifstream* file)
     player.SetAllowedFilters(u);
 }
 
+static void GetSpriteClip(ifstream* file, int* sx, int* sy)
+{
+    union {
+        char buffer[4];
+        uint16_t data[2];
+    } clipValues {};
+
+    file->read(clipValues.buffer, sizeof(clipValues.buffer));
+
+    if (file->fail())
+        throw AssetException("Missing sprite clip data for normal platform");
+
+    // Sprite clip x
+    *sx = (int)clipValues.data[0];
+    // Sprite clip y
+    *sy = (int)clipValues.data[1];
+}
+
 Platform* Assets::LoadPlatformData(Texture* tileSheet, ifstream* file)
 {
     union {
-        char buffer[22];
-        uint16_t data[11];
+        char buffer[20];
+        uint16_t data[10];
     } platformData {};
 
     file->read(platformData.buffer, sizeof(platformData.buffer));
@@ -137,38 +158,56 @@ Platform* Assets::LoadPlatformData(Texture* tileSheet, ifstream* file)
     {
         if (file->gcount() != 1 || platformData.buffer[0] != (char)0xFF)
             throw AssetException("Corrupt or incomplete platform data");
+
+        return nullptr;
     }
 
     // Visibility index
     auto vi = (uint8_t)platformData.data[0];
+    // Platform type
+    auto t = (uint8_t)platformData.data[1];
     // Sides
-    auto s = (uint8_t)platformData.data[1];
-    // Spritesheet x-index
-    auto sx = (int)platformData.data[2];
-    // Spritesheet y-index
-    auto sy = (int)platformData.data[3];
+    auto s = (uint8_t)platformData.data[2];
     // X-coordinate
-    auto x = (int)platformData.data[4];
+    auto x = (int)platformData.data[3];
     // Y-coordinate
-    auto y = (int)platformData.data[5];
+    auto y = (int)platformData.data[4];
     // Width
-    auto w = (int)platformData.data[6];
+    auto w = (int)platformData.data[5];
     // Height
-    auto h = (int)platformData.data[7];
+    auto h = (int)platformData.data[6];
     // Bounds width
-    auto bw = (float)platformData.data[8];
+    auto bw = (float)platformData.data[7];
     // Bounds height
-    auto bh = (float)platformData.data[9];
+    auto bh = (float)platformData.data[8];
     // Facing
-    auto f = (int)platformData.data[10];
-
+    auto f = (int)platformData.data[9];
     auto rotation = f * 90;
 
+#define PLATFORM_NORMAL_TYPE 0
+#define PLATFORM_SPRING_TYPE 1
+
     Platform* platform;
-    if (sx == 3 && sy == 3)
-        platform = new Spring(tileSheet, rotation, sx, sy, s, x, y, w, h);
-    else
-        platform = new Platform(tileSheet, rotation, sx, sy, s, x, y, w, h);
+    switch (t)
+    {
+        case PLATFORM_NORMAL_TYPE:
+            int sx, sy;
+            GetSpriteClip(file, &sx, &sy);
+            platform = new Platform(tileSheet, rotation, sx, sy, s, x, y, w, h);
+            break;
+
+        case PLATFORM_SPRING_TYPE:
+            platform = new Spring(tileSheet, rotation, s, x, y, w, h);
+            break;
+
+        default:
+            std::ostringstream message;
+            message << "Invalid platform type: ";
+            message << (int)t;
+            throw AssetException(message.str());
+    }
+#undef PLATFORM_NORMAL_TYPE
+#undef PLATFORM_SPRING_TYPE
 
     platform->SetBoundingBox(bw, bh);
     platform->SetVisibility(vi);
