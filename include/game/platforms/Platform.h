@@ -24,6 +24,8 @@ namespace game
             void CollideBottom(Sprite* entity) override;
             void CollideLeft(Sprite* entity) override;
             void CollideRight(Sprite* entity) override;
+
+            void Animate() override {}
         };
     }
 }

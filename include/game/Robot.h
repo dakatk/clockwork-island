@@ -27,8 +27,8 @@ namespace game
         void SetActiveFilter(uint8_t activeFilter_);
 
         void UpdateDirection();
-        void Animate();
-
+        
+        void Animate() override;
         void Render() override;
     };
 }

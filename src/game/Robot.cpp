@@ -111,6 +111,7 @@ void Robot::Animate()
     }
     else this->ticks ++;
 }
+
 void Robot::Render()
 {
     const struct Filter* drawFilter = FILTERS[this->activeFilter];

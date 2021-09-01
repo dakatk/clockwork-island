@@ -15,6 +15,7 @@ namespace game
 
             void CollideTop(Sprite* entity) override;
             void SetBoundingBox(float boundsWidth, float boundsHeight) override;
+            void Animate() override;
         };
     }
 }

@@ -1,4 +1,10 @@
 #include "game/platforms/Spring.h"
+#include "engine/Player.h"
+
+#define BOUNCE_SPEED 10.5f
+
+#define SPRITE_CLIP_START_X 3
+#define SPRITE_CLIP_END_X 5
 
 using namespace game;
 using namespace platforms;
@@ -6,16 +12,15 @@ using namespace platforms;
 void Spring::CollideTop(Sprite* entity)
 {
     Platform::CollideTop(entity);
-    // TODO Bounce player
-    // TODO Animate spring
-    /*
-     * Spring should animate between three frames (see sprite sheet)
-     * It should go forward in frame-count when the player is being launched,
-     * And then backwards after a short delay. The hitbox should change only on
-     * the third frame of animation, allowing the player to be launched successfully
-     * without any collision issues. Laslty, being launched by the Spring needs
-     * to ensure that the player has no control over their y-velocity (jump button disabled)
-     */
+
+    auto* player = dynamic_cast<Player*>(entity);
+    if (player == nullptr)
+        return;
+
+    player->SetJumping(true);
+    player->ChangeVY(BOUNCE_SPEED);
+
+    this->spriteClipX = 5;
 }
 
 void Spring::SetBoundingBox(float boundsWidth, float boundsHeight)
@@ -27,4 +32,9 @@ void Spring::SetBoundingBox(float boundsWidth, float boundsHeight)
     float centerY = (float)this->y - ((float)this->height - halfHeight);
 
     this->boundingBox = new BoundingBox(centerX, centerY, halfWidth, halfHeight);
+}
+
+void Spring::Animate()
+{
+
 }

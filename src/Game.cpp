@@ -12,14 +12,14 @@
 #define BUFFER_WIDTH 800
 #define BUFFER_HEIGHT 600
 
-#define GRAVITY 0.25f
+#define GRAVITY 0.3f
 #define FRICTION 0.88f
 
 #define PLAYER_MOVE_SPEED 3.5f
-#define PLAYER_JUMP_SPEED 8.3f
+#define PLAYER_JUMP_SPEED 8.5f
 
 #define PLAYER_MAX_MOVE_SPEED 4.1f
-#define PLAYER_MAX_JUMP_SPEED 8.5f
+#define PLAYER_MAX_FALL_SPEED 9.0f
 #define PLAYER_MIN_MOVE_SPEED 0.2f
 
 using namespace engine;
@@ -119,7 +119,7 @@ void Update(Robot& player, Level& level)
         player.SetJumping(true);
         player.ChangeVY(PLAYER_JUMP_SPEED);
     }
-    player.Move(GRAVITY, FRICTION, PLAYER_MAX_JUMP_SPEED, PLAYER_MAX_MOVE_SPEED, PLAYER_MIN_MOVE_SPEED);
+    player.Move(GRAVITY, FRICTION, PLAYER_MAX_FALL_SPEED, PLAYER_MAX_MOVE_SPEED, PLAYER_MIN_MOVE_SPEED);
 
     level.CheckPhysics(player);
     level.ScrollBackground(player);

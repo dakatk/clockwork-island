@@ -165,7 +165,7 @@ Platform* Assets::LoadPlatformData(Texture* tileSheet, ifstream* file)
     auto rotation = f * 90;
 
     Platform* platform;
-    if (sx == 4 && sy == 3)
+    if (sx == 3 && sy == 3)
         platform = new Spring(tileSheet, rotation, sx, sy, s, x, y, w, h);
     else
         platform = new Platform(tileSheet, rotation, sx, sy, s, x, y, w, h);

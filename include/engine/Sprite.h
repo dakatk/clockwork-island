@@ -31,6 +31,7 @@ namespace engine
         BoundingBox* GetBoundingBox();
 
         virtual void Render();
+        virtual void Animate() = 0;
     };
 }
 

@@ -47,6 +47,8 @@ void Level::CheckPhysics(Robot& player)
 
         if (player.GetBoundingBox()->Intersects(platform->GetBoundingBox()))
             player.Collide(platform);
+
+        platform->Animate();
     }
 }
 
