@@ -1,4 +1,5 @@
 #include "game/Assets.h"
+#include "game/platforms/Spring.h"
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -19,7 +20,7 @@ Texture* Assets::LoadPlayerSpritesheet()
 #undef PLAYER_SPRITE_CLIP_SIZE
 }
 
-Level* Assets::LoadLevel(Robot* player, uint8_t levelNum)
+Level Assets::LoadLevel(Robot& player, Texture* tileSheet, uint8_t levelNum)
 {
 #define LEVEL_FILE_REL_PATH "resources/levels/level"
 #define LEVEL_FILE_EXT ".bin"
@@ -36,9 +37,7 @@ Level* Assets::LoadLevel(Robot* player, uint8_t levelNum)
         throw AssetException("Failed to load level file: " + levelFile.str());
 
     Background* background = Assets::LoadBackground(levelNum);
-    Texture* tileSheet = Assets::LoadTileSheet(levelNum);
-
-    auto* level = new Level(background, tileSheet);
+    auto level = Level(background);
 
     try
     {
@@ -50,7 +49,7 @@ Level* Assets::LoadLevel(Robot* player, uint8_t levelNum)
             if (platform == nullptr)
                 break;
 
-            level->AddPlatform(platform);
+            level.AddPlatform(platform);
         }
     }
     catch (exception& e)
@@ -87,10 +86,10 @@ Background* Assets::LoadBackground(uint8_t levelNum)
 #undef BACKGROUND_LAYER_2_NAME
 }
 
-Texture* Assets::LoadTileSheet(uint8_t levelNum)
+Texture* Assets::LoadLevelTileSheet(uint8_t levelNum)
 {
 #define TILE_SHEET_NAME "/tiles.png"
-#define TILE_CLIP_SIZE 128
+#define TILE_CLIP_SIZE 64
 
     stringstream tileSheet;
     tileSheet << IMAGE_FILE_REL_PATH << (int)levelNum << TILE_SHEET_NAME;
@@ -103,7 +102,7 @@ Texture* Assets::LoadTileSheet(uint8_t levelNum)
 
 #undef IMAGE_FILE_REL_PATH
 
-void Assets::LoadPlayerData(Robot* player, ifstream* file)
+void Assets::LoadPlayerData(Robot& player, ifstream* file)
 {
     // REMEMBER: Ordering is little-endian
     // ('buffer[0]' is LSBs of 'data[0]', 'buffer[1]' is MSBs)
@@ -124,15 +123,33 @@ void Assets::LoadPlayerData(Robot* player, ifstream* file)
     // Upgrades
     auto u = (uint8_t)playerData.data[2];
 
-    player->MoveTo(px, py);
-    player->SetAllowedFilters(u);
+    player.MoveTo(px, py);
+    player.SetAllowedFilters(u);
+}
+
+static void GetSpriteClip(ifstream* file, int* sx, int* sy)
+{
+    union {
+        char buffer[4];
+        uint16_t data[2];
+    } clipValues {};
+
+    file->read(clipValues.buffer, sizeof(clipValues.buffer));
+
+    if (file->fail())
+        throw AssetException("Missing sprite clip data for normal platform");
+
+    // Sprite clip x
+    *sx = (int)clipValues.data[0];
+    // Sprite clip y
+    *sy = (int)clipValues.data[1];
 }
 
 Platform* Assets::LoadPlatformData(Texture* tileSheet, ifstream* file)
 {
     union {
-        char buffer[22];
-        uint16_t data[11];
+        char buffer[20];
+        uint16_t data[10];
     } platformData {};
 
     file->read(platformData.buffer, sizeof(platformData.buffer));
@@ -147,28 +164,51 @@ Platform* Assets::LoadPlatformData(Texture* tileSheet, ifstream* file)
 
     // Visibility index
     auto vi = (uint8_t)platformData.data[0];
+    // Platform type
+    auto t = (uint8_t)platformData.data[1];
     // Sides
-    auto s = (uint8_t)platformData.data[1];
-    // Spritesheet x-index
-    auto sx = (int)platformData.data[2];
-    // Spritesheet y-index
-    auto sy = (int)platformData.data[3];
+    auto s = (uint8_t)platformData.data[2];
     // X-coordinate
-    auto x = (int)platformData.data[4];
+    auto x = (int)platformData.data[3];
     // Y-coordinate
-    auto y = (int)platformData.data[5];
+    auto y = (int)platformData.data[4];
     // Width
-    auto w = (int)platformData.data[6];
+    auto w = (int)platformData.data[5];
     // Height
-    auto h = (int)platformData.data[7];
+    auto h = (int)platformData.data[6];
     // Bounds width
-    auto bw = (float)platformData.data[8];
+    auto bw = (float)platformData.data[7];
     // Bounds height
-    auto bh = (float)platformData.data[9];
+    auto bh = (float)platformData.data[8];
     // Facing
-    auto f = (int)platformData.data[10];
+    auto f = (int)platformData.data[9];
+    auto rotation = f * 90;
 
-    auto* platform = new Platform(tileSheet, f * 90, sx, sy, s, x, y, w, h);
+#define PLATFORM_NORMAL_TYPE 0
+#define PLATFORM_SPRING_TYPE 1
+
+    Platform* platform;
+    switch (t)
+    {
+        case PLATFORM_NORMAL_TYPE:
+            int sx, sy;
+            GetSpriteClip(file, &sx, &sy);
+            platform = new Platform(tileSheet, rotation, sx, sy, s, x, y, w, h);
+            break;
+
+        case PLATFORM_SPRING_TYPE:
+            platform = new Spring(tileSheet, rotation, s, x, y, w, h);
+            break;
+
+        default:
+            std::ostringstream message;
+            message << "Invalid platform type: ";
+            message << (int)t;
+            throw AssetException(message.str());
+    }
+#undef PLATFORM_NORMAL_TYPE
+#undef PLATFORM_SPRING_TYPE
+
     platform->SetBoundingBox(bw, bh);
     platform->SetVisibility(vi);
 

@@ -25,7 +25,10 @@ Background::Background(std::string filenames[BACKGROUND_NUM_LAYERS])
         clipHeight = (int)((float)Window::GetBufferHeight() * LAYER_SCALES[i]);
 
         this->layers[i].texture = new Texture(filenames[i], clipWidth, clipHeight);
-        this->layers[i].texture->QueryBitmapDims(&texWidth, &texHeight);
+        auto* texture = this->layers[i].texture;
+
+        texWidth = texture->GetBitmapWidth();
+        texHeight = texture->GetBitmapHeight();
 
         this->layers[i].maxScrollX = texWidth - clipWidth;
         this->layers[i].maxScrollY = texHeight - clipHeight;
@@ -62,6 +65,6 @@ void Background::Render()
         if (layer.texture == nullptr)
             continue;
 
-        Window::RenderFullScreenTexture(layer.texture);
+        Window::RenderFullScreenTexture(*layer.texture);
     }
 }

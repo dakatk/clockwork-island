@@ -98,18 +98,18 @@ static inline bool ClipFullImage(SDL_Rect* clip)
     return clip->w == FULL_IMAGE || clip->h == FULL_IMAGE;
 }
 
-static void RenderRect_(SDL_Renderer* renderer, Texture* texture, SDL_Rect* dest)
+static void RenderRect_(SDL_Renderer* renderer, Texture& texture, SDL_Rect* dest)
 {
-    SDL_Rect* clip = texture->GetClip();
+    SDL_Rect* clip = texture.GetClip();
     SDL_Rect* src = nullptr;
 
     if (!ClipFullImage(clip))
         src = clip;
 
-    SDL_RenderCopy(renderer, texture->GetBitmap(), src, dest);
+    SDL_RenderCopy(renderer, texture.GetBitmap(), src, dest);
 }
 
-void Window::RenderTexture(Texture *texture, int x, int y, int w, int h)
+void Window::RenderTexture(Texture& texture, int x, int y, int w, int h)
 {
     SDL_SetRenderTarget(renderer, target);
 
@@ -122,16 +122,17 @@ void Window::RenderTexture(Texture *texture, int x, int y, int w, int h)
     RenderRect_(renderer, texture, &dest);
 }
 
-void Window::RenderTextureRotated(Texture *texture, int angle, int x, int y, int w, int h)
+void Window::RenderTextureRotated(Texture& texture, int angle, int x, int y, int w, int h)
 {
     SDL_SetRenderTarget(renderer, target);
 
-    SDL_Rect* clip = texture->GetClip();
+    SDL_Rect* clip = texture.GetClip();
     SDL_Rect* dest = nullptr;
+    SDL_Rect destClip;
 
     if (!ClipFullImage(clip))
     {
-        SDL_Rect destClip = {
+        destClip = {
                 .x = x,
                 .y = y,
                 .w = w,
@@ -139,10 +140,10 @@ void Window::RenderTextureRotated(Texture *texture, int angle, int x, int y, int
         };
         dest = &destClip;
     }
-    SDL_RenderCopyEx(renderer, texture->GetBitmap(), clip, dest, angle, nullptr, SDL_FLIP_NONE);
+    SDL_RenderCopyEx(renderer, texture.GetBitmap(), clip, dest, angle, nullptr, SDL_FLIP_NONE);
 }
 
-void Window::RenderFullScreenTexture(Texture *texture)
+void Window::RenderFullScreenTexture(Texture& texture)
 {
     SDL_SetRenderTarget(renderer, target);
     RenderRect_(renderer, texture, nullptr);
@@ -159,12 +160,26 @@ void Window::RenderRect(int x, int y, int w, int h, uint8_t r, uint8_t g, uint8_
             .w = w,
             .h = h
     };
+    SDL_RenderDrawRect(renderer, &dest);
+}
+
+void Window::RenderFilledRect(int x, int y, int w, int h, uint8_t r, uint8_t g, uint8_t b, uint8_t a)
+{
+    SDL_SetRenderTarget(renderer, target);
+    SDL_SetRenderDrawColor(renderer, r, g, b, a);
+
+    SDL_Rect dest = {
+            .x = x,
+            .y = y,
+            .w = w,
+            .h = h
+    };
     SDL_RenderFillRect(renderer, &dest);
 }
 
 void Window::RenderFullScreenRect(uint8_t r, uint8_t g, uint8_t b, uint8_t a)
 {
-    Window::RenderRect(0, 0, (int)bufferWidth, (int)bufferHeight, r, g, b, a);
+    Window::RenderFilledRect(0, 0, (int)bufferWidth, (int)bufferHeight, r, g, b, a);
 }
 
 void Window::PresentBuffer()

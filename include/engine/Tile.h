@@ -14,7 +14,7 @@ namespace engine
         uint8_t sides;
 
     public:
-        Tile(Texture *spritesheet, int angle, int spriteClipX, int spriteClipY, uint8_t sides, int x, int y, int width,
+        Tile(Texture* spritesheet, int rotation, int spriteClipX, int spriteClipY, uint8_t sides, int x, int y, int width,
              int height);
 
         bool HasTop() const;

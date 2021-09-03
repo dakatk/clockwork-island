@@ -2,28 +2,25 @@
 #include "engine/Viewport.h"
 
 using namespace game;
+using namespace platforms;
 
-Level::Level(Background* background_, Texture* tileSheet_)
+Level::Level(Background* background)
 {
-    this->background = background_;
-    this->tileSheet = tileSheet_;
-
+    this->background = background;
     this->head = nullptr;
 }
 
 Level::~Level()
 {
     delete this->background;
-    delete this->tileSheet;
 
     struct PlatformNode* current = this->head;
-
     while (current != nullptr)
     {
         struct PlatformNode* next = current->next;
 
-        free(current->platform);
-        free(current);
+        delete current->platform;
+        delete current;
 
         current = next;
     }
@@ -39,24 +36,26 @@ void Level::AddPlatform(Platform* platform)
     this->head = node;
 }
 
-void Level::CheckPhysics(Robot* player)
+void Level::CheckPhysics(Robot& player)
 {
     for (struct PlatformNode* current = this->head; current != nullptr; current = current->next) {
 
         Platform* platform = current->platform;
 
-        if (platform->IsOffscreen() || !platform->IsVisible(player->GetActiveFilter()))
+        if (platform->IsOffscreen() || !platform->IsVisible(player.GetActiveFilter()))
             continue;
 
-        if (player->GetBoundingBox()->Intersects(platform->GetBoundingBox()))
-            player->Collide(platform);
+        if (player.GetBoundingBox()->Intersects(platform->GetBoundingBox()))
+            player.Collide(platform);
+
+        platform->Animate();
     }
 }
 
-void Level::ScrollBackground(Robot* player)
+void Level::ScrollBackground(Robot& player)
 {
-    float playerCenterX = player->GetBoundingBox()->GetCenterX();
-    float playerCenterY = player->GetBoundingBox()->GetCenterY();
+    float playerCenterX = player.GetBoundingBox()->GetCenterX();
+    float playerCenterY = player.GetBoundingBox()->GetCenterY();
 
     Viewport::SnapTo(playerCenterX, playerCenterY);
     Viewport::Constrain();
@@ -71,7 +70,6 @@ void Level::Render(uint8_t activeFilter)
     for (struct PlatformNode* current = this->head; current != nullptr; current = current->next)
     {
         Platform* platform = current->platform;
-
         if (platform->IsOffscreen() || !platform->IsVisible(activeFilter))
             continue;
 

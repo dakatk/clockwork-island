@@ -3,6 +3,7 @@
 
 namespace game
 {
+    // TODO 'sleep' should be in milliseconds
     struct Direction
     {
         int value;

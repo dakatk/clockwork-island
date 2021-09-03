@@ -3,7 +3,7 @@
 
 using namespace engine;
 
-Player::Player(Texture *spritesheet, int x, int y, int width, int height) : Sprite(spritesheet, (float)x, (float)y, width, height)
+Player::Player(Texture* spritesheet, int x, int y, int width, int height) : Sprite(spritesheet, (float)x, (float)y, width, height)
 {
     this->jumping = true;
 
@@ -12,11 +12,6 @@ Player::Player(Texture *spritesheet, int x, int y, int width, int height) : Spri
 
     this->oldCX = (float)x + ((float)width / 2.0f);
     this->oldCY = (float)y + ((float)height / 2.0f);
-}
-
-Player::~Player()
-{
-    delete this->spritesheet;
 }
 
 float Player::GetVX() const
@@ -59,11 +54,11 @@ bool Player::IsJumping() const
     return this->jumping;
 }
 
-void Player::Move(float gravity, float friction, float maxJumpSpeed, float maxMoveSpeed, float minMoveSpeed)
+void Player::Move(float gravity, float friction, float maxFallSpeed, float maxMoveSpeed, float minMoveSpeed)
 {
     this->vy -= gravity;
 
-    this->vy = fmaxf(fminf(this->vy, maxJumpSpeed), -maxJumpSpeed);
+    this->vy = fmaxf(this->vy, -maxFallSpeed);
     this->vx = fmaxf(fminf(this->vx, maxMoveSpeed), -maxMoveSpeed);
 
     if (this->boundingBox != nullptr)

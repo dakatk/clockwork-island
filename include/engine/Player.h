@@ -26,7 +26,6 @@ namespace engine
 
     public:
         Player(Texture* spritesheet, int x, int y, int width, int height);
-        ~Player() override;
 
         float GetVX() const;
         float GetVY() const;
@@ -43,7 +42,7 @@ namespace engine
         void Move(float gravity, float friction, float maxJumpSpeed, float maxMoveSpeed, float minMoveSpeed);
         void MoveTo(int x, int y);
 
-        void Collide(Tile *tile);
+        void Collide(Tile* tile);
     };
 }
 

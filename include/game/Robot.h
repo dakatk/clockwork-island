@@ -2,7 +2,7 @@
 #define CLOCKWORKISLAND_ROBOT_H__
 
 #include "engine/Player.h"
-#include "Direction.h"
+#include "constants/Direction.h"
 
 using namespace engine;
 
@@ -27,8 +27,8 @@ namespace game
         void SetActiveFilter(uint8_t activeFilter_);
 
         void UpdateDirection();
-        void Animate();
-
+        
+        void Animate() override;
         void Render() override;
     };
 }

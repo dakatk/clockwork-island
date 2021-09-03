@@ -1,11 +1,12 @@
 #include <engine/Player.h>
-#include "game/Platform.h"
-#include "game/Filter.h"
+#include "game/platforms/Platform.h"
+#include "game/constants/Filter.h"
 
 using namespace game;
+using namespace platforms;
 
-Platform::Platform(Texture *spritesheet, int angle, int spriteClipX, int spriteClipY, uint8_t sides, int x, int y, int width, int height)
-: Tile(spritesheet, angle, spriteClipX, spriteClipY, sides, x, y, width, height)
+Platform::Platform(Texture* spritesheet, int rotation, int spriteClipX, int spriteClipY, uint8_t sides, int x, int y, int width, int height)
+: Tile(spritesheet, rotation, spriteClipX, spriteClipY, sides, x, y, width, height)
 {
     this->visible = 0x3F;
 }
@@ -25,7 +26,9 @@ bool Platform::IsVisible(uint8_t filter) const
 
 void Platform::CollideTop(Sprite* entity)
 {
-    auto* player = (Player*)entity;
+    auto* player = dynamic_cast<Player*>(entity);
+    if (player == nullptr)
+        return;
 
     float platformTop = this->boundingBox->Top();
     float halfHeight = player->GetBoundingBox()->GetHalfHeight();
@@ -37,7 +40,9 @@ void Platform::CollideTop(Sprite* entity)
 
 void Platform::CollideBottom(Sprite* entity)
 {
-    auto* player = (Player*)entity;
+    auto* player = dynamic_cast<Player*>(entity);
+    if (player == nullptr)
+        return;
 
     float platformBottom = this->boundingBox->Bottom();
     float halfHeight = player->GetBoundingBox()->GetHalfHeight();
@@ -48,7 +53,9 @@ void Platform::CollideBottom(Sprite* entity)
 
 void Platform::CollideLeft(Sprite* entity)
 {
-    auto* player = (Player*)entity;
+    auto* player = dynamic_cast<Player*>(entity);
+    if (player == nullptr)
+        return;
 
     float platformLeft = this->boundingBox->Left();
     float halfWidth = player->GetBoundingBox()->GetHalfWidth();
@@ -59,7 +66,9 @@ void Platform::CollideLeft(Sprite* entity)
 
 void Platform::CollideRight(Sprite* entity)
 {
-    auto* player = (Player*)entity;
+    auto* player = dynamic_cast<Player*>(entity);
+    if (player == nullptr)
+        return;
 
     float platformRight = this->boundingBox->Right();
     float halfWidth = player->GetBoundingBox()->GetHalfWidth();

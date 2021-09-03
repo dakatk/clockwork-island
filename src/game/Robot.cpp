@@ -1,6 +1,6 @@
 #include "engine/Window.h"
 #include "game/Robot.h"
-#include "game/Filter.h"
+#include "game/constants/Filter.h"
 
 #define PLAYER_WIDTH 100
 #define PLAYER_HEIGHT 100
@@ -15,7 +15,7 @@ static const struct Filter* FILTERS[NUM_FILTERS] = {
         nullptr, &filters::PAST, &filters::FUTURE
 };
 
-Robot::Robot(Texture *spritesheet) : Player(spritesheet, 0, 0, PLAYER_WIDTH, PLAYER_HEIGHT)
+Robot::Robot(Texture* spritesheet) : Player(spritesheet, 0, 0, PLAYER_WIDTH, PLAYER_HEIGHT)
 {
     if (allowedFilters >= NUM_FILTERS)
         allowedFilters = NUM_FILTERS - 1;
@@ -99,6 +99,7 @@ void Robot::UpdateDirection()
 
 void Robot::Animate()
 {
+    // TODO Use 'Timer' class to count ticks instead of counting frames
     this->spriteClipY = this->direction->value;
 
     if (this->ticks >= this->direction->sleep)
@@ -111,6 +112,7 @@ void Robot::Animate()
     }
     else this->ticks ++;
 }
+
 void Robot::Render()
 {
     const struct Filter* drawFilter = FILTERS[this->activeFilter];

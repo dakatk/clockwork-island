@@ -3,10 +3,12 @@
 
 #include "engine/Background.h"
 #include "Robot.h"
-#include "Platform.h"
+#include "platforms/Platform.h"
 
 namespace game
 {
+    using namespace platforms;
+
     class Level
     {
     private:
@@ -15,18 +17,17 @@ namespace game
             Platform* platform;
             struct PlatformNode* next;
         };
-        struct PlatformNode* head;
 
+        struct PlatformNode* head;
         Background* background;
-        Texture* tileSheet;
 
     public:
-        Level(Background* background_, Texture* tileSheet_);
+        explicit Level(Background* background);
         ~Level();
 
         void AddPlatform(Platform* platform);
-        void CheckPhysics(Robot* player);
-        void ScrollBackground(Robot* player);
+        void CheckPhysics(Robot& player);
+        void ScrollBackground(Robot& player);
 
         void Render(uint8_t activeFilter);
     };
