@@ -12,9 +12,9 @@ namespace game
         {
         private:
             Timer animTimer;
-            bool activated;
             int animDirection;
             uint32_t animWait;
+            bool activated;
 
         public:
             Spring(Texture* spritesheet, int rotation, uint8_t sides, int x, int y, int width, int height);
