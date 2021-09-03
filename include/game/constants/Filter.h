@@ -4,7 +4,7 @@
 #include <cstdint>
 
 #define NUM_FILTERS 3
-#define FILTER_ALPHA 55
+#define FILTER_ALPHA 30
 
 namespace game
 {

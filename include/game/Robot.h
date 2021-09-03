@@ -2,7 +2,7 @@
 #define CLOCKWORKISLAND_ROBOT_H__
 
 #include "engine/Player.h"
-#include "Direction.h"
+#include "constants/Direction.h"
 
 using namespace engine;
 

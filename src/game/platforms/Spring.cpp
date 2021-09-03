@@ -10,8 +10,7 @@
 #define ANIM_TIMER_SHORT_TICKS 17
 #define ANIM_TIMER_LONG_TICKS 200
 
-using namespace game;
-using namespace platforms;
+using namespace game::platforms;
 
 Spring::Spring(Texture* spritesheet, int rotation, uint8_t sides, int x, int y, int width, int height)
     : Platform(spritesheet, rotation, SPRITE_CLIP_START_X, SPRITE_CLIP_START_Y, sides, x, y, width, height)
@@ -30,7 +29,6 @@ void Spring::CollideTop(Sprite* entity)
     if (player == nullptr)
         return;
 
-    // TODO bounce is good, but needs quicker decel (?)
     player->SetJumping(true);
     player->SetVY(BOUNCE_SPEED);
 

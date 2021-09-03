@@ -1,6 +1,6 @@
 #include <engine/Player.h>
 #include "game/platforms/Platform.h"
-#include "game/Filter.h"
+#include "game/constants/Filter.h"
 
 using namespace game;
 using namespace platforms;
@@ -29,7 +29,6 @@ void Platform::CollideTop(Sprite* entity)
     auto* player = dynamic_cast<Player*>(entity);
     if (player == nullptr)
         return;
-    // auto* player = (Player*)entity;
 
     float platformTop = this->boundingBox->Top();
     float halfHeight = player->GetBoundingBox()->GetHalfHeight();
@@ -44,7 +43,6 @@ void Platform::CollideBottom(Sprite* entity)
     auto* player = dynamic_cast<Player*>(entity);
     if (player == nullptr)
         return;
-    // auto* player = (Player*)entity;
 
     float platformBottom = this->boundingBox->Bottom();
     float halfHeight = player->GetBoundingBox()->GetHalfHeight();
@@ -58,7 +56,6 @@ void Platform::CollideLeft(Sprite* entity)
     auto* player = dynamic_cast<Player*>(entity);
     if (player == nullptr)
         return;
-    // auto* player = (Player*)entity;
 
     float platformLeft = this->boundingBox->Left();
     float halfWidth = player->GetBoundingBox()->GetHalfWidth();
@@ -72,7 +69,6 @@ void Platform::CollideRight(Sprite* entity)
     auto* player = dynamic_cast<Player*>(entity);
     if (player == nullptr)
         return;
-    // auto* player = (Player*)entity;
 
     float platformRight = this->boundingBox->Right();
     float halfWidth = player->GetBoundingBox()->GetHalfWidth();

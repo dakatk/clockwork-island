@@ -1,6 +1,6 @@
 #include "engine/Window.h"
 #include "game/Robot.h"
-#include "game/Filter.h"
+#include "game/constants/Filter.h"
 
 #define PLAYER_WIDTH 100
 #define PLAYER_HEIGHT 100
@@ -99,6 +99,7 @@ void Robot::UpdateDirection()
 
 void Robot::Animate()
 {
+    // TODO Use 'Timer' class to count ticks instead of counting frames
     this->spriteClipY = this->direction->value;
 
     if (this->ticks >= this->direction->sleep)
