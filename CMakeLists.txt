@@ -35,8 +35,8 @@ add_executable(ClockworkIsland_NewEngine src/Game.cpp
         include/engine/Timer.h src/engine/Timer.cpp
         include/game/Level.h src/game/Level.cpp
         include/game/Robot.h src/game/Robot.cpp
-        include/game/Filter.h include/game/Direction.h
         include/game/Assets.h src/game/Assets.cpp
+        include/game/constants/Filter.h include/game/constants/Direction.h
         include/game/platforms/Platform.h src/game/platforms/Platform.cpp
         include/game/platforms/Spring.h src/game/platforms/Spring.cpp)
 
