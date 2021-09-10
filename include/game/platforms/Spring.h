@@ -1,5 +1,5 @@
-#ifndef CLOCKWORKISLAND_NEWENGINE_SPRING_H__
-#define CLOCKWORKISLAND_NEWENGINE_SPRING_H__
+#ifndef GAME_PLATFORMS_SPRING_H__
+#define GAME_PLATFORMS_SPRING_H__
 
 #include <engine/Timer.h>
 #include "game/platforms/Platform.h"
@@ -26,4 +26,4 @@ namespace game
     }
 }
 
-#endif //CLOCKWORKISLAND_NEWENGINE_SPRING_H__
+#endif /* GAME_PLATFORMS_SPRING_H__ */

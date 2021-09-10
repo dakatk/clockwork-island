@@ -1,5 +1,5 @@
-#ifndef CLOCKWORKISLAND_FILTER_H__
-#define CLOCKWORKISLAND_FILTER_H__
+#ifndef GAME_CONSTANTS_FILTER_H__
+#define GAME_CONSTANTS_FILTER_H__
 
 #include <cstdint>
 
@@ -24,4 +24,4 @@ namespace game
     }
 }
 
-#endif /* CLOCKWORKISLAND_FILTER_H__ */
+#endif /* GAME_CONSTANTS_FILTER_H__ */

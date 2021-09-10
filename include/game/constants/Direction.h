@@ -1,5 +1,5 @@
-#ifndef CLOCKWORKISLAND_DIRECTION_H__
-#define CLOCKWORKISLAND_DIRECTION_H__
+#ifndef GAME_CONSTANTS_DIRECTION_H__
+#define GAME_CONSTANTS_DIRECTION_H__
 
 namespace game
 {
@@ -24,4 +24,4 @@ namespace game
     }
 }
 
-#endif /* CLOCKWORKISLAND_DIRECTION_H__ */
+#endif /* GAME_CONSTANTS_DIRECTION_H__ */

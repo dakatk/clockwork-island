@@ -1,5 +1,5 @@
-#ifndef CLOCKWORKISLAND_ROBOT_H__
-#define CLOCKWORKISLAND_ROBOT_H__
+#ifndef GAME_ROBOT_H__
+#define GAME_ROBOT_H__
 
 #include "engine/Player.h"
 #include "constants/Direction.h"
@@ -33,4 +33,4 @@ namespace game
     };
 }
 
-#endif /* CLOCKWORKISLAND_ROBOT_H__ */
+#endif /* GAME_ROBOT_H__ */

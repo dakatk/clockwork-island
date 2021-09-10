@@ -1,5 +1,6 @@
 #include "game/Assets.h"
 #include "game/platforms/Spring.h"
+#include "game/platforms/Magnet.h"
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -45,11 +46,8 @@ Level Assets::LoadLevel(Robot& player, Texture* tileSheet, uint8_t levelNum)
 
         while (!lvlFile.eof())
         {
-            Platform* platform = Assets::LoadPlatformData(tileSheet, &lvlFile);
-            if (platform == nullptr)
+            if (!Assets::LoadPlatformData(level, tileSheet, &lvlFile))
                 break;
-
-            level.AddPlatform(platform);
         }
     }
     catch (exception& e)
@@ -145,7 +143,7 @@ static void GetSpriteClip(ifstream* file, int* sx, int* sy)
     *sy = (int)clipValues.data[1];
 }
 
-Platform* Assets::LoadPlatformData(Texture* tileSheet, ifstream* file)
+bool Assets::LoadPlatformData(Level& level, Texture* tileSheet, ifstream* file)
 {
     union {
         char buffer[20];
@@ -159,7 +157,7 @@ Platform* Assets::LoadPlatformData(Texture* tileSheet, ifstream* file)
         if (file->gcount() != 1 || platformData.buffer[0] != (char)0xFF)
             throw AssetException("Corrupt or incomplete platform data");
 
-        return nullptr;
+        return false;
     }
 
     // Visibility index
@@ -186,6 +184,7 @@ Platform* Assets::LoadPlatformData(Texture* tileSheet, ifstream* file)
 
 #define PLATFORM_NORMAL_TYPE 0
 #define PLATFORM_SPRING_TYPE 1
+#define PLATFORM_MAGNET_TYPE 2
 
     Platform* platform;
     switch (t)
@@ -200,6 +199,14 @@ Platform* Assets::LoadPlatformData(Texture* tileSheet, ifstream* file)
             platform = new Spring(tileSheet, rotation, s, x, y, w, h);
             break;
 
+        case PLATFORM_MAGNET_TYPE:
+        {
+            auto* magnet = new Magnet(tileSheet, rotation, s, x, y, w, h);
+            level.AddHazard(magnet);
+            platform = magnet;
+            break;
+        }
+
         default:
             std::ostringstream message;
             message << "Invalid platform type: ";
@@ -208,10 +215,13 @@ Platform* Assets::LoadPlatformData(Texture* tileSheet, ifstream* file)
     }
 #undef PLATFORM_NORMAL_TYPE
 #undef PLATFORM_SPRING_TYPE
+#undef PLATFORM_MAGNET_TYPE
 
     platform->SetBoundingBox(bw, bh);
     platform->SetVisibility(vi);
 
-    return platform;
+    level.AddPlatform(platform);
+
+    return true;
 }
 

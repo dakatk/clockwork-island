@@ -23,6 +23,7 @@ include_directories(${PROJECT_SOURCE_DIR}/include)
 include_directories(${SDL2_INCLUDE_DIRS})
 
 add_executable(ClockworkIsland_NewEngine src/Game.cpp
+        include/util/LinkedList.h
         include/engine/BoundingBox.h src/engine/BoundingBox.cpp
         include/engine/Texture.h src/engine/Texture.cpp
         include/engine/Viewport.h src/engine/Viewport.cpp
@@ -38,7 +39,9 @@ add_executable(ClockworkIsland_NewEngine src/Game.cpp
         include/game/Assets.h src/game/Assets.cpp
         include/game/constants/Filter.h include/game/constants/Direction.h
         include/game/platforms/Platform.h src/game/platforms/Platform.cpp
-        include/game/platforms/Spring.h src/game/platforms/Spring.cpp include/game/platforms/Magnet.h src/game/platforms/Magnet.cpp)
+        include/game/platforms/Spring.h src/game/platforms/Spring.cpp
+        include/game/platforms/Magnet.h src/game/platforms/Magnet.cpp
+        include/game/Hazard.h)
 
 file(REMOVE_RECURSE ${CMAKE_CURRENT_BINARY_DIR}/resources)
 file(COPY resources DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
