@@ -35,7 +35,7 @@ void Magnet::Effect(Sprite* sprite)
     BoundingBox* playerBounds = player->GetBoundingBox();
     if (playerBounds->Intersects(&this->field))
     {
-        // TODO push/pull physics based on rotation and player's polarity (?)
+        // TODO push/pull physics based on rotation
     }
 }
 

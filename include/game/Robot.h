@@ -3,6 +3,7 @@
 
 #include "engine/Player.h"
 #include "constants/Direction.h"
+#include "engine/Timer.h"
 
 using namespace engine;
 
@@ -12,10 +13,12 @@ namespace game
     {
     private:
         const struct Direction* direction;
-        int ticks;
+        Timer timer;
 
         uint8_t activeFilter;
         uint8_t allowedFilters;
+
+        bool wasJumping;
 
     public:
         explicit Robot(Texture* spritesheet);

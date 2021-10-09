@@ -27,6 +27,17 @@ void Level::AddHazard(Hazard* hazard)
 
 void Level::CheckPhysics(Robot& player)
 {
+    this->hazards.Reset();
+    while (!this->hazards.Done())
+    {
+        Hazard* hazard = this->hazards.Next();
+
+        if (!hazard->IsApplicable(player.GetActiveFilter()))
+            continue;
+
+        hazard->Effect(&player);
+    }
+
     this->platforms.Reset();
     while (!this->platforms.Done())
     {
@@ -39,17 +50,6 @@ void Level::CheckPhysics(Robot& player)
             player.Collide(platform);
 
         platform->Animate();
-    }
-
-    this->hazards.Reset();
-    while (!this->hazards.Done())
-    {
-        Hazard* hazard = this->hazards.Next();
-
-        if (!hazard->IsApplicable(player.GetActiveFilter()))
-            continue;
-
-        hazard->Effect(&player);
     }
 }
 

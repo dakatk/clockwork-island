@@ -40,7 +40,6 @@ namespace util
         this->Reset();
         while (!this->Done())
         {
-            std::cout << "Destructor called" << std::endl;
             struct Node* next = this->current->next;
 
             delete this->current->payload;
