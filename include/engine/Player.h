@@ -11,13 +11,14 @@ namespace engine
     class Player : public Sprite
     {
     private:
-        bool jumping;
-
         float oldCX;
         float oldCY;
 
         float vx;
         float vy;
+
+        bool jumping;
+        bool wasJumping;
 
         bool CollideTop(Tile* tile, float playerBottom, float playerOldBottom);
         bool CollideLeft(Tile* tile, float playerRight, float playerOldRight);
@@ -36,10 +37,13 @@ namespace engine
         void ChangeVX(float dvx);
         void ChangeVY(float dvy);
 
-        void SetJumping(bool jumping);
+        void SetJumping();
         bool IsJumping() const;
+        void AllowJumping();
+        void StopJumping();
+        bool WasJumping() const;
 
-        void Move(float gravity, float friction, float maxJumpSpeed, float maxMoveSpeed, float minMoveSpeed);
+        void Move(float gravity, float maxJumpSpeed);
         void MoveTo(int x, int y);
 
         void Collide(Tile* tile);

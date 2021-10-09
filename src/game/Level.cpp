@@ -3,44 +3,45 @@
 
 using namespace game;
 using namespace platforms;
+using namespace util;
 
 Level::Level(Background* background)
 {
     this->background = background;
-    this->head = nullptr;
 }
 
 Level::~Level()
 {
     delete this->background;
-
-    struct PlatformNode* current = this->head;
-    while (current != nullptr)
-    {
-        struct PlatformNode* next = current->next;
-
-        delete current->platform;
-        delete current;
-
-        current = next;
-    }
 }
 
 void Level::AddPlatform(Platform* platform)
 {
-    auto* node = new PlatformNode();
+    this->platforms.Push(platform);
+}
 
-    node->platform = platform;
-    node->next = this->head;
-
-    this->head = node;
+void Level::AddHazard(Hazard* hazard)
+{
+    this->hazards.Push(hazard);
 }
 
 void Level::CheckPhysics(Robot& player)
 {
-    for (struct PlatformNode* current = this->head; current != nullptr; current = current->next) {
+    this->hazards.Reset();
+    while (!this->hazards.Done())
+    {
+        Hazard* hazard = this->hazards.Next();
 
-        Platform* platform = current->platform;
+        if (!hazard->IsApplicable(player.GetActiveFilter()))
+            continue;
+
+        hazard->Effect(&player);
+    }
+
+    this->platforms.Reset();
+    while (!this->platforms.Done())
+    {
+        Platform* platform = this->platforms.Next();
 
         if (platform->IsOffscreen() || !platform->IsVisible(player.GetActiveFilter()))
             continue;
@@ -67,9 +68,10 @@ void Level::Render(uint8_t activeFilter)
 {
     this->background->Render();
 
-    for (struct PlatformNode* current = this->head; current != nullptr; current = current->next)
+    this->platforms.Reset();
+    while (!this->platforms.Done())
     {
-        Platform* platform = current->platform;
+        Platform* platform = this->platforms.Next();
         if (platform->IsOffscreen() || !platform->IsVisible(activeFilter))
             continue;
 

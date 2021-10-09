@@ -1,5 +1,5 @@
-#ifndef CLOCKWORKISLAND_ASSETS_H__
-#define CLOCKWORKISLAND_ASSETS_H__
+#ifndef GAME_ASSETS_H__
+#define GAME_ASSETS_H__
 
 #include <engine/Background.h>
 
@@ -19,7 +19,7 @@ namespace game
         static Background* LoadBackground(uint8_t levelNum);
 
         static void LoadPlayerData(Robot& player, ifstream* file);
-        static Platform* LoadPlatformData(Texture* tileSheet, ifstream* file);
+        static bool LoadPlatformData(Level& level, Texture* tileSheet, ifstream* file);
 
     public:
         static Texture* LoadPlayerSpritesheet();
@@ -37,4 +37,4 @@ namespace game
     };
 }
 
-#endif /* CLOCKWORKISLAND_ASSETS_H__ */
+#endif /* GAME_ASSETS_H__ */

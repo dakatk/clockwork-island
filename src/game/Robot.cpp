@@ -24,9 +24,10 @@ Robot::Robot(Texture* spritesheet) : Player(spritesheet, 0, 0, PLAYER_WIDTH, PLA
 
     this->allowedFilters = 0;
     this->activeFilter = 0;
-    this->ticks = 0;
+    this->wasJumping = false;
 
     this->SetBoundingBox(PLAYER_BB_WIDTH, PLAYER_BB_HEIGHT);
+    this->timer.Start();
 }
 
 uint8_t Robot::GetAllowedFilters() const
@@ -54,7 +55,7 @@ void Robot::UpdateDirection()
     // Right
     if (this->GetVX() > 0.0f)
     {
-        if (this->GetVY() != 0.0f)
+        if (this->IsJumping())
             this->direction = &directions::JUMP_RIGHT;
         else
             this->direction = &directions::WALK_RIGHT;
@@ -62,7 +63,7 @@ void Robot::UpdateDirection()
     // Left
     else if (this->GetVX() < 0.0f)
     {
-        if (this->GetVY() != 0.0f)
+        if (this->IsJumping())
             this->direction = &directions::JUMP_LEFT;
         else
             this->direction = &directions::WALK_LEFT;
@@ -71,7 +72,7 @@ void Robot::UpdateDirection()
     else
     {
         // Jumping/Falling
-        if (this->GetVY() != 0.0f)
+        if (this->IsJumping())
         {
             bool prevLeft = this->direction == &directions::WALK_LEFT || this->direction == &directions::STAND_LEFT;
             bool prevRight = this->direction == &directions::WALK_RIGHT || this->direction == &directions::STAND_RIGHT;
@@ -99,18 +100,22 @@ void Robot::UpdateDirection()
 
 void Robot::Animate()
 {
-    // TODO Use 'Timer' class to count ticks instead of counting frames
     this->spriteClipY = this->direction->value;
 
-    if (this->ticks >= this->direction->sleep)
+    if (this->direction->frames <= 1 || this->direction->sleep == 0)
+    {
+        this->spriteClipX = 0;
+        return;
+    }
+
+    if (this->timer.Ticks() >= this->direction->sleep)
     {
         this->spriteClipX ++;
         if (this->spriteClipX >= this->direction->frames)
             this->spriteClipX = 0;
 
-        this->ticks = 0;
+        this->timer.Start();
     }
-    else this->ticks ++;
 }
 
 void Robot::Render()

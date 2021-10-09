@@ -1,5 +1,5 @@
-#ifndef CLOCKWORKISLAND_PLATFORM_H__
-#define CLOCKWORKISLAND_PLATFORM_H__
+#ifndef GAME_PLATFORMS_PLATFORM_H__
+#define GAME_PLATFORMS_PLATFORM_H__
 
 #include "engine/Tile.h"
 
@@ -30,4 +30,4 @@ namespace game
     }
 }
 
-#endif /* CLOCKWORKISLAND_PLATFORM_H__ */
+#endif /* GAME_PLATFORMS_PLATFORM_H__ */

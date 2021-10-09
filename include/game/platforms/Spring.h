@@ -1,5 +1,5 @@
-#ifndef CLOCKWORKISLAND_NEWENGINE_SPRING_H__
-#define CLOCKWORKISLAND_NEWENGINE_SPRING_H__
+#ifndef GAME_PLATFORMS_SPRING_H__
+#define GAME_PLATFORMS_SPRING_H__
 
 #include <engine/Timer.h>
 #include "game/platforms/Platform.h"
@@ -12,9 +12,9 @@ namespace game
         {
         private:
             Timer animTimer;
-            bool activated;
             int animDirection;
             uint32_t animWait;
+            bool activated;
 
         public:
             Spring(Texture* spritesheet, int rotation, uint8_t sides, int x, int y, int width, int height);
@@ -26,4 +26,4 @@ namespace game
     }
 }
 
-#endif //CLOCKWORKISLAND_NEWENGINE_SPRING_H__
+#endif /* GAME_PLATFORMS_SPRING_H__ */

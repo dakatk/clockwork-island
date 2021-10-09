@@ -6,6 +6,7 @@ using namespace engine;
 Player::Player(Texture* spritesheet, int x, int y, int width, int height) : Sprite(spritesheet, (float)x, (float)y, width, height)
 {
     this->jumping = true;
+    this->wasJumping = false;
 
     this->vx = 0.0f;
     this->vy = 0.0f;
@@ -44,9 +45,25 @@ void Player::ChangeVY(float dvy)
     this->vy += dvy;
 }
 
-void Player::SetJumping(bool _jumping)
+void Player::SetJumping()
 {
-    this->jumping = _jumping;
+    this->jumping = true;
+}
+
+void Player::AllowJumping()
+{
+    this->wasJumping = false;
+    this->jumping = false;
+}
+
+void Player::StopJumping()
+{
+    this->wasJumping = true;
+}
+
+bool Player::WasJumping() const
+{
+    return this->wasJumping;
 }
 
 bool Player::IsJumping() const
@@ -54,12 +71,10 @@ bool Player::IsJumping() const
     return this->jumping;
 }
 
-void Player::Move(float gravity, float friction, float maxFallSpeed, float maxMoveSpeed, float minMoveSpeed)
+void Player::Move(float gravity, float maxFallSpeed)
 {
     this->vy -= gravity;
-
     this->vy = fmaxf(this->vy, -maxFallSpeed);
-    this->vx = fmaxf(fminf(this->vx, maxMoveSpeed), -maxMoveSpeed);
 
     if (this->boundingBox != nullptr)
     {
@@ -76,10 +91,6 @@ void Player::Move(float gravity, float friction, float maxFallSpeed, float maxMo
         this->x += this->vx;
         this->y += this->vy;
     }
-    this->vx *= friction;
-
-    if (fabsf(this->vx) <= minMoveSpeed)
-        this->vx = 0.0f;
 }
 
 void Player::MoveTo(int x, int y)
@@ -87,8 +98,14 @@ void Player::MoveTo(int x, int y)
     this->x = (float)x;
     this->y = (float)y;
 
-    this->boundingBox->SetCenterX(this->x + ((float)this->width / 2.0f));
-    this->boundingBox->SetCenterY(this->y - ((float)this->height / 2.0f));
+    float halfWidth = (float)this->width / 2.0f;
+    float halfHeight = (float)this->height / 2.0f;
+
+    this->boundingBox->SetCenterX((float)x + halfWidth);
+    this->boundingBox->SetCenterY((float)y - halfHeight);
+
+//    this->x = this->boundingBox->GetCenterX() - halfWidth;
+//    this->y = this->boundingBox->GetCenterY() + halfHeight;
 }
 
 void Player::Collide(Tile* tile)

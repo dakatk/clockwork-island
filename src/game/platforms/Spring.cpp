@@ -1,14 +1,14 @@
 #include "game/platforms/Spring.h"
 #include "engine/Player.h"
 
-#define BOUNCE_SPEED 11.5f
+#define BOUNCE_SPEED 15.0f
 
 #define SPRITE_CLIP_START_X 3
 #define SPRITE_CLIP_START_Y 3
 #define SPRITE_CLIP_END_X 5
 
-#define ANIM_TIMER_SHORT_TICKS 17
-#define ANIM_TIMER_LONG_TICKS 200
+#define ANIM_TIMER_SHORT_TICKS 16
+#define ANIM_TIMER_LONG_TICKS 33
 
 using namespace game::platforms;
 
@@ -29,7 +29,8 @@ void Spring::CollideTop(Sprite* entity)
     if (player == nullptr)
         return;
 
-    player->SetJumping(true);
+    player->AllowJumping();
+    player->SetJumping();
     player->SetVY(BOUNCE_SPEED);
 
     this->animTimer.Start();

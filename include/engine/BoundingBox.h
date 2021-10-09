@@ -1,5 +1,5 @@
-#ifndef CLOCKWORKISLAND_BOUNDINGBOX_H
-#define CLOCKWORKISLAND_BOUNDINGBOX_H
+#ifndef ENGINE_BOUNDINGBOX_H
+#define ENGINE_BOUNDINGBOX_H
 
 namespace engine
 {
@@ -14,6 +14,7 @@ namespace engine
 
     public:
         BoundingBox(float centerX, float centerY, float halfWidth, float halfHeight);
+        BoundingBox() : BoundingBox(0.0f, 0.0f, 0.0f, 0.0f) {}
 
         float GetCenterX() const;
         float GetCenterY() const;
@@ -35,4 +36,4 @@ namespace engine
     };
 }
 
-#endif /* CLOCKWORKISLAND_BOUNDINGBOX_H */
+#endif /* ENGINE_BOUNDINGBOX_H */

@@ -12,15 +12,11 @@
 #define BUFFER_WIDTH 800
 #define BUFFER_HEIGHT 600
 
-#define GRAVITY 0.3f
-#define FRICTION 0.88f
+#define GRAVITY 0.5f
 
 #define PLAYER_MOVE_SPEED 3.5f
-#define PLAYER_JUMP_SPEED 8.5f
-
-#define PLAYER_MAX_MOVE_SPEED 4.1f
+#define PLAYER_JUMP_SPEED 12.0f
 #define PLAYER_MAX_FALL_SPEED 9.0f
-#define PLAYER_MIN_MOVE_SPEED 0.2f
 
 using namespace engine;
 using namespace std;
@@ -109,17 +105,22 @@ void Update(Robot& player, Level& level)
     UpdatePlayerFilter(player);
 
     if (Input::KeyPressed(KEY_LEFT | KEY_A))
-        player.ChangeVX(-PLAYER_MOVE_SPEED);
+        player.SetVX(-PLAYER_MOVE_SPEED);
 
     else if (Input::KeyPressed(KEY_RIGHT | KEY_D))
-        player.ChangeVX(PLAYER_MOVE_SPEED);
+        player.SetVX(PLAYER_MOVE_SPEED);
+
+    else player.SetVX(0.0f);
+
+    if (player.WasJumping())
+        player.AllowJumping();
 
     if (Input::KeyPressed(KEY_Z | KEY_SPACE) && !player.IsJumping())
     {
-        player.SetJumping(true);
+        player.SetJumping();
         player.ChangeVY(PLAYER_JUMP_SPEED);
     }
-    player.Move(GRAVITY, FRICTION, PLAYER_MAX_FALL_SPEED, PLAYER_MAX_MOVE_SPEED, PLAYER_MIN_MOVE_SPEED);
+    player.Move(GRAVITY, PLAYER_MAX_FALL_SPEED);
 
     level.CheckPhysics(player);
     level.ScrollBackground(player);

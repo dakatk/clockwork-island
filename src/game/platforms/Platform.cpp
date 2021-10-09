@@ -35,7 +35,9 @@ void Platform::CollideTop(Sprite* entity)
 
     player->GetBoundingBox()->SetCenterY(platformTop + halfHeight);
     player->SetVY(0.0f);
-    player->SetJumping(false);
+    // TODO set 'jumping = false' on next frame
+    // player->SetJumping(false);
+    player->StopJumping();
 }
 
 void Platform::CollideBottom(Sprite* entity)
